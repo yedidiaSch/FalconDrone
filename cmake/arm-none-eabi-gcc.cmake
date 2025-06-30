@@ -11,6 +11,10 @@ set(CMAKE_SIZE ${TOOLCHAIN_PREFIX}-size CACHE INTERNAL "size tool")
 
 set(CPU_OPTIONS "-mcpu=cortex-m4" "-mthumb" "-mfpu=fpv4-sp-d16" "-mfloat-abi=hard")
 
+# Tell CMake not to try linking executables when testing compiler
+set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
+
+
 add_compile_options(
     ${CPU_OPTIONS}
     -O2

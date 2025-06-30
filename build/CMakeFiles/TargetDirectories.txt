@@ -1,0 +1,4 @@
+/home/yedidia/github/FalconDrone/build/CMakeFiles/rebuild_cache.dir
+/home/yedidia/github/FalconDrone/build/CMakeFiles/edit_cache.dir
+/home/yedidia/github/FalconDrone/build/CMakeFiles/FalconDrone.dir
+/home/yedidia/github/FalconDrone/build/CMakeFiles/FreeRTOS-Kernel.dir

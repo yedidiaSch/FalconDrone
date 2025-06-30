@@ -1,0 +1,47 @@
+[
+{
+  "directory": "/home/yedidia/github/FalconDrone/build",
+  "command": "/usr/bin/arm-none-eabi-g++   -I/home/yedidia/github/FalconDrone/include -I/home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/include -I/home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM4F  -g   -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard -O2 -ffunction-sections -fdata-sections -std=gnu++17 -o CMakeFiles/FalconDrone.dir/src/main.cpp.obj -c /home/yedidia/github/FalconDrone/src/main.cpp",
+  "file": "/home/yedidia/github/FalconDrone/src/main.cpp"
+},
+{
+  "directory": "/home/yedidia/github/FalconDrone/build",
+  "command": "/usr/bin/arm-none-eabi-gcc  -I/home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/include -I/home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM4F -I/home/yedidia/github/FalconDrone/include  -g   -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard -O2 -ffunction-sections -fdata-sections -std=gnu11 -o CMakeFiles/FreeRTOS-Kernel.dir/include/FreeRTOS/FreeRTOS/Source/event_groups.c.obj   -c /home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/event_groups.c",
+  "file": "/home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/event_groups.c"
+},
+{
+  "directory": "/home/yedidia/github/FalconDrone/build",
+  "command": "/usr/bin/arm-none-eabi-gcc  -I/home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/include -I/home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM4F -I/home/yedidia/github/FalconDrone/include  -g   -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard -O2 -ffunction-sections -fdata-sections -std=gnu11 -o CMakeFiles/FreeRTOS-Kernel.dir/include/FreeRTOS/FreeRTOS/Source/list.c.obj   -c /home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/list.c",
+  "file": "/home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/list.c"
+},
+{
+  "directory": "/home/yedidia/github/FalconDrone/build",
+  "command": "/usr/bin/arm-none-eabi-gcc  -I/home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/include -I/home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM4F -I/home/yedidia/github/FalconDrone/include  -g   -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard -O2 -ffunction-sections -fdata-sections -std=gnu11 -o CMakeFiles/FreeRTOS-Kernel.dir/include/FreeRTOS/FreeRTOS/Source/queue.c.obj   -c /home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/queue.c",
+  "file": "/home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/queue.c"
+},
+{
+  "directory": "/home/yedidia/github/FalconDrone/build",
+  "command": "/usr/bin/arm-none-eabi-gcc  -I/home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/include -I/home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM4F -I/home/yedidia/github/FalconDrone/include  -g   -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard -O2 -ffunction-sections -fdata-sections -std=gnu11 -o CMakeFiles/FreeRTOS-Kernel.dir/include/FreeRTOS/FreeRTOS/Source/stream_buffer.c.obj   -c /home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/stream_buffer.c",
+  "file": "/home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/stream_buffer.c"
+},
+{
+  "directory": "/home/yedidia/github/FalconDrone/build",
+  "command": "/usr/bin/arm-none-eabi-gcc  -I/home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/include -I/home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM4F -I/home/yedidia/github/FalconDrone/include  -g   -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard -O2 -ffunction-sections -fdata-sections -std=gnu11 -o CMakeFiles/FreeRTOS-Kernel.dir/include/FreeRTOS/FreeRTOS/Source/tasks.c.obj   -c /home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/tasks.c",
+  "file": "/home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/tasks.c"
+},
+{
+  "directory": "/home/yedidia/github/FalconDrone/build",
+  "command": "/usr/bin/arm-none-eabi-gcc  -I/home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/include -I/home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM4F -I/home/yedidia/github/FalconDrone/include  -g   -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard -O2 -ffunction-sections -fdata-sections -std=gnu11 -o CMakeFiles/FreeRTOS-Kernel.dir/include/FreeRTOS/FreeRTOS/Source/timers.c.obj   -c /home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/timers.c",
+  "file": "/home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/timers.c"
+},
+{
+  "directory": "/home/yedidia/github/FalconDrone/build",
+  "command": "/usr/bin/arm-none-eabi-gcc  -I/home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/include -I/home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM4F -I/home/yedidia/github/FalconDrone/include  -g   -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard -O2 -ffunction-sections -fdata-sections -std=gnu11 -o CMakeFiles/FreeRTOS-Kernel.dir/include/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.obj   -c /home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c",
+  "file": "/home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c"
+},
+{
+  "directory": "/home/yedidia/github/FalconDrone/build",
+  "command": "/usr/bin/arm-none-eabi-gcc  -I/home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/include -I/home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM4F -I/home/yedidia/github/FalconDrone/include  -g   -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard -O2 -ffunction-sections -fdata-sections -std=gnu11 -o CMakeFiles/FreeRTOS-Kernel.dir/include/FreeRTOS/FreeRTOS/Source/portable/MemMang/heap_4.c.obj   -c /home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/portable/MemMang/heap_4.c",
+  "file": "/home/yedidia/github/FalconDrone/include/FreeRTOS/FreeRTOS/Source/portable/MemMang/heap_4.c"
+}
+]

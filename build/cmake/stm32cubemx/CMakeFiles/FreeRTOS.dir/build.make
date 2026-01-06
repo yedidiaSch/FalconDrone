@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/yedidya-schwarts/git/drone/falconDrone
+CMAKE_SOURCE_DIR = /home/yedidya-schwarts/git/FalconDrone
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/yedidya-schwarts/git/drone/falconDrone/build
+CMAKE_BINARY_DIR = /home/yedidya-schwarts/git/FalconDrone/build
 
 # Include any dependencies generated for this target.
 include cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/depend.make
@@ -69,156 +69,156 @@ include cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/progress.make
 # Include the compile flags for this target's objects.
 include cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/flags.make
 
-cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.o: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/flags.make
-cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.o: /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/croutine.c
-cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.o: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/drone/falconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.o"
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.o -MF CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.o.d -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.o -c /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/croutine.c
+cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.obj: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/flags.make
+cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.obj: /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/croutine.c
+cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.obj: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.obj"
+	cd /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.obj -MF CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.obj.d -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.obj -c /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/croutine.c
 
 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.i"
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/croutine.c > CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/croutine.c > CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.i
 
 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.s"
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/croutine.c -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/croutine.c -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.s
 
-cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.o: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/flags.make
-cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.o: /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c
-cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.o: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/drone/falconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.o"
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.o -MF CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.o.d -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.o -c /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c
+cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.obj: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/flags.make
+cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.obj: /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c
+cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.obj: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.obj"
+	cd /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.obj -MF CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.obj.d -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.obj -c /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c
 
 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.i"
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c > CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c > CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.i
 
 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.s"
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.s
 
-cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.o: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/flags.make
-cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.o: /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/list.c
-cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.o: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/drone/falconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.o"
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.o -MF CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.o.d -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.o -c /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/list.c
+cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.obj: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/flags.make
+cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.obj: /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/list.c
+cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.obj: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.obj"
+	cd /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.obj -MF CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.obj.d -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.obj -c /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/list.c
 
 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.i"
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/list.c > CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/list.c > CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.i
 
 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.s"
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/list.c -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/list.c -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.s
 
-cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.o: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/flags.make
-cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.o: /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/queue.c
-cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.o: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/drone/falconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.o"
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.o -MF CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.o.d -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.o -c /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/queue.c
+cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.obj: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/flags.make
+cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.obj: /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/queue.c
+cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.obj: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.obj"
+	cd /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.obj -MF CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.obj.d -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.obj -c /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/queue.c
 
 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.i"
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/queue.c > CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/queue.c > CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.i
 
 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.s"
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/queue.c -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/queue.c -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.s
 
-cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.o: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/flags.make
-cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.o: /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c
-cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.o: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/drone/falconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.o"
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.o -MF CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.o.d -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.o -c /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c
+cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.obj: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/flags.make
+cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.obj: /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c
+cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.obj: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.obj"
+	cd /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.obj -MF CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.obj.d -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.obj -c /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c
 
 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.i"
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c > CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c > CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.i
 
 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.s"
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.s
 
-cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.o: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/flags.make
-cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.o: /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/tasks.c
-cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.o: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/drone/falconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.o"
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.o -MF CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.o.d -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.o -c /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/tasks.c
+cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/flags.make
+cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj: /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/tasks.c
+cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj"
+	cd /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj -MF CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj.d -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj -c /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/tasks.c
 
 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.i"
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/tasks.c > CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/tasks.c > CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.i
 
 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.s"
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/tasks.c -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/tasks.c -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.s
 
-cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.o: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/flags.make
-cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.o: /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/timers.c
-cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.o: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/drone/falconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.o"
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.o -MF CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.o.d -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.o -c /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/timers.c
+cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/flags.make
+cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj: /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/timers.c
+cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj"
+	cd /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj -MF CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj.d -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj -c /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/timers.c
 
 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.i"
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/timers.c > CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/timers.c > CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.i
 
 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.s"
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/timers.c -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/timers.c -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.s
 
-cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.o: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/flags.make
-cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.o: /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c
-cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.o: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/drone/falconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.o"
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.o -MF CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.o.d -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.o -c /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c
+cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.obj: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/flags.make
+cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.obj: /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c
+cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.obj: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.obj"
+	cd /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.obj -MF CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.obj.d -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.obj -c /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c
 
 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.i"
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c > CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c > CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.i
 
 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.s"
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.s
 
-cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.o: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/flags.make
-cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.o: /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c
-cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.o: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/drone/falconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.o"
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.o -MF CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.o.d -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.o -c /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c
+cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.obj: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/flags.make
+cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.obj: /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c
+cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.obj: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.obj"
+	cd /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.obj -MF CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.obj.d -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.obj -c /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c
 
 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.i"
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c > CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c > CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.i
 
 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.s"
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.s
 
-cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.o: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/flags.make
-cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.o: /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c
-cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.o: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/drone/falconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.o"
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.o -MF CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.o.d -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.o -c /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c
+cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.obj: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/flags.make
+cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.obj: /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c
+cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.obj: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.obj"
+	cd /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.obj -MF CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.obj.d -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.obj -c /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c
 
 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.i"
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c > CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c > CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.i
 
 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.s"
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/drone/falconDrone/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx && /usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c -o CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.s
 
-FreeRTOS: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.o
-FreeRTOS: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.o
-FreeRTOS: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.o
-FreeRTOS: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.o
-FreeRTOS: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.o
-FreeRTOS: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.o
-FreeRTOS: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.o
-FreeRTOS: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.o
-FreeRTOS: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.o
-FreeRTOS: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.o
+FreeRTOS: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.obj
+FreeRTOS: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.obj
+FreeRTOS: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.obj
+FreeRTOS: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.obj
+FreeRTOS: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.obj
+FreeRTOS: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj
+FreeRTOS: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj
+FreeRTOS: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.obj
+FreeRTOS: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.obj
+FreeRTOS: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.obj
 FreeRTOS: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make
 .PHONY : FreeRTOS
 
@@ -227,10 +227,10 @@ cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build: FreeRTOS
 .PHONY : cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build
 
 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/clean:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx && $(CMAKE_COMMAND) -P CMakeFiles/FreeRTOS.dir/cmake_clean.cmake
+	cd /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx && $(CMAKE_COMMAND) -P CMakeFiles/FreeRTOS.dir/cmake_clean.cmake
 .PHONY : cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/clean
 
 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/depend:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/yedidya-schwarts/git/drone/falconDrone /home/yedidya-schwarts/git/drone/falconDrone/cmake/stm32cubemx /home/yedidya-schwarts/git/drone/falconDrone/build /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/yedidya-schwarts/git/FalconDrone /home/yedidya-schwarts/git/FalconDrone/cmake/stm32cubemx /home/yedidya-schwarts/git/FalconDrone/build /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/depend
 

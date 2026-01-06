@@ -53,10 +53,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/yedidya-schwarts/git/drone/falconDrone
+CMAKE_SOURCE_DIR = /home/yedidya-schwarts/git/FalconDrone
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/yedidya-schwarts/git/drone/falconDrone/build
+CMAKE_BINARY_DIR = /home/yedidya-schwarts/git/FalconDrone/build
 
 # Include any dependencies generated for this target.
 include CMakeFiles/falconDrone.dir/depend.make
@@ -69,268 +69,284 @@ include CMakeFiles/falconDrone.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/falconDrone.dir/flags.make
 
-CMakeFiles/falconDrone.dir/Core/Src/main.c.o: CMakeFiles/falconDrone.dir/flags.make
-CMakeFiles/falconDrone.dir/Core/Src/main.c.o: /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/main.c
-CMakeFiles/falconDrone.dir/Core/Src/main.c.o: CMakeFiles/falconDrone.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/drone/falconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/falconDrone.dir/Core/Src/main.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/falconDrone.dir/Core/Src/main.c.o -MF CMakeFiles/falconDrone.dir/Core/Src/main.c.o.d -o CMakeFiles/falconDrone.dir/Core/Src/main.c.o -c /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/main.c
+CMakeFiles/falconDrone.dir/Core/Src/main.c.obj: CMakeFiles/falconDrone.dir/flags.make
+CMakeFiles/falconDrone.dir/Core/Src/main.c.obj: /home/yedidya-schwarts/git/FalconDrone/Core/Src/main.c
+CMakeFiles/falconDrone.dir/Core/Src/main.c.obj: CMakeFiles/falconDrone.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building C object CMakeFiles/falconDrone.dir/Core/Src/main.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/falconDrone.dir/Core/Src/main.c.obj -MF CMakeFiles/falconDrone.dir/Core/Src/main.c.obj.d -o CMakeFiles/falconDrone.dir/Core/Src/main.c.obj -c /home/yedidya-schwarts/git/FalconDrone/Core/Src/main.c
 
 CMakeFiles/falconDrone.dir/Core/Src/main.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/falconDrone.dir/Core/Src/main.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/main.c > CMakeFiles/falconDrone.dir/Core/Src/main.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/FalconDrone/Core/Src/main.c > CMakeFiles/falconDrone.dir/Core/Src/main.c.i
 
 CMakeFiles/falconDrone.dir/Core/Src/main.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/falconDrone.dir/Core/Src/main.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/main.c -o CMakeFiles/falconDrone.dir/Core/Src/main.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/FalconDrone/Core/Src/main.c -o CMakeFiles/falconDrone.dir/Core/Src/main.c.s
 
-CMakeFiles/falconDrone.dir/Core/Src/gpio.c.o: CMakeFiles/falconDrone.dir/flags.make
-CMakeFiles/falconDrone.dir/Core/Src/gpio.c.o: /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/gpio.c
-CMakeFiles/falconDrone.dir/Core/Src/gpio.c.o: CMakeFiles/falconDrone.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/drone/falconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/falconDrone.dir/Core/Src/gpio.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/falconDrone.dir/Core/Src/gpio.c.o -MF CMakeFiles/falconDrone.dir/Core/Src/gpio.c.o.d -o CMakeFiles/falconDrone.dir/Core/Src/gpio.c.o -c /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/gpio.c
+CMakeFiles/falconDrone.dir/Core/Src/gpio.c.obj: CMakeFiles/falconDrone.dir/flags.make
+CMakeFiles/falconDrone.dir/Core/Src/gpio.c.obj: /home/yedidya-schwarts/git/FalconDrone/Core/Src/gpio.c
+CMakeFiles/falconDrone.dir/Core/Src/gpio.c.obj: CMakeFiles/falconDrone.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/falconDrone.dir/Core/Src/gpio.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/falconDrone.dir/Core/Src/gpio.c.obj -MF CMakeFiles/falconDrone.dir/Core/Src/gpio.c.obj.d -o CMakeFiles/falconDrone.dir/Core/Src/gpio.c.obj -c /home/yedidya-schwarts/git/FalconDrone/Core/Src/gpio.c
 
 CMakeFiles/falconDrone.dir/Core/Src/gpio.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/falconDrone.dir/Core/Src/gpio.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/gpio.c > CMakeFiles/falconDrone.dir/Core/Src/gpio.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/FalconDrone/Core/Src/gpio.c > CMakeFiles/falconDrone.dir/Core/Src/gpio.c.i
 
 CMakeFiles/falconDrone.dir/Core/Src/gpio.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/falconDrone.dir/Core/Src/gpio.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/gpio.c -o CMakeFiles/falconDrone.dir/Core/Src/gpio.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/FalconDrone/Core/Src/gpio.c -o CMakeFiles/falconDrone.dir/Core/Src/gpio.c.s
 
-CMakeFiles/falconDrone.dir/Core/Src/freertos.c.o: CMakeFiles/falconDrone.dir/flags.make
-CMakeFiles/falconDrone.dir/Core/Src/freertos.c.o: /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/freertos.c
-CMakeFiles/falconDrone.dir/Core/Src/freertos.c.o: CMakeFiles/falconDrone.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/drone/falconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/falconDrone.dir/Core/Src/freertos.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/falconDrone.dir/Core/Src/freertos.c.o -MF CMakeFiles/falconDrone.dir/Core/Src/freertos.c.o.d -o CMakeFiles/falconDrone.dir/Core/Src/freertos.c.o -c /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/freertos.c
+CMakeFiles/falconDrone.dir/Core/Src/freertos.c.obj: CMakeFiles/falconDrone.dir/flags.make
+CMakeFiles/falconDrone.dir/Core/Src/freertos.c.obj: /home/yedidya-schwarts/git/FalconDrone/Core/Src/freertos.c
+CMakeFiles/falconDrone.dir/Core/Src/freertos.c.obj: CMakeFiles/falconDrone.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building C object CMakeFiles/falconDrone.dir/Core/Src/freertos.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/falconDrone.dir/Core/Src/freertos.c.obj -MF CMakeFiles/falconDrone.dir/Core/Src/freertos.c.obj.d -o CMakeFiles/falconDrone.dir/Core/Src/freertos.c.obj -c /home/yedidya-schwarts/git/FalconDrone/Core/Src/freertos.c
 
 CMakeFiles/falconDrone.dir/Core/Src/freertos.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/falconDrone.dir/Core/Src/freertos.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/freertos.c > CMakeFiles/falconDrone.dir/Core/Src/freertos.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/FalconDrone/Core/Src/freertos.c > CMakeFiles/falconDrone.dir/Core/Src/freertos.c.i
 
 CMakeFiles/falconDrone.dir/Core/Src/freertos.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/falconDrone.dir/Core/Src/freertos.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/freertos.c -o CMakeFiles/falconDrone.dir/Core/Src/freertos.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/FalconDrone/Core/Src/freertos.c -o CMakeFiles/falconDrone.dir/Core/Src/freertos.c.s
 
-CMakeFiles/falconDrone.dir/Core/Src/i2c.c.o: CMakeFiles/falconDrone.dir/flags.make
-CMakeFiles/falconDrone.dir/Core/Src/i2c.c.o: /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/i2c.c
-CMakeFiles/falconDrone.dir/Core/Src/i2c.c.o: CMakeFiles/falconDrone.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/drone/falconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/falconDrone.dir/Core/Src/i2c.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/falconDrone.dir/Core/Src/i2c.c.o -MF CMakeFiles/falconDrone.dir/Core/Src/i2c.c.o.d -o CMakeFiles/falconDrone.dir/Core/Src/i2c.c.o -c /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/i2c.c
+CMakeFiles/falconDrone.dir/Core/Src/dma.c.obj: CMakeFiles/falconDrone.dir/flags.make
+CMakeFiles/falconDrone.dir/Core/Src/dma.c.obj: /home/yedidya-schwarts/git/FalconDrone/Core/Src/dma.c
+CMakeFiles/falconDrone.dir/Core/Src/dma.c.obj: CMakeFiles/falconDrone.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building C object CMakeFiles/falconDrone.dir/Core/Src/dma.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/falconDrone.dir/Core/Src/dma.c.obj -MF CMakeFiles/falconDrone.dir/Core/Src/dma.c.obj.d -o CMakeFiles/falconDrone.dir/Core/Src/dma.c.obj -c /home/yedidya-schwarts/git/FalconDrone/Core/Src/dma.c
+
+CMakeFiles/falconDrone.dir/Core/Src/dma.c.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/falconDrone.dir/Core/Src/dma.c.i"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/FalconDrone/Core/Src/dma.c > CMakeFiles/falconDrone.dir/Core/Src/dma.c.i
+
+CMakeFiles/falconDrone.dir/Core/Src/dma.c.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/falconDrone.dir/Core/Src/dma.c.s"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/FalconDrone/Core/Src/dma.c -o CMakeFiles/falconDrone.dir/Core/Src/dma.c.s
+
+CMakeFiles/falconDrone.dir/Core/Src/i2c.c.obj: CMakeFiles/falconDrone.dir/flags.make
+CMakeFiles/falconDrone.dir/Core/Src/i2c.c.obj: /home/yedidya-schwarts/git/FalconDrone/Core/Src/i2c.c
+CMakeFiles/falconDrone.dir/Core/Src/i2c.c.obj: CMakeFiles/falconDrone.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/falconDrone.dir/Core/Src/i2c.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/falconDrone.dir/Core/Src/i2c.c.obj -MF CMakeFiles/falconDrone.dir/Core/Src/i2c.c.obj.d -o CMakeFiles/falconDrone.dir/Core/Src/i2c.c.obj -c /home/yedidya-schwarts/git/FalconDrone/Core/Src/i2c.c
 
 CMakeFiles/falconDrone.dir/Core/Src/i2c.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/falconDrone.dir/Core/Src/i2c.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/i2c.c > CMakeFiles/falconDrone.dir/Core/Src/i2c.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/FalconDrone/Core/Src/i2c.c > CMakeFiles/falconDrone.dir/Core/Src/i2c.c.i
 
 CMakeFiles/falconDrone.dir/Core/Src/i2c.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/falconDrone.dir/Core/Src/i2c.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/i2c.c -o CMakeFiles/falconDrone.dir/Core/Src/i2c.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/FalconDrone/Core/Src/i2c.c -o CMakeFiles/falconDrone.dir/Core/Src/i2c.c.s
 
-CMakeFiles/falconDrone.dir/Core/Src/tim.c.o: CMakeFiles/falconDrone.dir/flags.make
-CMakeFiles/falconDrone.dir/Core/Src/tim.c.o: /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/tim.c
-CMakeFiles/falconDrone.dir/Core/Src/tim.c.o: CMakeFiles/falconDrone.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/drone/falconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building C object CMakeFiles/falconDrone.dir/Core/Src/tim.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/falconDrone.dir/Core/Src/tim.c.o -MF CMakeFiles/falconDrone.dir/Core/Src/tim.c.o.d -o CMakeFiles/falconDrone.dir/Core/Src/tim.c.o -c /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/tim.c
+CMakeFiles/falconDrone.dir/Core/Src/tim.c.obj: CMakeFiles/falconDrone.dir/flags.make
+CMakeFiles/falconDrone.dir/Core/Src/tim.c.obj: /home/yedidya-schwarts/git/FalconDrone/Core/Src/tim.c
+CMakeFiles/falconDrone.dir/Core/Src/tim.c.obj: CMakeFiles/falconDrone.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/falconDrone.dir/Core/Src/tim.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/falconDrone.dir/Core/Src/tim.c.obj -MF CMakeFiles/falconDrone.dir/Core/Src/tim.c.obj.d -o CMakeFiles/falconDrone.dir/Core/Src/tim.c.obj -c /home/yedidya-schwarts/git/FalconDrone/Core/Src/tim.c
 
 CMakeFiles/falconDrone.dir/Core/Src/tim.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/falconDrone.dir/Core/Src/tim.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/tim.c > CMakeFiles/falconDrone.dir/Core/Src/tim.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/FalconDrone/Core/Src/tim.c > CMakeFiles/falconDrone.dir/Core/Src/tim.c.i
 
 CMakeFiles/falconDrone.dir/Core/Src/tim.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/falconDrone.dir/Core/Src/tim.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/tim.c -o CMakeFiles/falconDrone.dir/Core/Src/tim.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/FalconDrone/Core/Src/tim.c -o CMakeFiles/falconDrone.dir/Core/Src/tim.c.s
 
-CMakeFiles/falconDrone.dir/Core/Src/usart.c.o: CMakeFiles/falconDrone.dir/flags.make
-CMakeFiles/falconDrone.dir/Core/Src/usart.c.o: /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/usart.c
-CMakeFiles/falconDrone.dir/Core/Src/usart.c.o: CMakeFiles/falconDrone.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/drone/falconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building C object CMakeFiles/falconDrone.dir/Core/Src/usart.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/falconDrone.dir/Core/Src/usart.c.o -MF CMakeFiles/falconDrone.dir/Core/Src/usart.c.o.d -o CMakeFiles/falconDrone.dir/Core/Src/usart.c.o -c /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/usart.c
+CMakeFiles/falconDrone.dir/Core/Src/usart.c.obj: CMakeFiles/falconDrone.dir/flags.make
+CMakeFiles/falconDrone.dir/Core/Src/usart.c.obj: /home/yedidya-schwarts/git/FalconDrone/Core/Src/usart.c
+CMakeFiles/falconDrone.dir/Core/Src/usart.c.obj: CMakeFiles/falconDrone.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/falconDrone.dir/Core/Src/usart.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/falconDrone.dir/Core/Src/usart.c.obj -MF CMakeFiles/falconDrone.dir/Core/Src/usart.c.obj.d -o CMakeFiles/falconDrone.dir/Core/Src/usart.c.obj -c /home/yedidya-schwarts/git/FalconDrone/Core/Src/usart.c
 
 CMakeFiles/falconDrone.dir/Core/Src/usart.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/falconDrone.dir/Core/Src/usart.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/usart.c > CMakeFiles/falconDrone.dir/Core/Src/usart.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/FalconDrone/Core/Src/usart.c > CMakeFiles/falconDrone.dir/Core/Src/usart.c.i
 
 CMakeFiles/falconDrone.dir/Core/Src/usart.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/falconDrone.dir/Core/Src/usart.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/usart.c -o CMakeFiles/falconDrone.dir/Core/Src/usart.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/FalconDrone/Core/Src/usart.c -o CMakeFiles/falconDrone.dir/Core/Src/usart.c.s
 
-CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_it.c.o: CMakeFiles/falconDrone.dir/flags.make
-CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_it.c.o: /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/stm32f4xx_it.c
-CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_it.c.o: CMakeFiles/falconDrone.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/drone/falconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building C object CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_it.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_it.c.o -MF CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_it.c.o.d -o CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_it.c.o -c /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/stm32f4xx_it.c
+CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_it.c.obj: CMakeFiles/falconDrone.dir/flags.make
+CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_it.c.obj: /home/yedidya-schwarts/git/FalconDrone/Core/Src/stm32f4xx_it.c
+CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_it.c.obj: CMakeFiles/falconDrone.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_it.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_it.c.obj -MF CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_it.c.obj.d -o CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_it.c.obj -c /home/yedidya-schwarts/git/FalconDrone/Core/Src/stm32f4xx_it.c
 
 CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_it.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_it.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/stm32f4xx_it.c > CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_it.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/FalconDrone/Core/Src/stm32f4xx_it.c > CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_it.c.i
 
 CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_it.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_it.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/stm32f4xx_it.c -o CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_it.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/FalconDrone/Core/Src/stm32f4xx_it.c -o CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_it.c.s
 
-CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.o: CMakeFiles/falconDrone.dir/flags.make
-CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.o: /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/stm32f4xx_hal_msp.c
-CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.o: CMakeFiles/falconDrone.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/drone/falconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building C object CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.o -MF CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.o.d -o CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.o -c /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/stm32f4xx_hal_msp.c
+CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.obj: CMakeFiles/falconDrone.dir/flags.make
+CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.obj: /home/yedidya-schwarts/git/FalconDrone/Core/Src/stm32f4xx_hal_msp.c
+CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.obj: CMakeFiles/falconDrone.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.obj -MF CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.obj.d -o CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.obj -c /home/yedidya-schwarts/git/FalconDrone/Core/Src/stm32f4xx_hal_msp.c
 
 CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/stm32f4xx_hal_msp.c > CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/FalconDrone/Core/Src/stm32f4xx_hal_msp.c > CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.i
 
 CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/stm32f4xx_hal_msp.c -o CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/FalconDrone/Core/Src/stm32f4xx_hal_msp.c -o CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.s
 
-CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.o: CMakeFiles/falconDrone.dir/flags.make
-CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.o: /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/stm32f4xx_hal_timebase_tim.c
-CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.o: CMakeFiles/falconDrone.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/drone/falconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building C object CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.o -MF CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.o.d -o CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.o -c /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/stm32f4xx_hal_timebase_tim.c
+CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj: CMakeFiles/falconDrone.dir/flags.make
+CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj: /home/yedidya-schwarts/git/FalconDrone/Core/Src/stm32f4xx_hal_timebase_tim.c
+CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj: CMakeFiles/falconDrone.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj -MF CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj.d -o CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj -c /home/yedidya-schwarts/git/FalconDrone/Core/Src/stm32f4xx_hal_timebase_tim.c
 
 CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/stm32f4xx_hal_timebase_tim.c > CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/FalconDrone/Core/Src/stm32f4xx_hal_timebase_tim.c > CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.i
 
 CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/stm32f4xx_hal_timebase_tim.c -o CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/FalconDrone/Core/Src/stm32f4xx_hal_timebase_tim.c -o CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.s
 
-CMakeFiles/falconDrone.dir/Core/Src/sysmem.c.o: CMakeFiles/falconDrone.dir/flags.make
-CMakeFiles/falconDrone.dir/Core/Src/sysmem.c.o: /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/sysmem.c
-CMakeFiles/falconDrone.dir/Core/Src/sysmem.c.o: CMakeFiles/falconDrone.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/drone/falconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building C object CMakeFiles/falconDrone.dir/Core/Src/sysmem.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/falconDrone.dir/Core/Src/sysmem.c.o -MF CMakeFiles/falconDrone.dir/Core/Src/sysmem.c.o.d -o CMakeFiles/falconDrone.dir/Core/Src/sysmem.c.o -c /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/sysmem.c
+CMakeFiles/falconDrone.dir/Core/Src/sysmem.c.obj: CMakeFiles/falconDrone.dir/flags.make
+CMakeFiles/falconDrone.dir/Core/Src/sysmem.c.obj: /home/yedidya-schwarts/git/FalconDrone/Core/Src/sysmem.c
+CMakeFiles/falconDrone.dir/Core/Src/sysmem.c.obj: CMakeFiles/falconDrone.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/falconDrone.dir/Core/Src/sysmem.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/falconDrone.dir/Core/Src/sysmem.c.obj -MF CMakeFiles/falconDrone.dir/Core/Src/sysmem.c.obj.d -o CMakeFiles/falconDrone.dir/Core/Src/sysmem.c.obj -c /home/yedidya-schwarts/git/FalconDrone/Core/Src/sysmem.c
 
 CMakeFiles/falconDrone.dir/Core/Src/sysmem.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/falconDrone.dir/Core/Src/sysmem.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/sysmem.c > CMakeFiles/falconDrone.dir/Core/Src/sysmem.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/FalconDrone/Core/Src/sysmem.c > CMakeFiles/falconDrone.dir/Core/Src/sysmem.c.i
 
 CMakeFiles/falconDrone.dir/Core/Src/sysmem.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/falconDrone.dir/Core/Src/sysmem.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/sysmem.c -o CMakeFiles/falconDrone.dir/Core/Src/sysmem.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/FalconDrone/Core/Src/sysmem.c -o CMakeFiles/falconDrone.dir/Core/Src/sysmem.c.s
 
-CMakeFiles/falconDrone.dir/Core/Src/syscalls.c.o: CMakeFiles/falconDrone.dir/flags.make
-CMakeFiles/falconDrone.dir/Core/Src/syscalls.c.o: /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/syscalls.c
-CMakeFiles/falconDrone.dir/Core/Src/syscalls.c.o: CMakeFiles/falconDrone.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/drone/falconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building C object CMakeFiles/falconDrone.dir/Core/Src/syscalls.c.o"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/falconDrone.dir/Core/Src/syscalls.c.o -MF CMakeFiles/falconDrone.dir/Core/Src/syscalls.c.o.d -o CMakeFiles/falconDrone.dir/Core/Src/syscalls.c.o -c /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/syscalls.c
+CMakeFiles/falconDrone.dir/Core/Src/syscalls.c.obj: CMakeFiles/falconDrone.dir/flags.make
+CMakeFiles/falconDrone.dir/Core/Src/syscalls.c.obj: /home/yedidya-schwarts/git/FalconDrone/Core/Src/syscalls.c
+CMakeFiles/falconDrone.dir/Core/Src/syscalls.c.obj: CMakeFiles/falconDrone.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building C object CMakeFiles/falconDrone.dir/Core/Src/syscalls.c.obj"
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/falconDrone.dir/Core/Src/syscalls.c.obj -MF CMakeFiles/falconDrone.dir/Core/Src/syscalls.c.obj.d -o CMakeFiles/falconDrone.dir/Core/Src/syscalls.c.obj -c /home/yedidya-schwarts/git/FalconDrone/Core/Src/syscalls.c
 
 CMakeFiles/falconDrone.dir/Core/Src/syscalls.c.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing C source to CMakeFiles/falconDrone.dir/Core/Src/syscalls.c.i"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/syscalls.c > CMakeFiles/falconDrone.dir/Core/Src/syscalls.c.i
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/yedidya-schwarts/git/FalconDrone/Core/Src/syscalls.c > CMakeFiles/falconDrone.dir/Core/Src/syscalls.c.i
 
 CMakeFiles/falconDrone.dir/Core/Src/syscalls.c.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling C source to assembly CMakeFiles/falconDrone.dir/Core/Src/syscalls.c.s"
-	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/drone/falconDrone/Core/Src/syscalls.c -o CMakeFiles/falconDrone.dir/Core/Src/syscalls.c.s
+	/usr/bin/arm-none-eabi-gcc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/yedidya-schwarts/git/FalconDrone/Core/Src/syscalls.c -o CMakeFiles/falconDrone.dir/Core/Src/syscalls.c.s
 
-CMakeFiles/falconDrone.dir/startup_stm32f446xx.s.o: CMakeFiles/falconDrone.dir/flags.make
-CMakeFiles/falconDrone.dir/startup_stm32f446xx.s.o: /home/yedidya-schwarts/git/drone/falconDrone/startup_stm32f446xx.s
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/drone/falconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Building ASM object CMakeFiles/falconDrone.dir/startup_stm32f446xx.s.o"
-	/usr/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/falconDrone.dir/startup_stm32f446xx.s.o -c /home/yedidya-schwarts/git/drone/falconDrone/startup_stm32f446xx.s
+CMakeFiles/falconDrone.dir/startup_stm32f446xx.s.obj: CMakeFiles/falconDrone.dir/flags.make
+CMakeFiles/falconDrone.dir/startup_stm32f446xx.s.obj: /home/yedidya-schwarts/git/FalconDrone/startup_stm32f446xx.s
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Building ASM object CMakeFiles/falconDrone.dir/startup_stm32f446xx.s.obj"
+	/usr/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -o CMakeFiles/falconDrone.dir/startup_stm32f446xx.s.obj -c /home/yedidya-schwarts/git/FalconDrone/startup_stm32f446xx.s
 
 CMakeFiles/falconDrone.dir/startup_stm32f446xx.s.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing ASM source to CMakeFiles/falconDrone.dir/startup_stm32f446xx.s.i"
-	/usr/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -E /home/yedidya-schwarts/git/drone/falconDrone/startup_stm32f446xx.s > CMakeFiles/falconDrone.dir/startup_stm32f446xx.s.i
+	/usr/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -E /home/yedidya-schwarts/git/FalconDrone/startup_stm32f446xx.s > CMakeFiles/falconDrone.dir/startup_stm32f446xx.s.i
 
 CMakeFiles/falconDrone.dir/startup_stm32f446xx.s.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling ASM source to assembly CMakeFiles/falconDrone.dir/startup_stm32f446xx.s.s"
-	/usr/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -S /home/yedidya-schwarts/git/drone/falconDrone/startup_stm32f446xx.s -o CMakeFiles/falconDrone.dir/startup_stm32f446xx.s.s
+	/usr/bin/arm-none-eabi-gcc $(ASM_DEFINES) $(ASM_INCLUDES) $(ASM_FLAGS) -S /home/yedidya-schwarts/git/FalconDrone/startup_stm32f446xx.s -o CMakeFiles/falconDrone.dir/startup_stm32f446xx.s.s
 
 # Object files for target falconDrone
 falconDrone_OBJECTS = \
-"CMakeFiles/falconDrone.dir/Core/Src/main.c.o" \
-"CMakeFiles/falconDrone.dir/Core/Src/gpio.c.o" \
-"CMakeFiles/falconDrone.dir/Core/Src/freertos.c.o" \
-"CMakeFiles/falconDrone.dir/Core/Src/i2c.c.o" \
-"CMakeFiles/falconDrone.dir/Core/Src/tim.c.o" \
-"CMakeFiles/falconDrone.dir/Core/Src/usart.c.o" \
-"CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_it.c.o" \
-"CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.o" \
-"CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.o" \
-"CMakeFiles/falconDrone.dir/Core/Src/sysmem.c.o" \
-"CMakeFiles/falconDrone.dir/Core/Src/syscalls.c.o" \
-"CMakeFiles/falconDrone.dir/startup_stm32f446xx.s.o"
+"CMakeFiles/falconDrone.dir/Core/Src/main.c.obj" \
+"CMakeFiles/falconDrone.dir/Core/Src/gpio.c.obj" \
+"CMakeFiles/falconDrone.dir/Core/Src/freertos.c.obj" \
+"CMakeFiles/falconDrone.dir/Core/Src/dma.c.obj" \
+"CMakeFiles/falconDrone.dir/Core/Src/i2c.c.obj" \
+"CMakeFiles/falconDrone.dir/Core/Src/tim.c.obj" \
+"CMakeFiles/falconDrone.dir/Core/Src/usart.c.obj" \
+"CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_it.c.obj" \
+"CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.obj" \
+"CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj" \
+"CMakeFiles/falconDrone.dir/Core/Src/sysmem.c.obj" \
+"CMakeFiles/falconDrone.dir/Core/Src/syscalls.c.obj" \
+"CMakeFiles/falconDrone.dir/startup_stm32f446xx.s.obj"
 
 # External object files for target falconDrone
 falconDrone_EXTERNAL_OBJECTS = \
-"/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.o" \
-"/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.o" \
-"/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.o" \
-"/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.o" \
-"/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.o" \
-"/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c.o" \
-"/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c.o" \
-"/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c.o" \
-"/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.o" \
-"/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c.o" \
-"/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.o" \
-"/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c.o" \
-"/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c.o" \
-"/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.o" \
-"/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.o" \
-"/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c.o" \
-"/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c.o" \
-"/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c.o" \
-"/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.o" \
-"/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.o" \
-"/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.o" \
-"/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.o" \
-"/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.o" \
-"/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.o" \
-"/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.o" \
-"/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.o" \
-"/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.o" \
-"/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.o" \
-"/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.o"
+"/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj" \
+"/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.obj" \
+"/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.obj" \
+"/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.obj" \
+"/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.obj" \
+"/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c.obj" \
+"/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c.obj" \
+"/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c.obj" \
+"/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.obj" \
+"/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c.obj" \
+"/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.obj" \
+"/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c.obj" \
+"/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c.obj" \
+"/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.obj" \
+"/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.obj" \
+"/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c.obj" \
+"/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c.obj" \
+"/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c.obj" \
+"/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.obj" \
+"/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.obj" \
+"/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.obj" \
+"/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.obj" \
+"/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.obj" \
+"/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.obj" \
+"/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj" \
+"/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj" \
+"/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.obj" \
+"/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.obj" \
+"/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.obj"
 
-falconDrone: CMakeFiles/falconDrone.dir/Core/Src/main.c.o
-falconDrone: CMakeFiles/falconDrone.dir/Core/Src/gpio.c.o
-falconDrone: CMakeFiles/falconDrone.dir/Core/Src/freertos.c.o
-falconDrone: CMakeFiles/falconDrone.dir/Core/Src/i2c.c.o
-falconDrone: CMakeFiles/falconDrone.dir/Core/Src/tim.c.o
-falconDrone: CMakeFiles/falconDrone.dir/Core/Src/usart.c.o
-falconDrone: CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_it.c.o
-falconDrone: CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.o
-falconDrone: CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.o
-falconDrone: CMakeFiles/falconDrone.dir/Core/Src/sysmem.c.o
-falconDrone: CMakeFiles/falconDrone.dir/Core/Src/syscalls.c.o
-falconDrone: CMakeFiles/falconDrone.dir/startup_stm32f446xx.s.o
-falconDrone: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.o
-falconDrone: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.o
-falconDrone: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.o
-falconDrone: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.o
-falconDrone: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.o
-falconDrone: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c.o
-falconDrone: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c.o
-falconDrone: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c.o
-falconDrone: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.o
-falconDrone: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c.o
-falconDrone: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.o
-falconDrone: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c.o
-falconDrone: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c.o
-falconDrone: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.o
-falconDrone: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.o
-falconDrone: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c.o
-falconDrone: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c.o
-falconDrone: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c.o
-falconDrone: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.o
-falconDrone: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.o
-falconDrone: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.o
-falconDrone: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.o
-falconDrone: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.o
-falconDrone: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.o
-falconDrone: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.o
-falconDrone: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.o
-falconDrone: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.o
-falconDrone: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.o
-falconDrone: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.o
-falconDrone: CMakeFiles/falconDrone.dir/build.make
-falconDrone: CMakeFiles/falconDrone.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/yedidya-schwarts/git/drone/falconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_13) "Linking C executable falconDrone"
+falconDrone.elf: CMakeFiles/falconDrone.dir/Core/Src/main.c.obj
+falconDrone.elf: CMakeFiles/falconDrone.dir/Core/Src/gpio.c.obj
+falconDrone.elf: CMakeFiles/falconDrone.dir/Core/Src/freertos.c.obj
+falconDrone.elf: CMakeFiles/falconDrone.dir/Core/Src/dma.c.obj
+falconDrone.elf: CMakeFiles/falconDrone.dir/Core/Src/i2c.c.obj
+falconDrone.elf: CMakeFiles/falconDrone.dir/Core/Src/tim.c.obj
+falconDrone.elf: CMakeFiles/falconDrone.dir/Core/Src/usart.c.obj
+falconDrone.elf: CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_it.c.obj
+falconDrone.elf: CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.obj
+falconDrone.elf: CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
+falconDrone.elf: CMakeFiles/falconDrone.dir/Core/Src/sysmem.c.obj
+falconDrone.elf: CMakeFiles/falconDrone.dir/Core/Src/syscalls.c.obj
+falconDrone.elf: CMakeFiles/falconDrone.dir/startup_stm32f446xx.s.obj
+falconDrone.elf: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
+falconDrone.elf: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.obj
+falconDrone.elf: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.obj
+falconDrone.elf: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.obj
+falconDrone.elf: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.obj
+falconDrone.elf: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c.obj
+falconDrone.elf: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c.obj
+falconDrone.elf: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c.obj
+falconDrone.elf: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.obj
+falconDrone.elf: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c.obj
+falconDrone.elf: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.obj
+falconDrone.elf: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c.obj
+falconDrone.elf: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c.obj
+falconDrone.elf: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.obj
+falconDrone.elf: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.obj
+falconDrone.elf: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c.obj
+falconDrone.elf: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c.obj
+falconDrone.elf: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c.obj
+falconDrone.elf: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.obj
+falconDrone.elf: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.obj
+falconDrone.elf: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.obj
+falconDrone.elf: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.obj
+falconDrone.elf: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.obj
+falconDrone.elf: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.obj
+falconDrone.elf: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj
+falconDrone.elf: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj
+falconDrone.elf: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.obj
+falconDrone.elf: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.obj
+falconDrone.elf: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.obj
+falconDrone.elf: CMakeFiles/falconDrone.dir/build.make
+falconDrone.elf: CMakeFiles/falconDrone.dir/link.txt
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_14) "Linking C executable falconDrone.elf"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/falconDrone.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
-CMakeFiles/falconDrone.dir/build: falconDrone
+CMakeFiles/falconDrone.dir/build: falconDrone.elf
 .PHONY : CMakeFiles/falconDrone.dir/build
 
 CMakeFiles/falconDrone.dir/clean:
@@ -338,6 +354,6 @@ CMakeFiles/falconDrone.dir/clean:
 .PHONY : CMakeFiles/falconDrone.dir/clean
 
 CMakeFiles/falconDrone.dir/depend:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/yedidya-schwarts/git/drone/falconDrone /home/yedidya-schwarts/git/drone/falconDrone /home/yedidya-schwarts/git/drone/falconDrone/build /home/yedidya-schwarts/git/drone/falconDrone/build /home/yedidya-schwarts/git/drone/falconDrone/build/CMakeFiles/falconDrone.dir/DependInfo.cmake "--color=$(COLOR)"
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/yedidya-schwarts/git/FalconDrone /home/yedidya-schwarts/git/FalconDrone /home/yedidya-schwarts/git/FalconDrone/build /home/yedidya-schwarts/git/FalconDrone/build /home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles/falconDrone.dir/DependInfo.cmake "--color=$(COLOR)"
 .PHONY : CMakeFiles/falconDrone.dir/depend
 

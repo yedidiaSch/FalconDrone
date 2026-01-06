@@ -1,7 +1,7 @@
-/home/yedidya-schwarts/git/drone/falconDrone/build/CMakeFiles/falconDrone.dir
-/home/yedidya-schwarts/git/drone/falconDrone/build/CMakeFiles/edit_cache.dir
-/home/yedidya-schwarts/git/drone/falconDrone/build/CMakeFiles/rebuild_cache.dir
-/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir
-/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir
-/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/edit_cache.dir
-/home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx/CMakeFiles/rebuild_cache.dir
+/home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles/falconDrone.dir
+/home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles/edit_cache.dir
+/home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles/rebuild_cache.dir
+/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir
+/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir
+/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/edit_cache.dir
+/home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx/CMakeFiles/rebuild_cache.dir

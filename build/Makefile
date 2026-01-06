@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/yedidya-schwarts/git/drone/falconDrone
+CMAKE_SOURCE_DIR = /home/yedidya-schwarts/git/FalconDrone
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/yedidya-schwarts/git/drone/falconDrone/build
+CMAKE_BINARY_DIR = /home/yedidya-schwarts/git/FalconDrone/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/yedidya-schwarts/git/drone/falconDrone/build/CMakeFiles /home/yedidya-schwarts/git/drone/falconDrone/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles /home/yedidya-schwarts/git/FalconDrone/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/yedidya-schwarts/git/drone/falconDrone/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -155,13 +155,37 @@ FreeRTOS/fast:
 	$(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build
 .PHONY : FreeRTOS/fast
 
-Core/Src/freertos.o: Core/Src/freertos.c.o
-.PHONY : Core/Src/freertos.o
+Core/Src/dma.obj: Core/Src/dma.c.obj
+.PHONY : Core/Src/dma.obj
 
 # target to build an object file
-Core/Src/freertos.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/freertos.c.o
-.PHONY : Core/Src/freertos.c.o
+Core/Src/dma.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/dma.c.obj
+.PHONY : Core/Src/dma.c.obj
+
+Core/Src/dma.i: Core/Src/dma.c.i
+.PHONY : Core/Src/dma.i
+
+# target to preprocess a source file
+Core/Src/dma.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/dma.c.i
+.PHONY : Core/Src/dma.c.i
+
+Core/Src/dma.s: Core/Src/dma.c.s
+.PHONY : Core/Src/dma.s
+
+# target to generate assembly for a file
+Core/Src/dma.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/dma.c.s
+.PHONY : Core/Src/dma.c.s
+
+Core/Src/freertos.obj: Core/Src/freertos.c.obj
+.PHONY : Core/Src/freertos.obj
+
+# target to build an object file
+Core/Src/freertos.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/freertos.c.obj
+.PHONY : Core/Src/freertos.c.obj
 
 Core/Src/freertos.i: Core/Src/freertos.c.i
 .PHONY : Core/Src/freertos.i
@@ -179,13 +203,13 @@ Core/Src/freertos.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/freertos.c.s
 .PHONY : Core/Src/freertos.c.s
 
-Core/Src/gpio.o: Core/Src/gpio.c.o
-.PHONY : Core/Src/gpio.o
+Core/Src/gpio.obj: Core/Src/gpio.c.obj
+.PHONY : Core/Src/gpio.obj
 
 # target to build an object file
-Core/Src/gpio.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/gpio.c.o
-.PHONY : Core/Src/gpio.c.o
+Core/Src/gpio.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/gpio.c.obj
+.PHONY : Core/Src/gpio.c.obj
 
 Core/Src/gpio.i: Core/Src/gpio.c.i
 .PHONY : Core/Src/gpio.i
@@ -203,13 +227,13 @@ Core/Src/gpio.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/gpio.c.s
 .PHONY : Core/Src/gpio.c.s
 
-Core/Src/i2c.o: Core/Src/i2c.c.o
-.PHONY : Core/Src/i2c.o
+Core/Src/i2c.obj: Core/Src/i2c.c.obj
+.PHONY : Core/Src/i2c.obj
 
 # target to build an object file
-Core/Src/i2c.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/i2c.c.o
-.PHONY : Core/Src/i2c.c.o
+Core/Src/i2c.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/i2c.c.obj
+.PHONY : Core/Src/i2c.c.obj
 
 Core/Src/i2c.i: Core/Src/i2c.c.i
 .PHONY : Core/Src/i2c.i
@@ -227,13 +251,13 @@ Core/Src/i2c.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/i2c.c.s
 .PHONY : Core/Src/i2c.c.s
 
-Core/Src/main.o: Core/Src/main.c.o
-.PHONY : Core/Src/main.o
+Core/Src/main.obj: Core/Src/main.c.obj
+.PHONY : Core/Src/main.obj
 
 # target to build an object file
-Core/Src/main.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/main.c.o
-.PHONY : Core/Src/main.c.o
+Core/Src/main.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/main.c.obj
+.PHONY : Core/Src/main.c.obj
 
 Core/Src/main.i: Core/Src/main.c.i
 .PHONY : Core/Src/main.i
@@ -251,13 +275,13 @@ Core/Src/main.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/main.c.s
 .PHONY : Core/Src/main.c.s
 
-Core/Src/stm32f4xx_hal_msp.o: Core/Src/stm32f4xx_hal_msp.c.o
-.PHONY : Core/Src/stm32f4xx_hal_msp.o
+Core/Src/stm32f4xx_hal_msp.obj: Core/Src/stm32f4xx_hal_msp.c.obj
+.PHONY : Core/Src/stm32f4xx_hal_msp.obj
 
 # target to build an object file
-Core/Src/stm32f4xx_hal_msp.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.o
-.PHONY : Core/Src/stm32f4xx_hal_msp.c.o
+Core/Src/stm32f4xx_hal_msp.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.obj
+.PHONY : Core/Src/stm32f4xx_hal_msp.c.obj
 
 Core/Src/stm32f4xx_hal_msp.i: Core/Src/stm32f4xx_hal_msp.c.i
 .PHONY : Core/Src/stm32f4xx_hal_msp.i
@@ -275,13 +299,13 @@ Core/Src/stm32f4xx_hal_msp.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.s
 .PHONY : Core/Src/stm32f4xx_hal_msp.c.s
 
-Core/Src/stm32f4xx_hal_timebase_tim.o: Core/Src/stm32f4xx_hal_timebase_tim.c.o
-.PHONY : Core/Src/stm32f4xx_hal_timebase_tim.o
+Core/Src/stm32f4xx_hal_timebase_tim.obj: Core/Src/stm32f4xx_hal_timebase_tim.c.obj
+.PHONY : Core/Src/stm32f4xx_hal_timebase_tim.obj
 
 # target to build an object file
-Core/Src/stm32f4xx_hal_timebase_tim.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.o
-.PHONY : Core/Src/stm32f4xx_hal_timebase_tim.c.o
+Core/Src/stm32f4xx_hal_timebase_tim.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj
+.PHONY : Core/Src/stm32f4xx_hal_timebase_tim.c.obj
 
 Core/Src/stm32f4xx_hal_timebase_tim.i: Core/Src/stm32f4xx_hal_timebase_tim.c.i
 .PHONY : Core/Src/stm32f4xx_hal_timebase_tim.i
@@ -299,13 +323,13 @@ Core/Src/stm32f4xx_hal_timebase_tim.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.s
 .PHONY : Core/Src/stm32f4xx_hal_timebase_tim.c.s
 
-Core/Src/stm32f4xx_it.o: Core/Src/stm32f4xx_it.c.o
-.PHONY : Core/Src/stm32f4xx_it.o
+Core/Src/stm32f4xx_it.obj: Core/Src/stm32f4xx_it.c.obj
+.PHONY : Core/Src/stm32f4xx_it.obj
 
 # target to build an object file
-Core/Src/stm32f4xx_it.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_it.c.o
-.PHONY : Core/Src/stm32f4xx_it.c.o
+Core/Src/stm32f4xx_it.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_it.c.obj
+.PHONY : Core/Src/stm32f4xx_it.c.obj
 
 Core/Src/stm32f4xx_it.i: Core/Src/stm32f4xx_it.c.i
 .PHONY : Core/Src/stm32f4xx_it.i
@@ -323,13 +347,13 @@ Core/Src/stm32f4xx_it.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_it.c.s
 .PHONY : Core/Src/stm32f4xx_it.c.s
 
-Core/Src/syscalls.o: Core/Src/syscalls.c.o
-.PHONY : Core/Src/syscalls.o
+Core/Src/syscalls.obj: Core/Src/syscalls.c.obj
+.PHONY : Core/Src/syscalls.obj
 
 # target to build an object file
-Core/Src/syscalls.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/syscalls.c.o
-.PHONY : Core/Src/syscalls.c.o
+Core/Src/syscalls.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/syscalls.c.obj
+.PHONY : Core/Src/syscalls.c.obj
 
 Core/Src/syscalls.i: Core/Src/syscalls.c.i
 .PHONY : Core/Src/syscalls.i
@@ -347,13 +371,13 @@ Core/Src/syscalls.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/syscalls.c.s
 .PHONY : Core/Src/syscalls.c.s
 
-Core/Src/sysmem.o: Core/Src/sysmem.c.o
-.PHONY : Core/Src/sysmem.o
+Core/Src/sysmem.obj: Core/Src/sysmem.c.obj
+.PHONY : Core/Src/sysmem.obj
 
 # target to build an object file
-Core/Src/sysmem.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/sysmem.c.o
-.PHONY : Core/Src/sysmem.c.o
+Core/Src/sysmem.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/sysmem.c.obj
+.PHONY : Core/Src/sysmem.c.obj
 
 Core/Src/sysmem.i: Core/Src/sysmem.c.i
 .PHONY : Core/Src/sysmem.i
@@ -371,13 +395,13 @@ Core/Src/sysmem.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/sysmem.c.s
 .PHONY : Core/Src/sysmem.c.s
 
-Core/Src/tim.o: Core/Src/tim.c.o
-.PHONY : Core/Src/tim.o
+Core/Src/tim.obj: Core/Src/tim.c.obj
+.PHONY : Core/Src/tim.obj
 
 # target to build an object file
-Core/Src/tim.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/tim.c.o
-.PHONY : Core/Src/tim.c.o
+Core/Src/tim.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/tim.c.obj
+.PHONY : Core/Src/tim.c.obj
 
 Core/Src/tim.i: Core/Src/tim.c.i
 .PHONY : Core/Src/tim.i
@@ -395,13 +419,13 @@ Core/Src/tim.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/tim.c.s
 .PHONY : Core/Src/tim.c.s
 
-Core/Src/usart.o: Core/Src/usart.c.o
-.PHONY : Core/Src/usart.o
+Core/Src/usart.obj: Core/Src/usart.c.obj
+.PHONY : Core/Src/usart.obj
 
 # target to build an object file
-Core/Src/usart.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/usart.c.o
-.PHONY : Core/Src/usart.c.o
+Core/Src/usart.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/usart.c.obj
+.PHONY : Core/Src/usart.c.obj
 
 Core/Src/usart.i: Core/Src/usart.c.i
 .PHONY : Core/Src/usart.i
@@ -419,13 +443,13 @@ Core/Src/usart.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/usart.c.s
 .PHONY : Core/Src/usart.c.s
 
-startup_stm32f446xx.o: startup_stm32f446xx.s.o
-.PHONY : startup_stm32f446xx.o
+startup_stm32f446xx.obj: startup_stm32f446xx.s.obj
+.PHONY : startup_stm32f446xx.obj
 
 # target to build an object file
-startup_stm32f446xx.s.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/startup_stm32f446xx.s.o
-.PHONY : startup_stm32f446xx.s.o
+startup_stm32f446xx.s.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/startup_stm32f446xx.s.obj
+.PHONY : startup_stm32f446xx.s.obj
 
 # Help Target
 help:
@@ -438,40 +462,43 @@ help:
 	@echo "... FreeRTOS"
 	@echo "... STM32_Drivers"
 	@echo "... falconDrone"
-	@echo "... Core/Src/freertos.o"
+	@echo "... Core/Src/dma.obj"
+	@echo "... Core/Src/dma.i"
+	@echo "... Core/Src/dma.s"
+	@echo "... Core/Src/freertos.obj"
 	@echo "... Core/Src/freertos.i"
 	@echo "... Core/Src/freertos.s"
-	@echo "... Core/Src/gpio.o"
+	@echo "... Core/Src/gpio.obj"
 	@echo "... Core/Src/gpio.i"
 	@echo "... Core/Src/gpio.s"
-	@echo "... Core/Src/i2c.o"
+	@echo "... Core/Src/i2c.obj"
 	@echo "... Core/Src/i2c.i"
 	@echo "... Core/Src/i2c.s"
-	@echo "... Core/Src/main.o"
+	@echo "... Core/Src/main.obj"
 	@echo "... Core/Src/main.i"
 	@echo "... Core/Src/main.s"
-	@echo "... Core/Src/stm32f4xx_hal_msp.o"
+	@echo "... Core/Src/stm32f4xx_hal_msp.obj"
 	@echo "... Core/Src/stm32f4xx_hal_msp.i"
 	@echo "... Core/Src/stm32f4xx_hal_msp.s"
-	@echo "... Core/Src/stm32f4xx_hal_timebase_tim.o"
+	@echo "... Core/Src/stm32f4xx_hal_timebase_tim.obj"
 	@echo "... Core/Src/stm32f4xx_hal_timebase_tim.i"
 	@echo "... Core/Src/stm32f4xx_hal_timebase_tim.s"
-	@echo "... Core/Src/stm32f4xx_it.o"
+	@echo "... Core/Src/stm32f4xx_it.obj"
 	@echo "... Core/Src/stm32f4xx_it.i"
 	@echo "... Core/Src/stm32f4xx_it.s"
-	@echo "... Core/Src/syscalls.o"
+	@echo "... Core/Src/syscalls.obj"
 	@echo "... Core/Src/syscalls.i"
 	@echo "... Core/Src/syscalls.s"
-	@echo "... Core/Src/sysmem.o"
+	@echo "... Core/Src/sysmem.obj"
 	@echo "... Core/Src/sysmem.i"
 	@echo "... Core/Src/sysmem.s"
-	@echo "... Core/Src/tim.o"
+	@echo "... Core/Src/tim.obj"
 	@echo "... Core/Src/tim.i"
 	@echo "... Core/Src/tim.s"
-	@echo "... Core/Src/usart.o"
+	@echo "... Core/Src/usart.obj"
 	@echo "... Core/Src/usart.i"
 	@echo "... Core/Src/usart.s"
-	@echo "... startup_stm32f446xx.o"
+	@echo "... startup_stm32f446xx.obj"
 .PHONY : help
 
 

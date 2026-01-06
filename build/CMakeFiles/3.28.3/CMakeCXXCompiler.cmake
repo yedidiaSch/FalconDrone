@@ -26,13 +26,13 @@ set(CMAKE_AR "/usr/bin/arm-none-eabi-ar")
 set(CMAKE_CXX_COMPILER_AR "/usr/bin/arm-none-eabi-gcc-ar")
 set(CMAKE_RANLIB "/usr/bin/arm-none-eabi-ranlib")
 set(CMAKE_CXX_COMPILER_RANLIB "/usr/bin/arm-none-eabi-gcc-ranlib")
-set(CMAKE_LINKER "/usr/bin/arm-none-eabi-ld")
+set(CMAKE_LINKER "/usr/bin/arm-none-eabi-g++")
 set(CMAKE_MT "")
 set(CMAKE_TAPI "CMAKE_TAPI-NOTFOUND")
 set(CMAKE_COMPILER_IS_GNUCXX 1)
 set(CMAKE_CXX_COMPILER_LOADED 1)
-set(CMAKE_CXX_COMPILER_WORKS 1)
-set(CMAKE_CXX_ABI_COMPILED FALSE)
+set(CMAKE_CXX_COMPILER_WORKS TRUE)
+set(CMAKE_CXX_ABI_COMPILED TRUE)
 
 set(CMAKE_CXX_COMPILER_ENV_VAR "CXX")
 
@@ -53,9 +53,9 @@ set(CMAKE_CXX_LINKER_PREFERENCE_PROPAGATES 1)
 set(CMAKE_CXX_LINKER_DEPFILE_SUPPORTED TRUE)
 
 # Save compiler ABI information.
-set(CMAKE_CXX_SIZEOF_DATA_PTR "")
-set(CMAKE_CXX_COMPILER_ABI "")
-set(CMAKE_CXX_BYTE_ORDER "")
+set(CMAKE_CXX_SIZEOF_DATA_PTR "4")
+set(CMAKE_CXX_COMPILER_ABI "ELF")
+set(CMAKE_CXX_BYTE_ORDER "LITTLE_ENDIAN")
 set(CMAKE_CXX_LIBRARY_ARCHITECTURE "")
 
 if(CMAKE_CXX_SIZEOF_DATA_PTR)
@@ -79,7 +79,7 @@ endif()
 
 
 
-set(CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES "")
+set(CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES "/usr/lib/arm-none-eabi/include/c++/13.2.1;/usr/lib/arm-none-eabi/include/c++/13.2.1/arm-none-eabi/thumb/v7e-m+fp/hard;/usr/lib/arm-none-eabi/include/c++/13.2.1/backward;/usr/lib/gcc/arm-none-eabi/13.2.1/include;/usr/lib/gcc/arm-none-eabi/13.2.1/include-fixed;/usr/lib/arm-none-eabi/include")
 set(CMAKE_CXX_IMPLICIT_LINK_LIBRARIES "")
 set(CMAKE_CXX_IMPLICIT_LINK_DIRECTORIES "")
 set(CMAKE_CXX_IMPLICIT_LINK_FRAMEWORK_DIRECTORIES "")

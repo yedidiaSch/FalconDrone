@@ -6,5 +6,5 @@
 
 #IncludeRegexTransform: 
 
-/home/yedidya-schwarts/git/drone/falconDrone/startup_stm32f446xx.s
+/home/yedidya-schwarts/git/FalconDrone/startup_stm32f446xx.s
 

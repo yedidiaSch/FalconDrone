@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/yedidya-schwarts/git/drone/falconDrone
+CMAKE_SOURCE_DIR = /home/yedidya-schwarts/git/FalconDrone
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/yedidya-schwarts/git/drone/falconDrone/build
+CMAKE_BINARY_DIR = /home/yedidya-schwarts/git/FalconDrone/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,14 +87,14 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/yedidya-schwarts/git/drone/falconDrone/build/CMakeFiles /home/yedidya-schwarts/git/drone/falconDrone/build/cmake/stm32cubemx//CMakeFiles/progress.marks
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake/stm32cubemx/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/yedidya-schwarts/git/drone/falconDrone/build/CMakeFiles 0
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles /home/yedidya-schwarts/git/FalconDrone/build/cmake/stm32cubemx//CMakeFiles/progress.marks
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake/stm32cubemx/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake/stm32cubemx/clean
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake/stm32cubemx/clean
 .PHONY : clean
 
 # The main clean target
@@ -103,22 +103,22 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake/stm32cubemx/preinstall
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake/stm32cubemx/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake/stm32cubemx/preinstall
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake/stm32cubemx/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
 depend:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 1
 .PHONY : depend
 
 # Convenience name for target.
 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/rule:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/rule
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/rule
 .PHONY : cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/rule
 
 # Convenience name for target.
@@ -127,12 +127,12 @@ STM32_Drivers: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/rule
 
 # fast build rule for target.
 STM32_Drivers/fast:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build
 .PHONY : STM32_Drivers/fast
 
 # Convenience name for target.
 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/rule:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/rule
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/rule
 .PHONY : cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/rule
 
 # Convenience name for target.
@@ -141,23 +141,23 @@ FreeRTOS: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/rule
 
 # fast build rule for target.
 FreeRTOS/fast:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build
 .PHONY : FreeRTOS/fast
 
-__/__/Core/Src/system_stm32f4xx.o: __/__/Core/Src/system_stm32f4xx.c.o
-.PHONY : __/__/Core/Src/system_stm32f4xx.o
+__/__/Core/Src/system_stm32f4xx.obj: __/__/Core/Src/system_stm32f4xx.c.obj
+.PHONY : __/__/Core/Src/system_stm32f4xx.obj
 
 # target to build an object file
-__/__/Core/Src/system_stm32f4xx.c.o:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.o
-.PHONY : __/__/Core/Src/system_stm32f4xx.c.o
+__/__/Core/Src/system_stm32f4xx.c.obj:
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.obj
+.PHONY : __/__/Core/Src/system_stm32f4xx.c.obj
 
 __/__/Core/Src/system_stm32f4xx.i: __/__/Core/Src/system_stm32f4xx.c.i
 .PHONY : __/__/Core/Src/system_stm32f4xx.i
 
 # target to preprocess a source file
 __/__/Core/Src/system_stm32f4xx.c.i:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.i
 .PHONY : __/__/Core/Src/system_stm32f4xx.c.i
 
 __/__/Core/Src/system_stm32f4xx.s: __/__/Core/Src/system_stm32f4xx.c.s
@@ -165,23 +165,23 @@ __/__/Core/Src/system_stm32f4xx.s: __/__/Core/Src/system_stm32f4xx.c.s
 
 # target to generate assembly for a file
 __/__/Core/Src/system_stm32f4xx.c.s:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Core/Src/system_stm32f4xx.c.s
 .PHONY : __/__/Core/Src/system_stm32f4xx.c.s
 
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.obj: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.obj
 
 # target to build an object file
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.o:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.obj:
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.obj
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.i: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.i
 
 # target to preprocess a source file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.i:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.i
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.s: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.s
@@ -189,23 +189,23 @@ __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.s: __/__/Drivers/STM32F4xx_
 
 # target to generate assembly for a file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.s:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.s
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c.s
 
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.obj: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.obj
 
 # target to build an object file
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.o:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.obj:
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.obj
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.i: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.i
 
 # target to preprocess a source file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.i:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.i
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.s: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.s
@@ -213,23 +213,23 @@ __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.s: __/__/Drivers/STM
 
 # target to generate assembly for a file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.s:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.s
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c.s
 
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.obj: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.obj
 
 # target to build an object file
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.o:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.obj:
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.obj
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.i: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.i
 
 # target to preprocess a source file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.i:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.i
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.s: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.s
@@ -237,23 +237,23 @@ __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.s: __/__/Drivers/STM32F
 
 # target to generate assembly for a file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.s:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.s
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c.s
 
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.o: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.obj: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.obj
 
 # target to build an object file
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c.o:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c.obj:
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c.obj
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.i: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.i
 
 # target to preprocess a source file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c.i:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c.i
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.s: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c.s
@@ -261,23 +261,23 @@ __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.s: __/__/Drivers/STM
 
 # target to generate assembly for a file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c.s:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c.s
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c.s
 
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.o: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.obj: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.obj
 
 # target to build an object file
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c.o:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c.obj:
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c.obj
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.i: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.i
 
 # target to preprocess a source file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c.i:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c.i
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.s: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c.s
@@ -285,23 +285,23 @@ __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.s: __/__/Drivers/STM32
 
 # target to generate assembly for a file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c.s:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c.s
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.c.s
 
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.o: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.obj: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.obj
 
 # target to build an object file
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c.o:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c.obj:
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c.obj
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.i: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.i
 
 # target to preprocess a source file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c.i:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c.i
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.s: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c.s
@@ -309,23 +309,23 @@ __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.s: __/__/Drivers/STM3
 
 # target to generate assembly for a file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c.s:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c.s
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c.s
 
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.o: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.obj: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.obj
 
 # target to build an object file
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c.o:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c.obj:
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c.obj
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.i: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.i
 
 # target to preprocess a source file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c.i:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c.i
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.s: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c.s
@@ -333,23 +333,23 @@ __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.s: __/__/Drivers/S
 
 # target to generate assembly for a file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c.s:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c.s
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c.s
 
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.o: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.obj: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.obj
 
 # target to build an object file
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c.o:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c.obj:
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c.obj
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.i: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.i
 
 # target to preprocess a source file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c.i:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c.i
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.s: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c.s
@@ -357,23 +357,23 @@ __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.s: __/__/Driv
 
 # target to generate assembly for a file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c.s:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c.s
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c.s
 
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.obj: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.obj
 
 # target to build an object file
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.o:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.obj:
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.obj
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.i: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.i
 
 # target to preprocess a source file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.i:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.i
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.s: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.s
@@ -381,23 +381,23 @@ __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.s: __/__/Drivers/STM32
 
 # target to generate assembly for a file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.s:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.s
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c.s
 
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.o: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.obj: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.obj
 
 # target to build an object file
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c.o:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c.obj:
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c.obj
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.i: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.i
 
 # target to preprocess a source file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c.i:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c.i
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.s: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c.s
@@ -405,23 +405,23 @@ __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.s: __/__/Drivers/STM32F
 
 # target to generate assembly for a file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c.s:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c.s
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c.s
 
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.o: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.obj: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.obj
 
 # target to build an object file
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c.o:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c.obj:
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c.obj
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.i: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.i
 
 # target to preprocess a source file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c.i:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c.i
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.s: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c.s
@@ -429,23 +429,23 @@ __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.s: __/__/Drivers/STM
 
 # target to generate assembly for a file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c.s:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c.s
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c.s
 
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.o: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.obj: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.obj
 
 # target to build an object file
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c.o:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c.obj:
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c.obj
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.i: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.i
 
 # target to preprocess a source file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c.i:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c.i
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.s: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c.s
@@ -453,23 +453,23 @@ __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.s: __/__/Drivers/STM32F
 
 # target to generate assembly for a file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c.s:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c.s
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c.s
 
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.o: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.obj: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.obj
 
 # target to build an object file
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c.o:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c.obj:
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c.obj
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.i: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.i
 
 # target to preprocess a source file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c.i:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c.i
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.s: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c.s
@@ -477,23 +477,23 @@ __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.s: __/__/Drivers/STM
 
 # target to generate assembly for a file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c.s:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c.s
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c.s
 
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.obj: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.obj
 
 # target to build an object file
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.o:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.obj:
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.obj
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.i: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.i
 
 # target to preprocess a source file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.i:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.i
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.s: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.s
@@ -501,23 +501,23 @@ __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.s: __/__/Drivers/STM32F
 
 # target to generate assembly for a file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.s:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.s
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c.s
 
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.obj: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.obj
 
 # target to build an object file
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.o:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.obj:
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.obj
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.i: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.i
 
 # target to preprocess a source file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.i:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.i
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.s: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.s
@@ -525,23 +525,23 @@ __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.s: __/__/Drivers/STM
 
 # target to generate assembly for a file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.s:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.s
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c.s
 
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.obj: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.obj
 
 # target to build an object file
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.o:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.obj:
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.obj
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.i: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.i
 
 # target to preprocess a source file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.i:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.i
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.s: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.s
@@ -549,23 +549,23 @@ __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.s: __/__/Drivers/STM32F
 
 # target to generate assembly for a file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.s:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.s
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c.s
 
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.obj: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.obj
 
 # target to build an object file
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.o:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.obj:
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.obj
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.i: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.i
 
 # target to preprocess a source file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.i:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.i
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.s: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.s
@@ -573,23 +573,23 @@ __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.s: __/__/Drivers/STM
 
 # target to generate assembly for a file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.s:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.s
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c.s
 
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.obj: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.obj
 
 # target to build an object file
-__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.o:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.o
-.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.o
+__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.obj:
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.obj
+.PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.obj
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.i: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.i
 
 # target to preprocess a source file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.i:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.i
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.i
 
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.s: __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.s
@@ -597,23 +597,23 @@ __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.s: __/__/Drivers/STM32
 
 # target to generate assembly for a file
 __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.s:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/build.make cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/__/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.s
 .PHONY : __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c.s
 
-__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.o: __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.o
-.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.o
+__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.obj: __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.obj
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.obj
 
 # target to build an object file
-__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.o:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.o
-.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.o
+__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.obj:
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.obj
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.obj
 
 __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.i: __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.i
 .PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.i
 
 # target to preprocess a source file
 __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.i:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.i
 .PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.i
 
 __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.s: __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.s
@@ -621,23 +621,23 @@ __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.s: __/__/M
 
 # target to generate assembly for a file
 __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.s:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.s
 .PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.c.s
 
-__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.o: __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.o
-.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.o
+__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.obj: __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.obj
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.obj
 
 # target to build an object file
-__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.o:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.o
-.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.o
+__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.obj:
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.obj
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.obj
 
 __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.i: __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.i
 .PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.i
 
 # target to preprocess a source file
 __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.i:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.i
 .PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.i
 
 __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.s: __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.s
@@ -645,23 +645,23 @@ __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.s: __/__/Middlewares/Thir
 
 # target to generate assembly for a file
 __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.s:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.s
 .PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.c.s
 
-__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.o: __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.o
-.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.o
+__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.obj: __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.obj
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.obj
 
 # target to build an object file
-__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.o:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.o
-.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.o
+__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.obj:
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.obj
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.obj
 
 __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.i: __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.i
 .PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.i
 
 # target to preprocess a source file
 __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.i:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.i
 .PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.i
 
 __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.s: __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.s
@@ -669,23 +669,23 @@ __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.s: __/__/Middlewares/
 
 # target to generate assembly for a file
 __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.s:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.s
 .PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.c.s
 
-__/__/Middlewares/Third_Party/FreeRTOS/Source/list.o: __/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.o
-.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/list.o
+__/__/Middlewares/Third_Party/FreeRTOS/Source/list.obj: __/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.obj
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/list.obj
 
 # target to build an object file
-__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.o:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.o
-.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.o
+__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.obj:
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.obj
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.obj
 
 __/__/Middlewares/Third_Party/FreeRTOS/Source/list.i: __/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.i
 .PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/list.i
 
 # target to preprocess a source file
 __/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.i:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.i
 .PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.i
 
 __/__/Middlewares/Third_Party/FreeRTOS/Source/list.s: __/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.s
@@ -693,23 +693,23 @@ __/__/Middlewares/Third_Party/FreeRTOS/Source/list.s: __/__/Middlewares/Third_Pa
 
 # target to generate assembly for a file
 __/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.s:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.s
 .PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/list.c.s
 
-__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.o: __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.o
-.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.o
+__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.obj: __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.obj
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.obj
 
 # target to build an object file
-__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.o:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.o
-.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.o
+__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.obj:
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.obj
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.obj
 
 __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.i: __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.i
 .PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.i
 
 # target to preprocess a source file
 __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.i:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.i
 .PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.i
 
 __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.s: __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.s
@@ -717,23 +717,23 @@ __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.s: __/_
 
 # target to generate assembly for a file
 __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.s:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.s
 .PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c.s
 
-__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o: __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.o
-.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o
+__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.obj: __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.obj
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.obj
 
 # target to build an object file
-__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.o:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.o
-.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.o
+__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.obj:
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.obj
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.obj
 
 __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.i: __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.i
 .PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.i
 
 # target to preprocess a source file
 __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.i:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.i
 .PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.i
 
 __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.s: __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.s
@@ -741,23 +741,23 @@ __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.s: __/__/M
 
 # target to generate assembly for a file
 __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.s:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.s
 .PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.c.s
 
-__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.o: __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.o
-.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.o
+__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.obj: __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.obj
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.obj
 
 # target to build an object file
-__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.o:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.o
-.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.o
+__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.obj:
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.obj
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.obj
 
 __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.i: __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.i
 .PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.i
 
 # target to preprocess a source file
 __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.i:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.i
 .PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.i
 
 __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.s: __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.s
@@ -765,23 +765,23 @@ __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.s: __/__/Middlewares/Third_P
 
 # target to generate assembly for a file
 __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.s:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.s
 .PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.c.s
 
-__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.o: __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.o
-.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.o
+__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.obj: __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.obj
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.obj
 
 # target to build an object file
-__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.o:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.o
-.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.o
+__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.obj:
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.obj
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.obj
 
 __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.i: __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.i
 .PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.i
 
 # target to preprocess a source file
 __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.i:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.i
 .PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.i
 
 __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.s: __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.s
@@ -789,23 +789,23 @@ __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.s: __/__/Middlewares
 
 # target to generate assembly for a file
 __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.s:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.s
 .PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.c.s
 
-__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.o: __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.o
-.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.o
+__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.obj: __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.obj
 
 # target to build an object file
-__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.o:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.o
-.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.o
+__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj:
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.obj
 
 __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.i: __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.i
 .PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.i
 
 # target to preprocess a source file
 __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.i:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.i
 .PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.i
 
 __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.s: __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.s
@@ -813,23 +813,23 @@ __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.s: __/__/Middlewares/Third_P
 
 # target to generate assembly for a file
 __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.s:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.s
 .PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.c.s
 
-__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.o: __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.o
-.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.o
+__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.obj: __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.obj
 
 # target to build an object file
-__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.o:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.o
-.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.o
+__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj:
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj
+.PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.obj
 
 __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.i: __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.i
 .PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.i
 
 # target to preprocess a source file
 __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.i:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.i
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.i
 .PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.i
 
 __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.s: __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.s
@@ -837,7 +837,7 @@ __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.s: __/__/Middlewares/Third_
 
 # target to generate assembly for a file
 __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.s:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.s
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/__/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.s
 .PHONY : __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.c.s
 
 # Help Target
@@ -850,91 +850,91 @@ help:
 	@echo "... rebuild_cache"
 	@echo "... FreeRTOS"
 	@echo "... STM32_Drivers"
-	@echo "... __/__/Core/Src/system_stm32f4xx.o"
+	@echo "... __/__/Core/Src/system_stm32f4xx.obj"
 	@echo "... __/__/Core/Src/system_stm32f4xx.i"
 	@echo "... __/__/Core/Src/system_stm32f4xx.s"
-	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o"
+	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.obj"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.i"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.s"
-	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o"
+	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.obj"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.i"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.s"
-	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.o"
+	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.obj"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.i"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.s"
-	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.o"
+	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.obj"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.i"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.s"
-	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.o"
+	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.obj"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.i"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_exti.s"
-	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.o"
+	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.obj"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.i"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.s"
-	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.o"
+	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.obj"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.i"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.s"
-	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.o"
+	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.obj"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.i"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.s"
-	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o"
+	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.obj"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.i"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.s"
-	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.o"
+	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.obj"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.i"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.s"
-	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.o"
+	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.obj"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.i"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.s"
-	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.o"
+	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.obj"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.i"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.s"
-	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.o"
+	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.obj"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.i"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.s"
-	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o"
+	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.obj"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.i"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.s"
-	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.o"
+	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.obj"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.i"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.s"
-	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.o"
+	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.obj"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.i"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.s"
-	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.o"
+	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.obj"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.i"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.s"
-	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.o"
+	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.obj"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.i"
 	@echo "... __/__/Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.s"
-	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.o"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.obj"
 	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.i"
 	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.s"
-	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.o"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.obj"
 	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.i"
 	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/croutine.s"
-	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.o"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.obj"
 	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.i"
 	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/event_groups.s"
-	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/list.o"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/list.obj"
 	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/list.i"
 	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/list.s"
-	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.o"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.obj"
 	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.i"
 	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.s"
-	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.o"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.obj"
 	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.i"
 	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/portable/MemMang/heap_4.s"
-	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.o"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.obj"
 	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.i"
 	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/queue.s"
-	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.o"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.obj"
 	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.i"
 	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/stream_buffer.s"
-	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.o"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.obj"
 	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.i"
 	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/tasks.s"
-	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.o"
+	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.obj"
 	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.i"
 	@echo "... __/__/Middlewares/Third_Party/FreeRTOS/Source/timers.s"
 .PHONY : help
@@ -948,6 +948,6 @@ help:
 # No rule that depends on this can have commands that come from listfiles
 # because they might be regenerated.
 cmake_check_build_system:
-	cd /home/yedidya-schwarts/git/drone/falconDrone/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
+	cd /home/yedidya-schwarts/git/FalconDrone/build && $(CMAKE_COMMAND) -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR) --check-build-system CMakeFiles/Makefile.cmake 0
 .PHONY : cmake_check_build_system
 

@@ -1,4 +1,0 @@
-{
-    "cmake.generator": "Unix Makefiles",
-    "cmake.toolchain": "${workspaceFolder}/cmake/arm-none-eabi-gcc.cmake"
-}

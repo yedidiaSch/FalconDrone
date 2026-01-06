@@ -1,42 +1,78 @@
-cmake_minimum_required(VERSION 3.15)
+cmake_minimum_required(VERSION 3.22)
 
-project(FalconDrone LANGUAGES C CXX ASM)
+#
+# This file is generated only once,
+# and is not re-generated if converter is called multiple times.
+#
+# User is free to modify the file as much as necessary
+#
 
+# Setup compiler settings
 set(CMAKE_C_STANDARD 11)
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+set(CMAKE_C_EXTENSIONS ON)
+set(MCU_FLAGS -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard)
 
-set(FREERTOS_CONFIG_FILE_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include" CACHE INTERNAL "")
+# Define the build type
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE "Debug")
+endif()
 
-# Create the FreeRTOS library manually
-add_library(FreeRTOS-Kernel
-    include/FreeRTOS/FreeRTOS/Source/event_groups.c
-    include/FreeRTOS/FreeRTOS/Source/list.c
-    include/FreeRTOS/FreeRTOS/Source/queue.c
-    include/FreeRTOS/FreeRTOS/Source/stream_buffer.c
-    include/FreeRTOS/FreeRTOS/Source/tasks.c
-    include/FreeRTOS/FreeRTOS/Source/timers.c
-    include/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM4F/port.c
-    include/FreeRTOS/FreeRTOS/Source/portable/MemMang/heap_4.c
+# Set the project name
+set(CMAKE_PROJECT_NAME falconDrone)
+
+# Enable compile command to ease indexing with e.g. clangd
+set(CMAKE_EXPORT_COMPILE_COMMANDS TRUE)
+
+# Core project settings
+project(${CMAKE_PROJECT_NAME})
+message("Build type: " ${CMAKE_BUILD_TYPE})
+
+file(GLOB LINKER_SCRIPTS "${CMAKE_SOURCE_DIR}/*.ld")
+list(LENGTH LINKER_SCRIPTS NUM_SCRIPTS)
+if(NUM_SCRIPTS EQUAL 0)
+    message(FATAL_ERROR "No .ld linker script found! Please generate it via CubeMX.")
+endif()
+list(GET LINKER_SCRIPTS 0 LINKER_SCRIPT)
+message(STATUS "Using Linker Script: ${LINKER_SCRIPT}")
+add_compile_options(${MCU_FLAGS})
+add_link_options(${MCU_FLAGS} -T${LINKER_SCRIPT} -Wl,-Map=${CMAKE_PROJECT_NAME}.map -Wl,--gc-sections --specs=nosys.specs)
+
+# Enable CMake support for ASM and C languages
+enable_language(C ASM)
+
+# Create an executable object type
+add_executable(${CMAKE_PROJECT_NAME})
+
+# Add STM32CubeMX generated sources
+add_subdirectory(cmake/stm32cubemx)
+
+# Link directories setup
+target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
+    # Add user defined library search paths
 )
 
-target_include_directories(FreeRTOS-Kernel PUBLIC
-    include/FreeRTOS/FreeRTOS/Source/include
-    include/FreeRTOS/FreeRTOS/Source/portable/GCC/ARM_CM4F
-    ${FREERTOS_CONFIG_FILE_DIRECTORY}
+# Add sources to executable
+target_sources(${CMAKE_PROJECT_NAME} PRIVATE
+    # Add user sources here
 )
 
-add_library(FreeRTOS::Kernel ALIAS FreeRTOS-Kernel)
-
-add_executable(${PROJECT_NAME}
-    src/main.cpp
+# Add include paths
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
+    # Add user defined include paths
 )
 
-target_include_directories(${PROJECT_NAME}
-    PRIVATE
-        ${FREERTOS_CONFIG_FILE_DIRECTORY}
+# Add project symbols (macros)
+target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE
+    # Add user defined symbols
 )
 
-target_link_libraries(${PROJECT_NAME}
-    PRIVATE
-        FreeRTOS::Kernel
+# Remove wrong libob.a library dependency when using cpp files
+list(REMOVE_ITEM CMAKE_C_IMPLICIT_LINK_LIBRARIES ob)
+
+# Add linked libraries
+target_link_libraries(${CMAKE_PROJECT_NAME}
+    stm32cubemx
+
+    # Add user defined libraries
 )

@@ -1,5 +1,7 @@
 file(REMOVE_RECURSE
   "falconDrone.map"
+  "CMakeFiles/falconDrone.dir/Core/Src/cpp_adapter.cpp.obj"
+  "CMakeFiles/falconDrone.dir/Core/Src/cpp_adapter.cpp.obj.d"
   "CMakeFiles/falconDrone.dir/Core/Src/dma.c.obj"
   "CMakeFiles/falconDrone.dir/Core/Src/dma.c.obj.d"
   "CMakeFiles/falconDrone.dir/Core/Src/freertos.c.obj"
@@ -30,6 +32,6 @@ file(REMOVE_RECURSE
 )
 
 # Per-language clean rules from dependency scanning.
-foreach(lang ASM C)
+foreach(lang ASM C CXX)
   include(CMakeFiles/falconDrone.dir/cmake_clean_${lang}.cmake OPTIONAL)
 endforeach()

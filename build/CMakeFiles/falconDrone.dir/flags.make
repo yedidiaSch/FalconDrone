@@ -3,15 +3,22 @@
 
 # compile ASM with /usr/bin/arm-none-eabi-gcc
 # compile C with /usr/bin/arm-none-eabi-gcc
+# compile CXX with /usr/bin/arm-none-eabi-g++
 ASM_DEFINES = -DDEBUG -DSTM32F446xx -DUSE_HAL_DRIVER
 
 ASM_INCLUDES = -I/home/yedidya-schwarts/git/FalconDrone/cmake/stm32cubemx/../../Core/Inc -I/home/yedidya-schwarts/git/FalconDrone/cmake/stm32cubemx/../../Drivers/STM32F4xx_HAL_Driver/Inc -I/home/yedidya-schwarts/git/FalconDrone/cmake/stm32cubemx/../../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I/home/yedidya-schwarts/git/FalconDrone/cmake/stm32cubemx/../../Middlewares/Third_Party/FreeRTOS/Source/include -I/home/yedidya-schwarts/git/FalconDrone/cmake/stm32cubemx/../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I/home/yedidya-schwarts/git/FalconDrone/cmake/stm32cubemx/../../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I/home/yedidya-schwarts/git/FalconDrone/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I/home/yedidya-schwarts/git/FalconDrone/cmake/stm32cubemx/../../Drivers/CMSIS/Include
 
-ASM_FLAGS =  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -fdata-sections -ffunction-sections -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -x assembler-with-cpp -MMD -MP -g -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard
+ASM_FLAGS =  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -x assembler-with-cpp -MMD -MP -g -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard
 
 C_DEFINES = -DDEBUG -DSTM32F446xx -DUSE_HAL_DRIVER
 
 C_INCLUDES = -I/home/yedidya-schwarts/git/FalconDrone/cmake/stm32cubemx/../../Core/Inc -I/home/yedidya-schwarts/git/FalconDrone/cmake/stm32cubemx/../../Drivers/STM32F4xx_HAL_Driver/Inc -I/home/yedidya-schwarts/git/FalconDrone/cmake/stm32cubemx/../../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I/home/yedidya-schwarts/git/FalconDrone/cmake/stm32cubemx/../../Middlewares/Third_Party/FreeRTOS/Source/include -I/home/yedidya-schwarts/git/FalconDrone/cmake/stm32cubemx/../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I/home/yedidya-schwarts/git/FalconDrone/cmake/stm32cubemx/../../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I/home/yedidya-schwarts/git/FalconDrone/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I/home/yedidya-schwarts/git/FalconDrone/cmake/stm32cubemx/../../Drivers/CMSIS/Include
 
-C_FLAGS =  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -fdata-sections -ffunction-sections -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard
+C_FLAGS =  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -fdata-sections -ffunction-sections -O0 -g3 -std=gnu11 -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard
+
+CXX_DEFINES = -DDEBUG -DSTM32F446xx -DUSE_HAL_DRIVER
+
+CXX_INCLUDES = -I/home/yedidya-schwarts/git/FalconDrone/cmake/stm32cubemx/../../Core/Inc -I/home/yedidya-schwarts/git/FalconDrone/cmake/stm32cubemx/../../Drivers/STM32F4xx_HAL_Driver/Inc -I/home/yedidya-schwarts/git/FalconDrone/cmake/stm32cubemx/../../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I/home/yedidya-schwarts/git/FalconDrone/cmake/stm32cubemx/../../Middlewares/Third_Party/FreeRTOS/Source/include -I/home/yedidya-schwarts/git/FalconDrone/cmake/stm32cubemx/../../Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2 -I/home/yedidya-schwarts/git/FalconDrone/cmake/stm32cubemx/../../Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F -I/home/yedidya-schwarts/git/FalconDrone/cmake/stm32cubemx/../../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I/home/yedidya-schwarts/git/FalconDrone/cmake/stm32cubemx/../../Drivers/CMSIS/Include
+
+CXX_FLAGS =  -mcpu=cortex-m4 -mfpu=fpv4-sp-d16 -mfloat-abi=hard  -Wall -fdata-sections -ffunction-sections -fno-rtti -fno-exceptions -fno-threadsafe-statics -O0 -g3 -mcpu=cortex-m4 -mthumb -mfpu=fpv4-sp-d16 -mfloat-abi=hard
 

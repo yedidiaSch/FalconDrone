@@ -155,6 +155,30 @@ FreeRTOS/fast:
 	$(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build
 .PHONY : FreeRTOS/fast
 
+Core/Src/cpp_adapter.obj: Core/Src/cpp_adapter.cpp.obj
+.PHONY : Core/Src/cpp_adapter.obj
+
+# target to build an object file
+Core/Src/cpp_adapter.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/cpp_adapter.cpp.obj
+.PHONY : Core/Src/cpp_adapter.cpp.obj
+
+Core/Src/cpp_adapter.i: Core/Src/cpp_adapter.cpp.i
+.PHONY : Core/Src/cpp_adapter.i
+
+# target to preprocess a source file
+Core/Src/cpp_adapter.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/cpp_adapter.cpp.i
+.PHONY : Core/Src/cpp_adapter.cpp.i
+
+Core/Src/cpp_adapter.s: Core/Src/cpp_adapter.cpp.s
+.PHONY : Core/Src/cpp_adapter.s
+
+# target to generate assembly for a file
+Core/Src/cpp_adapter.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/cpp_adapter.cpp.s
+.PHONY : Core/Src/cpp_adapter.cpp.s
+
 Core/Src/dma.obj: Core/Src/dma.c.obj
 .PHONY : Core/Src/dma.obj
 
@@ -462,6 +486,9 @@ help:
 	@echo "... FreeRTOS"
 	@echo "... STM32_Drivers"
 	@echo "... falconDrone"
+	@echo "... Core/Src/cpp_adapter.obj"
+	@echo "... Core/Src/cpp_adapter.i"
+	@echo "... Core/Src/cpp_adapter.s"
 	@echo "... Core/Src/dma.obj"
 	@echo "... Core/Src/dma.i"
 	@echo "... Core/Src/dma.s"

@@ -25,7 +25,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "cpp_adapter.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -115,9 +115,17 @@ void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN StartDefaultTask */
   /* Infinite loop */
+
+  cpp_init();
+
+  /* Infinite loop */
   for(;;)
   {
-    osDelay(1);
+  
+    cpp_tick();
+
+    
+    osDelay(500);
   }
   /* USER CODE END StartDefaultTask */
 }

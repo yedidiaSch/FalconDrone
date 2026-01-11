@@ -31,16 +31,24 @@ public:
      */
     void ProcessData();
 
-    float roll, pitch;
+    float roll;
+    float pitch;
+    float gyro_x;
+    float gyro_y;
+    float gyro_z;
 
 private:
     I2C_HandleTypeDef* _hi2c;
     osSemaphoreId_t _sem;
-    uint8_t _buffer[6]; // DMA Buffer
+    uint8_t _buffer[14]; // DMA Buffer
     
     static const uint16_t DEVICE_ADDR = (0x68 << 1);
-    static constexpr float ACCEL_SENSITIVITY = 16384.0f;
     static constexpr float RAD_TO_DEG = 180.0f / M_PI;
+
+    // Sensitivities for MPU6050 (Default settings)
+    static constexpr float ACCEL_SENSITIVITY = 16384.0f;
+    static constexpr float GYRO_SENSITIVITY  = 131.0f;
+    static constexpr float MPU_BLOCK_SIZE    = 14;   // 6 Accel + 2 Temp + 6 Gyro
 };
 
 #endif // MPU6050_H_

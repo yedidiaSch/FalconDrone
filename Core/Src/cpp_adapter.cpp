@@ -34,7 +34,8 @@ void imuTick()
         // 3. Hardware finished! Process the data
         imu.ProcessData();
         
-        printf("\rDMA Roll: %6.2f | Pitch: %6.2f", imu.roll, imu.pitch);
+        printf("\rR: %6.2f P: %6.2f | Gx: %6.2f Gy: %6.2f Gz: %6.2f", 
+               imu.roll, imu.pitch, imu.gyro_x, imu.gyro_y, imu.gyro_z);
         fflush(stdout);
     }
 }

@@ -1,3 +1,13 @@
+/**
+ * @file cpp_adapter.cpp
+ * @brief Bridge between C system calls and C++ Application Logic.
+ * 
+ * This file contains the implementation of the global wrapper functions
+ * that manage the singleton instance of the MPU6050 driver.
+ * 
+ * @author Yedidya Schwartz
+ */
+
 #include "cpp_adapter.h"
 #include "MPU6050.h"
 #include <cstdio>
@@ -10,6 +20,9 @@ extern "C" osSemaphoreId_t imuSemHandle;
 static MPU6050 imu(&hi2c1, imuSemHandle);
 
 
+/**
+ * @brief Wrapper for initializing the MPU6050 sensor.
+ */
 void imuInit()
 {
     printf("\r\n--- Initializing IMU Object ---\r\n");
@@ -24,6 +37,11 @@ void imuInit()
     }
 }
 
+/**
+ * @brief Wrapper for the threaded IMU update loop.
+ * 
+ * Executes the read-wait-process cycle for the sensor.
+ */
 void imuTick()
 {
     // 1. Trigger the hardware to start reading

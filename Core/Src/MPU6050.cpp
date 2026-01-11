@@ -1,26 +1,44 @@
 /**
  * @file MPU6050.cpp
- * @brief Implementation of DMA-based data acquisition.
+ * @brief Implementation of DMA-based data acquisition for MPU6050.
+ * 
+ * @author Yedidya Schwartz
  */
 
 #include "MPU6050.h"
 
+/**
+ * @brief Constructs the MPU6050 driver instance.
+ * @param hi2c I2C Handle
+ * @param sem Semaphore Handle
+ */
 MPU6050::MPU6050(I2C_HandleTypeDef* hi2c, osSemaphoreId_t sem) 
     : _hi2c(hi2c), _sem(sem), roll(0.0f), pitch(0.0f) 
 {
 }
 
+/**
+ * @brief Wakes up the sensor.
+ * @return true if communication succeeded.
+ */
 bool MPU6050::Init() {
     uint8_t wake_up_data = 0;
     // Wake up using standard blocking call (only happens once at start)
     return (HAL_I2C_Mem_Write(_hi2c, DEVICE_ADDR, 0x6B, 1, &wake_up_data, 1, 100) == HAL_OK);
 }
 
+/**
+ * @brief Starts the DMA transfer for sensor registers.
+ * Reads registers 0x3B to 0x48 (Accel, Temp, Gyro).
+ */
 void MPU6050::StartUpdateDMA() {
     // Start non-blocking DMA read
     HAL_I2C_Mem_Read_DMA(_hi2c, DEVICE_ADDR, 0x3B, 1, _buffer, MPU_BLOCK_SIZE);
 }
 
+/**
+ * @brief Computes physical values from the raw DMA buffer.
+ */
 void MPU6050::ProcessData() {
     
     // --- Accelerometer Raw Data ---

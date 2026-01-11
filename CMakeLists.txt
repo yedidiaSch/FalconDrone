@@ -38,6 +38,8 @@ message(STATUS "Using Linker Script: ${LINKER_SCRIPT}")
 add_compile_options(${MCU_FLAGS})
 add_link_options(${MCU_FLAGS} -T${LINKER_SCRIPT} -Wl,-Map=${CMAKE_PROJECT_NAME}.map -Wl,--gc-sections --specs=nosys.specs)
 
+
+
 # Enable CMake support for ASM and C languages
 enable_language(C CXX ASM)
 
@@ -55,6 +57,7 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 # Add sources to executable
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Core/Src/cpp_adapter.cpp
+    Core/Src/MPU6050.cpp
     # Add user sources here
 )
 
@@ -76,4 +79,9 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
     stm32cubemx
 
     # Add user defined libraries
+)
+
+# Add linker flags to enable float support in printf
+target_link_options(${CMAKE_PROJECT_NAME} PRIVATE
+    -u _printf_float
 )

@@ -1,5 +1,7 @@
 file(REMOVE_RECURSE
   "falconDrone.map"
+  "CMakeFiles/falconDrone.dir/Core/Src/MPU6050.cpp.obj"
+  "CMakeFiles/falconDrone.dir/Core/Src/MPU6050.cpp.obj.d"
   "CMakeFiles/falconDrone.dir/Core/Src/cpp_adapter.cpp.obj"
   "CMakeFiles/falconDrone.dir/Core/Src/cpp_adapter.cpp.obj.d"
   "CMakeFiles/falconDrone.dir/Core/Src/dma.c.obj"

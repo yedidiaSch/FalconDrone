@@ -7,11 +7,11 @@ extern "C" {
 
 // --- Functions callable from C files ---
 
-// 1. System initialization (called once before the loop)
-void cpp_init();
 
-// 2. Cyclic tick (called from the Default Task)
-void cpp_tick();
+void imuInit();
+void imuTick();
+
+
 
 #ifdef __cplusplus
 }

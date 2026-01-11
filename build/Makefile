@@ -155,6 +155,30 @@ FreeRTOS/fast:
 	$(MAKE) $(MAKESILENT) -f cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build.make cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/build
 .PHONY : FreeRTOS/fast
 
+Core/Src/MPU6050.obj: Core/Src/MPU6050.cpp.obj
+.PHONY : Core/Src/MPU6050.obj
+
+# target to build an object file
+Core/Src/MPU6050.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/MPU6050.cpp.obj
+.PHONY : Core/Src/MPU6050.cpp.obj
+
+Core/Src/MPU6050.i: Core/Src/MPU6050.cpp.i
+.PHONY : Core/Src/MPU6050.i
+
+# target to preprocess a source file
+Core/Src/MPU6050.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/MPU6050.cpp.i
+.PHONY : Core/Src/MPU6050.cpp.i
+
+Core/Src/MPU6050.s: Core/Src/MPU6050.cpp.s
+.PHONY : Core/Src/MPU6050.s
+
+# target to generate assembly for a file
+Core/Src/MPU6050.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/MPU6050.cpp.s
+.PHONY : Core/Src/MPU6050.cpp.s
+
 Core/Src/cpp_adapter.obj: Core/Src/cpp_adapter.cpp.obj
 .PHONY : Core/Src/cpp_adapter.obj
 
@@ -486,6 +510,9 @@ help:
 	@echo "... FreeRTOS"
 	@echo "... STM32_Drivers"
 	@echo "... falconDrone"
+	@echo "... Core/Src/MPU6050.obj"
+	@echo "... Core/Src/MPU6050.i"
+	@echo "... Core/Src/MPU6050.s"
 	@echo "... Core/Src/cpp_adapter.obj"
 	@echo "... Core/Src/cpp_adapter.i"
 	@echo "... Core/Src/cpp_adapter.s"

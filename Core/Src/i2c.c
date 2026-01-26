@@ -103,7 +103,7 @@ void HAL_I2C_MspInit(I2C_HandleTypeDef* i2cHandle)
     __HAL_LINKDMA(i2cHandle,hdmarx,hdma_i2c1_rx);
 
     /* I2C1_TX Init */
-    hdma_i2c1_tx.Instance = DMA1_Stream6;
+    hdma_i2c1_tx.Instance = DMA1_Stream7;
     hdma_i2c1_tx.Init.Channel = DMA_CHANNEL_1;
     hdma_i2c1_tx.Init.Direction = DMA_MEMORY_TO_PERIPH;
     hdma_i2c1_tx.Init.PeriphInc = DMA_PINC_DISABLE;
@@ -164,5 +164,60 @@ void HAL_I2C_MspDeInit(I2C_HandleTypeDef* i2cHandle)
 }
 
 /* USER CODE BEGIN 1 */
+
+/**
+ * @brief I2C Bus Recovery Sequence.
+ * 
+ * If a slave (like MPU6050) holds SDA LOW, the master cannot generate a START.
+ * This function manually clocks SCL to release the bus.
+ * 
+ * @param hi2c Pointer to I2C handle.
+ */
+void I2C_Recover(I2C_HandleTypeDef *hi2c)
+{
+    GPIO_InitTypeDef GPIO_InitStruct = {0};
+
+    // 1. Disable I2C peripheral
+    __HAL_I2C_DISABLE(hi2c);
+
+    // 2. Configure SCL (PB6) as GPIO Output Open-Drain
+    GPIO_InitStruct.Pin = GPIO_PIN_6;
+    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
+    GPIO_InitStruct.Pull = GPIO_PULLUP;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+    // 3. Clock SCL 9 times to release stuck slave
+    for (int i = 0; i < 9; i++) {
+        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_RESET);
+        HAL_Delay(1);
+        HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);
+        HAL_Delay(1);
+    }
+
+    // 4. Generate STOP condition (SDA LOW -> HIGH while SCL HIGH)
+    GPIO_InitStruct.Pin = GPIO_PIN_7; // SDA
+    GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_OD;
+    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+    
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, GPIO_PIN_RESET); // SDA LOW
+    HAL_Delay(1);
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_6, GPIO_PIN_SET);   // SCL HIGH
+    HAL_Delay(1);
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_7, GPIO_PIN_SET);   // SDA HIGH (STOP)
+    HAL_Delay(1);
+
+    // 5. Restore pins to I2C Alternate Function
+    GPIO_InitStruct.Pin = GPIO_PIN_6 | GPIO_PIN_7;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_VERY_HIGH;
+    GPIO_InitStruct.Alternate = GPIO_AF4_I2C1;
+    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+
+    // 6. Re-initialize I2C peripheral
+    hi2c->State = HAL_I2C_STATE_RESET;
+    HAL_I2C_Init(hi2c);
+}
 
 /* USER CODE END 1 */

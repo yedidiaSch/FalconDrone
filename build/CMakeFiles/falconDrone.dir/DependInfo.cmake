@@ -37,6 +37,7 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/yedidya-schwarts/git/FalconDrone/Core/Src/freertos.c" "CMakeFiles/falconDrone.dir/Core/Src/freertos.c.obj" "gcc" "CMakeFiles/falconDrone.dir/Core/Src/freertos.c.obj.d"
   "/home/yedidya-schwarts/git/FalconDrone/Core/Src/gpio.c" "CMakeFiles/falconDrone.dir/Core/Src/gpio.c.obj" "gcc" "CMakeFiles/falconDrone.dir/Core/Src/gpio.c.obj.d"
   "/home/yedidya-schwarts/git/FalconDrone/Core/Src/i2c.c" "CMakeFiles/falconDrone.dir/Core/Src/i2c.c.obj" "gcc" "CMakeFiles/falconDrone.dir/Core/Src/i2c.c.obj.d"
+  "/home/yedidya-schwarts/git/FalconDrone/Core/Src/logger.c" "CMakeFiles/falconDrone.dir/Core/Src/logger.c.obj" "gcc" "CMakeFiles/falconDrone.dir/Core/Src/logger.c.obj.d"
   "/home/yedidya-schwarts/git/FalconDrone/Core/Src/main.c" "CMakeFiles/falconDrone.dir/Core/Src/main.c.obj" "gcc" "CMakeFiles/falconDrone.dir/Core/Src/main.c.obj.d"
   "/home/yedidya-schwarts/git/FalconDrone/Core/Src/stm32f4xx_hal_msp.c" "CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.obj" "gcc" "CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.obj.d"
   "/home/yedidya-schwarts/git/FalconDrone/Core/Src/stm32f4xx_hal_timebase_tim.c" "CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj" "gcc" "CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_timebase_tim.c.obj.d"

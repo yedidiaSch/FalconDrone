@@ -13,7 +13,8 @@
  * @param sem Semaphore Handle
  */
 MPU6050::MPU6050(I2C_HandleTypeDef* hi2c, osSemaphoreId_t sem) 
-    : _hi2c(hi2c), _sem(sem), roll(0.0f), pitch(0.0f) 
+    : roll(0.0f), pitch(0.0f), gyro_x(0.0f), gyro_y(0.0f), gyro_z(0.0f),
+      _hi2c(hi2c), _sem(sem), _buffer{0}, _last_tick(0)
 {
 }
 
@@ -30,10 +31,19 @@ bool MPU6050::Init() {
 /**
  * @brief Starts the DMA transfer for sensor registers.
  * Reads registers 0x3B to 0x48 (Accel, Temp, Gyro).
+ * @return true if DMA started successfully, false if bus is busy.
  */
-void MPU6050::StartUpdateDMA() {
+bool MPU6050::StartUpdateDMA() {
+    // Check if I2C is ready before starting using HAL function
+    if (HAL_I2C_GetState(_hi2c) != HAL_I2C_STATE_READY) {
+        // Attempt I2C recovery
+        I2C_Recover(_hi2c);
+        return false;
+    }
+    
     // Start non-blocking DMA read
-    HAL_I2C_Mem_Read_DMA(_hi2c, DEVICE_ADDR, 0x3B, 1, _buffer, MPU_BLOCK_SIZE);
+    HAL_StatusTypeDef status = HAL_I2C_Mem_Read_DMA(_hi2c, DEVICE_ADDR, 0x3B, 1, _buffer, MPU_BLOCK_SIZE);
+    return (status == HAL_OK);
 }
 
 /**
@@ -62,7 +72,19 @@ void MPU6050::ProcessData() {
     gyro_y = raw_gy / GYRO_SENSITIVITY;
     gyro_z = raw_gz / GYRO_SENSITIVITY;
 
+    // Time Delta Calculation
+    uint32_t current_tick = HAL_GetTick();
+    float dt = (current_tick - _last_tick) / 1000.0f;
+    _last_tick = current_tick;
+
+    // Basic dt safety
+    if(dt > 0.2f) dt = 0.0f;
+
     // Static Angle Calculation (Accelerometer only)
-    roll  = atan2(ay, az) * RAD_TO_DEG;
-    pitch = atan2(-ax, sqrt(ay * ay + az * az)) * RAD_TO_DEG;
+    float accel_roll  = atan2(ay, az) * RAD_TO_DEG;
+    float accel_pitch = atan2(-ax, sqrt(ay * ay + az * az)) * RAD_TO_DEG;
+
+    // Complementary Filter
+    roll  = ALPHA * (roll + gyro_x * dt) + (1.0f - ALPHA) * accel_roll;
+    pitch = ALPHA * (pitch + gyro_y * dt) + (1.0f - ALPHA) * accel_pitch;
 }

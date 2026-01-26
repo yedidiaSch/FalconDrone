@@ -93,7 +93,8 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the semaphores(s) */
   /* creation of imuSem */
-  imuSemHandle = osSemaphoreNew(1, 1, &imuSem_attributes);
+  /* Initial count = 0: Task must wait for first DMA completion */
+  imuSemHandle = osSemaphoreNew(1, 0, &imuSem_attributes);
 
   /* USER CODE BEGIN RTOS_SEMAPHORES */
   /* add semaphores, ... */

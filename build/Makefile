@@ -299,6 +299,30 @@ Core/Src/i2c.c.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/i2c.c.s
 .PHONY : Core/Src/i2c.c.s
 
+Core/Src/logger.obj: Core/Src/logger.c.obj
+.PHONY : Core/Src/logger.obj
+
+# target to build an object file
+Core/Src/logger.c.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/logger.c.obj
+.PHONY : Core/Src/logger.c.obj
+
+Core/Src/logger.i: Core/Src/logger.c.i
+.PHONY : Core/Src/logger.i
+
+# target to preprocess a source file
+Core/Src/logger.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/logger.c.i
+.PHONY : Core/Src/logger.c.i
+
+Core/Src/logger.s: Core/Src/logger.c.s
+.PHONY : Core/Src/logger.s
+
+# target to generate assembly for a file
+Core/Src/logger.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/Core/Src/logger.c.s
+.PHONY : Core/Src/logger.c.s
+
 Core/Src/main.obj: Core/Src/main.c.obj
 .PHONY : Core/Src/main.obj
 
@@ -528,6 +552,9 @@ help:
 	@echo "... Core/Src/i2c.obj"
 	@echo "... Core/Src/i2c.i"
 	@echo "... Core/Src/i2c.s"
+	@echo "... Core/Src/logger.obj"
+	@echo "... Core/Src/logger.i"
+	@echo "... Core/Src/logger.s"
 	@echo "... Core/Src/main.obj"
 	@echo "... Core/Src/main.i"
 	@echo "... Core/Src/main.s"

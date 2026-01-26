@@ -43,8 +43,9 @@ public:
      * @brief Triggers a non-blocking DMA read sequence.
      * 
      * Initiates an I2C DMA read of 14 bytes starting from the ACCEL_XOUT_H register.
+     * @return true if DMA started successfully, false if bus is busy.
      */
-    void StartUpdateDMA();
+    bool StartUpdateDMA();
 
     /**
      * @brief Processes the raw buffer after DMA completion.
@@ -74,6 +75,9 @@ private:
     static constexpr float ACCEL_SENSITIVITY = 16384.0f; /**< LSB per G (Range +/- 2g) */
     static constexpr float GYRO_SENSITIVITY  = 131.0f;   /**< LSB per dps (Range +/- 250dps) */
     static constexpr float MPU_BLOCK_SIZE    = 14;       /**< 6 Accel + 2 Temp + 6 Gyro */
+    static constexpr float ALPHA             = 0.98f;    /**< Complementary Filter coefficient */
+
+    uint32_t _last_tick; /**< Last update timestamp in ms */
 };
 
 #endif // MPU6050_H_

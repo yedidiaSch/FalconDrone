@@ -101,6 +101,7 @@ CMakeFiles/falconDrone.dir/Core/Src/cpp_adapter.cpp.obj: /home/yedidya-schwarts/
   /home/yedidya-schwarts/git/FalconDrone/Core/Inc/MPU6050.h \
   /home/yedidya-schwarts/git/FalconDrone/Core/Inc/cpp_adapter.h \
   /home/yedidya-schwarts/git/FalconDrone/Core/Inc/i2c.h \
+  /home/yedidya-schwarts/git/FalconDrone/Core/Inc/logger.h \
   /home/yedidya-schwarts/git/FalconDrone/Core/Inc/main.h \
   /home/yedidya-schwarts/git/FalconDrone/Core/Inc/stm32f4xx_hal_conf.h \
   /home/yedidya-schwarts/git/FalconDrone/Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f446xx.h \
@@ -195,6 +196,7 @@ CMakeFiles/falconDrone.dir/Core/Src/cpp_adapter.cpp.obj: /home/yedidya-schwarts/
   /usr/include/newlib/sys/reent.h \
   /usr/include/newlib/sys/stdio.h \
   /usr/lib/gcc/arm-none-eabi/13.2.1/include/stdarg.h \
+  /usr/lib/gcc/arm-none-eabi/13.2.1/include/stdbool.h \
   /usr/lib/gcc/arm-none-eabi/13.2.1/include/stddef.h \
   /usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h
 
@@ -353,11 +355,70 @@ CMakeFiles/falconDrone.dir/Core/Src/i2c.c.obj: /home/yedidya-schwarts/git/Falcon
   /usr/lib/gcc/arm-none-eabi/13.2.1/include/stddef.h \
   /usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h
 
+CMakeFiles/falconDrone.dir/Core/Src/logger.c.obj: /home/yedidya-schwarts/git/FalconDrone/Core/Src/logger.c \
+  /home/yedidya-schwarts/git/FalconDrone/Core/Inc/logger.h \
+  /home/yedidya-schwarts/git/FalconDrone/Core/Inc/main.h \
+  /home/yedidya-schwarts/git/FalconDrone/Core/Inc/stm32f4xx_hal_conf.h \
+  /home/yedidya-schwarts/git/FalconDrone/Core/Inc/usart.h \
+  /home/yedidya-schwarts/git/FalconDrone/Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f446xx.h \
+  /home/yedidya-schwarts/git/FalconDrone/Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h \
+  /home/yedidya-schwarts/git/FalconDrone/Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h \
+  /home/yedidya-schwarts/git/FalconDrone/Drivers/CMSIS/Include/cmsis_compiler.h \
+  /home/yedidya-schwarts/git/FalconDrone/Drivers/CMSIS/Include/cmsis_gcc.h \
+  /home/yedidya-schwarts/git/FalconDrone/Drivers/CMSIS/Include/cmsis_version.h \
+  /home/yedidya-schwarts/git/FalconDrone/Drivers/CMSIS/Include/core_cm4.h \
+  /home/yedidya-schwarts/git/FalconDrone/Drivers/CMSIS/Include/mpu_armv7.h \
+  /home/yedidya-schwarts/git/FalconDrone/Drivers/STM32F4xx_HAL_Driver/Inc/Legacy/stm32_hal_legacy.h \
+  /home/yedidya-schwarts/git/FalconDrone/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h \
+  /home/yedidya-schwarts/git/FalconDrone/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h \
+  /home/yedidya-schwarts/git/FalconDrone/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h \
+  /home/yedidya-schwarts/git/FalconDrone/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h \
+  /home/yedidya-schwarts/git/FalconDrone/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h \
+  /home/yedidya-schwarts/git/FalconDrone/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h \
+  /home/yedidya-schwarts/git/FalconDrone/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h \
+  /home/yedidya-schwarts/git/FalconDrone/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h \
+  /home/yedidya-schwarts/git/FalconDrone/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h \
+  /home/yedidya-schwarts/git/FalconDrone/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h \
+  /home/yedidya-schwarts/git/FalconDrone/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h \
+  /home/yedidya-schwarts/git/FalconDrone/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h \
+  /home/yedidya-schwarts/git/FalconDrone/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h \
+  /home/yedidya-schwarts/git/FalconDrone/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h \
+  /home/yedidya-schwarts/git/FalconDrone/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
+  /home/yedidya-schwarts/git/FalconDrone/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h \
+  /home/yedidya-schwarts/git/FalconDrone/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h \
+  /home/yedidya-schwarts/git/FalconDrone/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
+  /home/yedidya-schwarts/git/FalconDrone/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
+  /home/yedidya-schwarts/git/FalconDrone/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
+  /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/cmsis_os2.h \
+  /usr/include/newlib/_ansi.h \
+  /usr/include/newlib/_newlib_version.h \
+  /usr/include/newlib/machine/_default_types.h \
+  /usr/include/newlib/machine/_types.h \
+  /usr/include/newlib/machine/ieeefp.h \
+  /usr/include/newlib/newlib.h \
+  /usr/include/newlib/stdio.h \
+  /usr/include/newlib/string.h \
+  /usr/include/newlib/strings.h \
+  /usr/include/newlib/sys/_locale.h \
+  /usr/include/newlib/sys/_types.h \
+  /usr/include/newlib/sys/cdefs.h \
+  /usr/include/newlib/sys/config.h \
+  /usr/include/newlib/sys/features.h \
+  /usr/include/newlib/sys/lock.h \
+  /usr/include/newlib/sys/reent.h \
+  /usr/include/newlib/sys/stdio.h \
+  /usr/include/newlib/sys/string.h \
+  /usr/lib/gcc/arm-none-eabi/13.2.1/include/stdarg.h \
+  /usr/lib/gcc/arm-none-eabi/13.2.1/include/stdbool.h \
+  /usr/lib/gcc/arm-none-eabi/13.2.1/include/stddef.h \
+  /usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h
+
 CMakeFiles/falconDrone.dir/Core/Src/main.c.obj: /home/yedidya-schwarts/git/FalconDrone/Core/Src/main.c \
   /home/yedidya-schwarts/git/FalconDrone/Core/Inc/FreeRTOSConfig.h \
   /home/yedidya-schwarts/git/FalconDrone/Core/Inc/dma.h \
   /home/yedidya-schwarts/git/FalconDrone/Core/Inc/gpio.h \
   /home/yedidya-schwarts/git/FalconDrone/Core/Inc/i2c.h \
+  /home/yedidya-schwarts/git/FalconDrone/Core/Inc/logger.h \
   /home/yedidya-schwarts/git/FalconDrone/Core/Inc/main.h \
   /home/yedidya-schwarts/git/FalconDrone/Core/Inc/stm32f4xx_hal_conf.h \
   /home/yedidya-schwarts/git/FalconDrone/Core/Inc/tim.h \
@@ -416,6 +477,7 @@ CMakeFiles/falconDrone.dir/Core/Src/main.c.obj: /home/yedidya-schwarts/git/Falco
   /usr/include/newlib/sys/reent.h \
   /usr/include/newlib/sys/stdio.h \
   /usr/lib/gcc/arm-none-eabi/13.2.1/include/stdarg.h \
+  /usr/lib/gcc/arm-none-eabi/13.2.1/include/stdbool.h \
   /usr/lib/gcc/arm-none-eabi/13.2.1/include/stddef.h \
   /usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h
 
@@ -690,11 +752,21 @@ CMakeFiles/falconDrone.dir/Core/Src/usart.c.obj: /home/yedidya-schwarts/git/Falc
 
 /usr/include/newlib/machine/_time.h:
 
+/usr/include/newlib/errno.h:
+
+/home/yedidya-schwarts/git/FalconDrone/Core/Src/syscalls.c:
+
+/home/yedidya-schwarts/git/FalconDrone/Core/Inc/stm32f4xx_it.h:
+
+/home/yedidya-schwarts/git/FalconDrone/Core/Src/stm32f4xx_it.c:
+
+/home/yedidya-schwarts/git/FalconDrone/Core/Src/stm32f4xx_hal_timebase_tim.c:
+
+/home/yedidya-schwarts/git/FalconDrone/Core/Src/stm32f4xx_hal_msp.c:
+
 /usr/include/newlib/c++/13.2.1/tr1/modified_bessel_func.tcc:
 
 /usr/include/newlib/c++/13.2.1/bits/stl_iterator_base_funcs.h:
-
-/usr/include/newlib/c++/13.2.1/bits/stl_algobase.h:
 
 /usr/include/newlib/c++/13.2.1/bits/std_abs.h:
 
@@ -736,8 +808,6 @@ CMakeFiles/falconDrone.dir/Core/Src/usart.c.obj: /home/yedidya-schwarts/git/Falc
 
 /home/yedidya-schwarts/git/FalconDrone/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h:
 
-/home/yedidya-schwarts/git/FalconDrone/Drivers/CMSIS/Include/mpu_armv7.h:
-
 /home/yedidya-schwarts/git/FalconDrone/Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h:
 
 /home/yedidya-schwarts/git/FalconDrone/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h:
@@ -753,6 +823,8 @@ CMakeFiles/falconDrone.dir/Core/Src/usart.c.obj: /home/yedidya-schwarts/git/Falc
 /home/yedidya-schwarts/git/FalconDrone/Core/Inc/MPU6050.h:
 
 /home/yedidya-schwarts/git/FalconDrone/Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f446xx.h:
+
+/usr/include/newlib/strings.h:
 
 /home/yedidya-schwarts/git/FalconDrone/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h:
 
@@ -814,8 +886,6 @@ CMakeFiles/falconDrone.dir/Core/Src/usart.c.obj: /home/yedidya-schwarts/git/Falc
 
 /usr/include/newlib/c++/13.2.1/bits/concept_check.h:
 
-/home/yedidya-schwarts/git/FalconDrone/Core/Src/stm32f4xx_it.c:
-
 /home/yedidya-schwarts/git/FalconDrone/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h:
 
 /home/yedidya-schwarts/git/FalconDrone/Core/Inc/cpp_adapter.h:
@@ -828,6 +898,10 @@ CMakeFiles/falconDrone.dir/Core/Src/usart.c.obj: /home/yedidya-schwarts/git/Falc
 
 /home/yedidya-schwarts/git/FalconDrone/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h:
 
+/home/yedidya-schwarts/git/FalconDrone/Drivers/CMSIS/Include/mpu_armv7.h:
+
+/usr/include/newlib/string.h:
+
 /usr/include/newlib/sys/times.h:
 
 /home/yedidya-schwarts/git/FalconDrone/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h:
@@ -839,6 +913,10 @@ CMakeFiles/falconDrone.dir/Core/Src/usart.c.obj: /home/yedidya-schwarts/git/Falc
 /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/include/portable.h:
 
 /usr/include/newlib/machine/_default_types.h:
+
+/usr/include/newlib/machine/_endian.h:
+
+/usr/include/newlib/c++/13.2.1/cmath:
 
 /home/yedidya-schwarts/git/FalconDrone/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_exti.h:
 
@@ -872,10 +950,6 @@ CMakeFiles/falconDrone.dir/Core/Src/usart.c.obj: /home/yedidya-schwarts/git/Falc
 
 /usr/include/newlib/c++/13.2.1/stdlib.h:
 
-/usr/include/newlib/c++/13.2.1/cmath:
-
-/usr/include/newlib/machine/_endian.h:
-
 /usr/include/newlib/c++/13.2.1/debug/debug.h:
 
 /usr/include/newlib/c++/13.2.1/tr1/ell_integral.tcc:
@@ -889,6 +963,8 @@ CMakeFiles/falconDrone.dir/Core/Src/usart.c.obj: /home/yedidya-schwarts/git/Falc
 /usr/include/newlib/newlib.h:
 
 /usr/include/newlib/c++/13.2.1/tr1/legendre_function.tcc:
+
+/usr/lib/gcc/arm-none-eabi/13.2.1/include/stdbool.h:
 
 /home/yedidya-schwarts/git/FalconDrone/Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h:
 
@@ -922,6 +998,8 @@ CMakeFiles/falconDrone.dir/Core/Src/usart.c.obj: /home/yedidya-schwarts/git/Falc
 
 /usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h:
 
+/home/yedidya-schwarts/git/FalconDrone/Core/Inc/logger.h:
+
 /usr/include/newlib/c++/13.2.1/tr1/exp_integral.tcc:
 
 /usr/include/newlib/c++/13.2.1/cstdio:
@@ -938,26 +1016,22 @@ CMakeFiles/falconDrone.dir/Core/Src/usart.c.obj: /home/yedidya-schwarts/git/Falc
 
 /home/yedidya-schwarts/git/FalconDrone/Core/Src/gpio.c:
 
-/home/yedidya-schwarts/git/FalconDrone/Core/Src/stm32f4xx_hal_timebase_tim.c:
-
 /usr/include/newlib/c++/13.2.1/bit:
 
 /home/yedidya-schwarts/git/FalconDrone/Core/Inc/gpio.h:
+
+/home/yedidya-schwarts/git/FalconDrone/Core/Src/logger.c:
+
+/usr/include/newlib/c++/13.2.1/tr1/hypergeometric.tcc:
+
+/home/yedidya-schwarts/git/FalconDrone/Core/Inc/tim.h:
+
+/usr/include/newlib/c++/13.2.1/bits/stl_algobase.h:
+
+/usr/include/newlib/sys/string.h:
 
 /usr/include/newlib/c++/13.2.1/bits/stl_iterator.h:
 
 /usr/include/newlib/c++/13.2.1/ext/numeric_traits.h:
 
 /home/yedidya-schwarts/git/FalconDrone/Core/Src/main.c:
-
-/usr/include/newlib/c++/13.2.1/tr1/hypergeometric.tcc:
-
-/home/yedidya-schwarts/git/FalconDrone/Core/Inc/tim.h:
-
-/home/yedidya-schwarts/git/FalconDrone/Core/Src/stm32f4xx_hal_msp.c:
-
-/home/yedidya-schwarts/git/FalconDrone/Core/Inc/stm32f4xx_it.h:
-
-/home/yedidya-schwarts/git/FalconDrone/Core/Src/syscalls.c:
-
-/usr/include/newlib/errno.h:

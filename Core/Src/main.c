@@ -61,18 +61,37 @@ void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 #include <stdio.h>
-#include "usart.h" // Important to access huart2
+#include "usart.h"
+#include "logger.h"
 
+/* Keep blocking _write for startup messages only */
 int _write(int file, char *ptr, int len) {
-    // Redirect printf to UART2 (the USB connection)
     HAL_UART_Transmit(&huart2, (uint8_t*)ptr, len, HAL_MAX_DELAY);
     return len;
 }
 
+/**
+ * @brief UART TX Complete Callback - signals logger that DMA finished.
+ */
+void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
+    if (huart->Instance == USART2) {
+        Log_TxComplete();
+    }
+}
 
 void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c) {
     if (hi2c->Instance == I2C1) {
         // Signal the Task that data is ready
+        osSemaphoreRelease(imuSemHandle);
+    }
+}
+
+/**
+ * @brief I2C Error Callback - handles bus errors and triggers recovery.
+ */
+void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c) {
+    if (hi2c->Instance == I2C1) {
+        // Release semaphore to unblock task (it will detect the error via timeout/state)
         osSemaphoreRelease(imuSemHandle);
     }
 }

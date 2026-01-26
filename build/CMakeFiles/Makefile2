@@ -101,12 +101,12 @@ CMakeFiles/falconDrone.dir/all: cmake/stm32cubemx/CMakeFiles/STM32_Drivers.dir/a
 CMakeFiles/falconDrone.dir/all: cmake/stm32cubemx/CMakeFiles/FreeRTOS.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/falconDrone.dir/build.make CMakeFiles/falconDrone.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles --progress-num=30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45 "Built target falconDrone"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles --progress-num=30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46 "Built target falconDrone"
 .PHONY : CMakeFiles/falconDrone.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/falconDrone.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles 45
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles 46
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/falconDrone.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/yedidya-schwarts/git/FalconDrone/build/CMakeFiles 0
 .PHONY : CMakeFiles/falconDrone.dir/rule

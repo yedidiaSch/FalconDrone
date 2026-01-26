@@ -12,6 +12,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/falconDrone.dir/Core/Src/gpio.c.obj.d"
   "CMakeFiles/falconDrone.dir/Core/Src/i2c.c.obj"
   "CMakeFiles/falconDrone.dir/Core/Src/i2c.c.obj.d"
+  "CMakeFiles/falconDrone.dir/Core/Src/logger.c.obj"
+  "CMakeFiles/falconDrone.dir/Core/Src/logger.c.obj.d"
   "CMakeFiles/falconDrone.dir/Core/Src/main.c.obj"
   "CMakeFiles/falconDrone.dir/Core/Src/main.c.obj.d"
   "CMakeFiles/falconDrone.dir/Core/Src/stm32f4xx_hal_msp.c.obj"

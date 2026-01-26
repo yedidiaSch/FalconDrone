@@ -12,6 +12,10 @@
 #include "MPU6050.h"
 #include <cstdio>
 
+extern "C" {
+#include "logger.h"
+}
+
 /* Link to the peripherals and semaphores from C code */
 extern "C" I2C_HandleTypeDef hi2c1;
 extern "C" osSemaphoreId_t imuSemHandle;
@@ -25,16 +29,18 @@ static MPU6050 imu(&hi2c1, imuSemHandle);
  */
 void imuInit()
 {
-    printf("\r\n--- Initializing IMU Object ---\r\n");
+    printf("\r\n--- Initializing IMU Object ---\r\n");  // Blocking OK at startup
     if (imu.Init()) 
     {
         printf("IMU Initialization Success!\r\n");
     } 
-
     else 
     {
         printf("IMU Initialization FAILED!\r\n");
     }
+    
+    /* Initialize the non-blocking logger for runtime use */
+    Log_Init();
 }
 
 /**
@@ -42,19 +48,28 @@ void imuInit()
  * 
  * Executes the read-wait-process cycle for the sensor.
  */
+#define IMU_TIMEOUT_MS 200
+
 void imuTick()
 {
     // 1. Trigger the hardware to start reading
-    imu.StartUpdateDMA();
+    if (!imu.StartUpdateDMA()) {
+        // DMA failed to start, skip this cycle
+        return;
+    }
 
-    // 2. Wait for the semaphore (Task sleeps here, NO CPU USAGE!)
-    if (osSemaphoreAcquire(imuSemHandle, osWaitForever) == osOK) {
+    // 2. Wait for the semaphore with timeout (prevents deadlock)
+    osStatus_t status = osSemaphoreAcquire(imuSemHandle, IMU_TIMEOUT_MS);
+    
+    if (status == osOK) {
         // 3. Hardware finished! Process the data
         imu.ProcessData();
         
-        printf("\rR: %6.2f P: %6.2f | Gx: %6.2f Gy: %6.2f Gz: %6.2f", 
-               imu.roll, imu.pitch, imu.gyro_x, imu.gyro_y, imu.gyro_z);
-        fflush(stdout);
+        // Non-blocking log - returns immediately!
+        Log_Printf("%.2f,%.2f\r\n", imu.roll, imu.pitch);
+    } else {
+        // Timeout: I2C may be stuck, will recover on next StartUpdateDMA()
+        Log_Printf("IMU Timeout!\r\n");
     }
 }
 

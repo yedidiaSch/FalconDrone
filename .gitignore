@@ -64,3 +64,8 @@ desktop.ini
 *.map
 *.lst
 *.srec
+
+
+venv/
+__pycache__/
+*.pyc

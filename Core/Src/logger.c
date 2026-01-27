@@ -18,63 +18,30 @@ typedef struct {
     uint16_t len;
 } LogMessage_t;
 
-/* Queue and Task handles */
-static osMessageQueueId_t logQueueHandle;
-static osThreadId_t logTaskHandle;
-static osSemaphoreId_t txCompleteSemHandle;
+/* External handles - created in freertos.c */
+extern osMessageQueueId_t logQueueHandle;
+extern osSemaphoreId_t txCompleteSemHandle;
 
 /* Current message being transmitted */
 static LogMessage_t currentMsg;
 
-/* Task attributes */
-static const osThreadAttr_t logTask_attributes = {
-    .name = "LogTask",
-    .stack_size = 256 * 4,
-    .priority = (osPriority_t) osPriorityLow,  /* Low priority - doesn't block critical tasks */
-};
-
-static const osSemaphoreAttr_t txCompleteSem_attributes = {
-    .name = "txCompleteSem"
-};
-
-/* Forward declaration */
-static void LogTask(void *argument);
-
 /**
- * @brief Initialize the logging system.
+ * @brief Process one message from the queue.
+ * 
+ * Called by LogTask in freertos.c. Blocks until message available.
  */
-void Log_Init(void)
+void Log_ProcessQueue(void)
 {
-    /* Create the message queue */
-    logQueueHandle = osMessageQueueNew(LOG_QUEUE_SIZE, sizeof(LogMessage_t), NULL);
-    
-    /* Create semaphore for DMA completion (starts at 1 - ready to transmit) */
-    txCompleteSemHandle = osSemaphoreNew(1, 1, &txCompleteSem_attributes);
-    
-    /* Create the logging task */
-    logTaskHandle = osThreadNew(LogTask, NULL, &logTask_attributes);
-}
-
-/**
- * @brief The logging task - processes queued messages.
- */
-static void LogTask(void *argument)
-{
-    (void)argument;
-    
-    for (;;)
+    /* Wait for a message in the queue (blocks here when idle) */
+    if (osMessageQueueGet(logQueueHandle, &currentMsg, NULL, osWaitForever) == osOK)
     {
-        /* Wait for a message in the queue (blocks here when idle) */
-        if (osMessageQueueGet(logQueueHandle, &currentMsg, NULL, osWaitForever) == osOK)
-        {
-            /* Wait for previous DMA to complete */
-            osSemaphoreAcquire(txCompleteSemHandle, osWaitForever);
-            
-            /* Start DMA transmission */
-            HAL_UART_Transmit_DMA(&huart2, (uint8_t*)currentMsg.data, currentMsg.len);
-            
-            /* Semaphore will be released by Log_TxComplete() when DMA finishes */
-        }
+        /* Wait for previous DMA to complete */
+        osSemaphoreAcquire(txCompleteSemHandle, osWaitForever);
+        
+        /* Start DMA transmission */
+        HAL_UART_Transmit_DMA(&huart2, (uint8_t*)currentMsg.data, currentMsg.len);
+        
+        /* Semaphore will be released by Log_TxComplete() when DMA finishes */
     }
 }
 

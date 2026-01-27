@@ -239,6 +239,7 @@ CMakeFiles/falconDrone.dir/Core/Src/dma.c.obj: /home/yedidya-schwarts/git/Falcon
 CMakeFiles/falconDrone.dir/Core/Src/freertos.c.obj: /home/yedidya-schwarts/git/FalconDrone/Core/Src/freertos.c \
   /home/yedidya-schwarts/git/FalconDrone/Core/Inc/FreeRTOSConfig.h \
   /home/yedidya-schwarts/git/FalconDrone/Core/Inc/cpp_adapter.h \
+  /home/yedidya-schwarts/git/FalconDrone/Core/Inc/logger.h \
   /home/yedidya-schwarts/git/FalconDrone/Core/Inc/main.h \
   /home/yedidya-schwarts/git/FalconDrone/Core/Inc/stm32f4xx_hal_conf.h \
   /home/yedidya-schwarts/git/FalconDrone/Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f446xx.h \
@@ -280,6 +281,7 @@ CMakeFiles/falconDrone.dir/Core/Src/freertos.c.obj: /home/yedidya-schwarts/git/F
   /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/include/projdefs.h \
   /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/include/task.h \
   /home/yedidya-schwarts/git/FalconDrone/Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/portmacro.h \
+  /usr/lib/gcc/arm-none-eabi/13.2.1/include/stdbool.h \
   /usr/lib/gcc/arm-none-eabi/13.2.1/include/stddef.h \
   /usr/lib/gcc/arm-none-eabi/13.2.1/include/stdint.h
 

@@ -22,16 +22,18 @@ extern "C" {
 /** Maximum length of a single log message */
 #define LOG_MSG_MAX_LEN     64
 
+/** Size of the message struct for queue creation */
+#define LOG_MSG_STRUCT_SIZE (LOG_MSG_MAX_LEN + sizeof(uint16_t))
+
 /** Number of messages the queue can hold */
 #define LOG_QUEUE_SIZE      16
 
 /**
- * @brief Initialize the logging system.
+ * @brief Process one message from the queue (called by LogTask).
  * 
- * Creates the message queue and logging task.
- * Must be called before using Log_Print().
+ * Blocks until a message is available, then transmits via DMA.
  */
-void Log_Init(void);
+void Log_ProcessQueue(void);
 
 /**
  * @brief Queue a message for transmission (non-blocking).

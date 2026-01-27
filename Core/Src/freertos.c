@@ -26,6 +26,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "cpp_adapter.h"
+#include "logger.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -61,10 +62,27 @@ const osThreadAttr_t IMUTask_attributes = {
   .stack_size = 512 * 4,
   .priority = (osPriority_t) osPriorityRealtime,
 };
+/* Definitions for LogTask */
+osThreadId_t LogTaskHandle;
+const osThreadAttr_t LogTask_attributes = {
+  .name = "LogTask",
+  .stack_size = 256 * 4,
+  .priority = (osPriority_t) osPriorityLow,
+};
+/* Definitions for logQueue */
+osMessageQueueId_t logQueueHandle;
+const osMessageQueueAttr_t logQueue_attributes = {
+  .name = "logQueue"
+};
 /* Definitions for imuSem */
 osSemaphoreId_t imuSemHandle;
 const osSemaphoreAttr_t imuSem_attributes = {
   .name = "imuSem"
+};
+/* Definitions for txCompleteSem */
+osSemaphoreId_t txCompleteSemHandle;
+const osSemaphoreAttr_t txCompleteSem_attributes = {
+  .name = "txCompleteSem"
 };
 
 /* Private function prototypes -----------------------------------------------*/
@@ -74,6 +92,7 @@ const osSemaphoreAttr_t imuSem_attributes = {
 
 void StartDefaultTask(void *argument);
 void StartIMUTask(void *argument);
+void StartLogTask(void *argument);
 
 void MX_FREERTOS_Init(void); /* (MISRA C 2004 rule 8.1) */
 
@@ -93,8 +112,10 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the semaphores(s) */
   /* creation of imuSem */
-  /* Initial count = 0: Task must wait for first DMA completion */
   imuSemHandle = osSemaphoreNew(1, 0, &imuSem_attributes);
+
+  /* creation of txCompleteSem */
+  txCompleteSemHandle = osSemaphoreNew(1, 1, &txCompleteSem_attributes);
 
   /* USER CODE BEGIN RTOS_SEMAPHORES */
   /* add semaphores, ... */
@@ -103,6 +124,10 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE BEGIN RTOS_TIMERS */
   /* start timers, add new ones, ... */
   /* USER CODE END RTOS_TIMERS */
+
+  /* Create the queue(s) */
+  /* creation of logQueue */
+  logQueueHandle = osMessageQueueNew (16, 66, &logQueue_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
@@ -114,6 +139,9 @@ void MX_FREERTOS_Init(void) {
 
   /* creation of IMUTask */
   IMUTaskHandle = osThreadNew(StartIMUTask, NULL, &IMUTask_attributes);
+
+  /* creation of LogTask */
+  LogTaskHandle = osThreadNew(StartLogTask, NULL, &LogTask_attributes);
 
   /* USER CODE BEGIN RTOS_THREADS */
   /* add threads, ... */
@@ -164,6 +192,24 @@ void StartIMUTask(void *argument)
     osDelay(100);
   }
   /* USER CODE END StartIMUTask */
+}
+
+/* USER CODE BEGIN Header_StartLogTask */
+/**
+* @brief Function implementing the LogTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartLogTask */
+void StartLogTask(void *argument)
+{
+  /* USER CODE BEGIN StartLogTask */
+  /* Infinite loop */
+  for(;;)
+  {
+    Log_ProcessQueue();
+  }
+  /* USER CODE END StartLogTask */
 }
 
 /* Private application code --------------------------------------------------*/

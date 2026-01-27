@@ -38,9 +38,6 @@ void imuInit()
     {
         printf("IMU Initialization FAILED!\r\n");
     }
-    
-    /* Initialize the non-blocking logger for runtime use */
-    Log_Init();
 }
 
 /**

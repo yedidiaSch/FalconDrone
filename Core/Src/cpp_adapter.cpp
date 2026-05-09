@@ -14,11 +14,14 @@
 
 extern "C" {
 #include "logger.h"
+#include "FreeRTOS.h"
+#include "task.h"
 }
 
 /* Link to the peripherals and semaphores from C code */
 extern "C" I2C_HandleTypeDef hi2c1;
 extern "C" osSemaphoreId_t imuSemHandle;
+extern "C" osSemaphoreId_t imuDataReadySemHandle;
 
 /* Single static instance with TWO arguments */
 static MPU6050 imu(&hi2c1, imuSemHandle);
@@ -61,12 +64,25 @@ void imuTick()
     if (status == osOK) {
         // 3. Hardware finished! Process the data
         imu.ProcessData();
-        
-        // Non-blocking log - returns immediately!
-        Log_Printf("%.2f,%.2f\r\n", imu.roll, imu.pitch);
+
+        // Wake the control task — fresh sample ready.
+        // Telemetry is logged from ControlTask so every record has matching
+        // IMU + motor values. Don't double-log here.
+        osSemaphoreRelease(imuDataReadySemHandle);
     } else {
         // Timeout: I2C may be stuck, will recover on next StartUpdateDMA()
         Log_Printf("IMU Timeout!\r\n");
     }
+}
+
+extern "C" void imuGetSnapshot(IMUData *out)
+{
+    taskENTER_CRITICAL();
+    out->roll   = imu.roll;
+    out->pitch  = imu.pitch;
+    out->gyro_x = imu.gyro_x;
+    out->gyro_y = imu.gyro_y;
+    out->gyro_z = imu.gyro_z;
+    taskEXIT_CRITICAL();
 }
 

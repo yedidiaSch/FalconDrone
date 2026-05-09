@@ -17,31 +17,40 @@
 extern "C" {
 #endif
 
+/**
+ * @brief Snapshot of the latest IMU computation, copied out atomically.
+ *
+ * Roll/pitch are in degrees (complementary-filter fused).
+ * Gyro rates are in degrees/second (raw scaled).
+ */
+typedef struct {
+    float roll;
+    float pitch;
+    float gyro_x;
+    float gyro_y;
+    float gyro_z;
+} IMUData;
+
 // --- Functions callable from C files ---
 
 /**
  * @brief Initialize the global IMU object.
- * 
- * This wrapper creates the underlying C++ MPU6050 instance
- * and calls its initialization method. It should be called
- * once at system startup.
  */
 void imuInit();
 
 /**
- * @brief Periodic IMU processtick.
- * 
- * This function handles the IMU data cycle:
- * 1. Triggers DMA read
- * 2. Waits for Semaphore
- * 3. Processes Data
- * 4. Prints Telemetry
- * 
- * It is intended to be called from a FreeRTOS task.
+ * @brief Periodic IMU process tick — DMA read, wait, fuse, signal.
+ *
+ * On success, releases imuDataReadySemHandle to wake the control task.
  */
 void imuTick();
 
-
+/**
+ * @brief Copy the latest IMU values into `out` under a critical section.
+ *
+ * Safe to call from any task. Cheap (~5 word copy, interrupts off briefly).
+ */
+void imuGetSnapshot(IMUData *out);
 
 #ifdef __cplusplus
 }

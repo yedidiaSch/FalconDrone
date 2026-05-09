@@ -40,8 +40,17 @@ public:
     bool Init();
     
     /**
+     * @brief Sample the gyroscope while stationary and store DC bias offsets.
+     *
+     * Blocks for ~1 second (100 samples * 10 ms). The board MUST be still.
+     * Subsequent ProcessData() calls subtract the measured bias.
+     * Re-callable any time (e.g., after re-leveling on a bench).
+     */
+    void Calibrate();
+
+    /**
      * @brief Triggers a non-blocking DMA read sequence.
-     * 
+     *
      * Initiates an I2C DMA read of 14 bytes starting from the ACCEL_XOUT_H register.
      * @return true if DMA started successfully, false if bus is busy.
      */
@@ -59,9 +68,13 @@ public:
 
     float roll;     /**< Calculated Roll angle in degrees */
     float pitch;    /**< Calculated Pitch angle in degrees */
-    float gyro_x;   /**< Angular velocity X in dps */
-    float gyro_y;   /**< Angular velocity Y in dps */
-    float gyro_z;   /**< Angular velocity Z in dps */
+    float gyro_x;   /**< Angular velocity X in dps (bias-corrected) */
+    float gyro_y;   /**< Angular velocity Y in dps (bias-corrected) */
+    float gyro_z;   /**< Angular velocity Z in dps (bias-corrected) */
+
+    float gyro_bias_x;  /**< Per-axis DC bias (dps), measured at startup */
+    float gyro_bias_y;
+    float gyro_bias_z;
 
 private:
     I2C_HandleTypeDef* _hi2c;   /**< Handle to I2C peripheral */

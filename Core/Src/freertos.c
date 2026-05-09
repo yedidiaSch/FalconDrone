@@ -30,6 +30,7 @@
 #include "pwm_esc.h"
 #include "pid.h"
 #include "mixer.h"
+#include "gpio.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -251,10 +252,15 @@ void StartLogTask(void *argument)
  *   4. Mixer → 4 motor pulse widths
  *   5. ESC_SetAllMotors
  *
- * SAFETY: base_throttle is hard-pinned to ESC_MIN_US. With props off you can
- * verify on the bench that motor outputs respond to tilting (one motor pair
- * ramps up, the opposite pair stays at min). Do NOT raise base_throttle
- * until PID gains have been bench-tuned and a tether is in place.
+ * SAFETY: base_throttle = 1300 us is BENCH-TEST ONLY (props removed!).
+ * With out_limit = 300 each axis can swing the motors symmetrically across
+ * 1000-1600 us, which is required to observe both sides of the PID response
+ * during gain tuning. ESC_MIN_US (1000) makes the response asymmetric
+ * because the negative side gets clamped at idle.
+ *
+ * BEFORE flying with props ON: re-pin base_throttle to ESC_MIN_US, validate
+ * gains on a single-axis tethered rig, then choose a hover-throttle base
+ * (typically 1400-1600 depending on thrust-to-weight) for the actual flight.
  */
 void StartControlTask(void *argument)
 {
@@ -274,10 +280,21 @@ void StartControlTask(void *argument)
     Log_Print("ESC armed — control loop starting\r\n");
 
     uint32_t last_tick = osKernelGetTickCount();
-    uint32_t log_div   = 0;   /* decimate telemetry to 50 Hz */
+    uint32_t log_div   = 0;   /* decimate telemetry to 50 Hz — 100 Hz overruns the queue */
+
+    /* B1 user button polling state — edge-detect a press (pull-up: idle high). */
+    GPIO_PinState last_b1 = GPIO_PIN_SET;
 
     for (;;)
     {
+        /* Poll B1 (PC13) — request gyro recal on the press edge. The
+         * external pull-up keeps the line high; press pulls to ground. */
+        const GPIO_PinState b1 = HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin);
+        if (b1 == GPIO_PIN_RESET && last_b1 == GPIO_PIN_SET) {
+            imuRequestCalibration();
+        }
+        last_b1 = b1;
+
         /* Block on fresh IMU sample. 100 ms timeout = fail-safe to idle. */
         if (osSemaphoreAcquire(imuDataReadySemHandle, 100) != osOK) {
             ESC_SetAllMotors(ESC_MIN_US, ESC_MIN_US, ESC_MIN_US, ESC_MIN_US);
@@ -304,8 +321,8 @@ void StartControlTask(void *argument)
         const float pitch_out = PID_Update(&pid_pitch, pitch_rate_sp, s.gyro_y, dt);
         const float yaw_out   = PID_Update(&pid_yaw,   yaw_rate_sp,   s.gyro_z, dt);
 
-        /* SAFETY pin — see header comment before changing. */
-        const float base_throttle = (float)ESC_MIN_US;
+        /* BENCH-TEST base — props OFF. See header comment before changing. */
+        const float base_throttle = 1300.0f;
 
         uint16_t motors[4];
         Mixer_Compute(base_throttle, roll_out, pitch_out, yaw_out,
@@ -313,7 +330,9 @@ void StartControlTask(void *argument)
 
         ESC_SetAllMotors(motors[0], motors[1], motors[2], motors[3]);
 
-        /* Telemetry — one CSV line every 2 ticks (≈50 Hz).
+        /* Telemetry — one CSV line every 2 ticks (~50 Hz).
+         * 100 Hz overruns the 16-deep log queue during motion bursts (~33%
+         * loss observed). 50 Hz drains comfortably under UART 115200.
          * Format: t_ms,roll,pitch,gx,gy,gz,m1,m2,m3,m4 */
         if ((++log_div & 0x1) == 0u) {
             Log_Printf("%lu,%.1f,%.1f,%.1f,%.1f,%.1f,%u,%u,%u,%u\r\n",

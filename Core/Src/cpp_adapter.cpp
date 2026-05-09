@@ -23,6 +23,10 @@ extern "C" I2C_HandleTypeDef hi2c1;
 extern "C" osSemaphoreId_t imuSemHandle;
 extern "C" osSemaphoreId_t imuDataReadySemHandle;
 
+/* Set by imuRequestCalibration(), consumed by imuTick(). One byte = atomic
+ * load/store on Cortex-M4 so a plain volatile is sufficient. */
+static volatile uint8_t s_recal_request = 0;
+
 /* Single static instance with TWO arguments */
 static MPU6050 imu(&hi2c1, imuSemHandle);
 
@@ -52,6 +56,18 @@ void imuInit()
 
 void imuTick()
 {
+    /* Service a pending calibration request before kicking off the next read.
+     * I2C is idle here (no DMA in flight), so blocking reads in Calibrate()
+     * are safe. ControlTask will timeout-fallback during the ~1 s window. */
+    if (s_recal_request) {
+        s_recal_request = 0;
+        Log_Print("[IMU] Calibrating gyro — hold still 1s\r\n");
+        imu.Calibrate();
+        Log_Printf("[IMU] Bias: x=%+.2f y=%+.2f z=%+.2f dps\r\n",
+                   imu.gyro_bias_x, imu.gyro_bias_y, imu.gyro_bias_z);
+        return;
+    }
+
     // 1. Trigger the hardware to start reading
     if (!imu.StartUpdateDMA()) {
         // DMA failed to start, skip this cycle
@@ -73,6 +89,11 @@ void imuTick()
         // Timeout: I2C may be stuck, will recover on next StartUpdateDMA()
         Log_Printf("IMU Timeout!\r\n");
     }
+}
+
+extern "C" void imuRequestCalibration(void)
+{
+    s_recal_request = 1;
 }
 
 extern "C" void imuGetSnapshot(IMUData *out)

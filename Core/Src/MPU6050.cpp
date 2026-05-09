@@ -12,20 +12,73 @@
  * @param hi2c I2C Handle
  * @param sem Semaphore Handle
  */
-MPU6050::MPU6050(I2C_HandleTypeDef* hi2c, osSemaphoreId_t sem) 
+MPU6050::MPU6050(I2C_HandleTypeDef* hi2c, osSemaphoreId_t sem)
     : roll(0.0f), pitch(0.0f), gyro_x(0.0f), gyro_y(0.0f), gyro_z(0.0f),
+      gyro_bias_x(0.0f), gyro_bias_y(0.0f), gyro_bias_z(0.0f),
       _hi2c(hi2c), _sem(sem), _buffer{0}, _last_tick(0)
 {
 }
 
 /**
- * @brief Wakes up the sensor.
- * @return true if communication succeeded.
+ * @brief Wakes up the sensor and configures the digital low-pass filter.
+ *
+ * Default DLPF is wide-open (~256 Hz cutoff), which lets a lot of vibration
+ * and electrical noise through — measured ~7-9 dps gyro noise stationary.
+ * DLPF_CFG = 3 sets the on-chip LPF to ~42 Hz on both accel and gyro, which
+ * is well above our 100 Hz control loop's Nyquist concerns and dramatically
+ * cleans up the signal feeding into the PID derivative term.
+ *
+ * Reference: MPU-6000 register map, register 0x1A (CONFIG):
+ *   bits [2:0] DLPF_CFG: 0=256Hz, 1=188Hz, 2=98Hz, 3=42Hz, 4=20Hz, 5=10Hz, 6=5Hz
+ *
+ * @return true if both writes succeeded.
  */
 bool MPU6050::Init() {
     uint8_t wake_up_data = 0;
-    // Wake up using standard blocking call (only happens once at start)
-    return (HAL_I2C_Mem_Write(_hi2c, DEVICE_ADDR, 0x6B, 1, &wake_up_data, 1, 100) == HAL_OK);
+    if (HAL_I2C_Mem_Write(_hi2c, DEVICE_ADDR, 0x6B, 1, &wake_up_data, 1, 100) != HAL_OK) {
+        return false;
+    }
+
+    uint8_t dlpf_cfg = 0x03;  /* ~42 Hz LPF on accel + gyro */
+    return (HAL_I2C_Mem_Write(_hi2c, DEVICE_ADDR, 0x1A, 1, &dlpf_cfg, 1, 100) == HAL_OK);
+}
+
+/**
+ * @brief Sample 100 gyro readings while the board is stationary and store
+ *        the mean per axis as the DC bias offset.
+ *
+ * The MPU6050 has a per-unit zero-rate offset of typically ±2 dps. Without
+ * correction it becomes a permanent setpoint error the PID has to fight.
+ * Caller is responsible for ensuring the board is held still during the
+ * ~1.05 s this function blocks.
+ *
+ * Bias of zero is left in place if too many I2C reads fail (degraded but
+ * functional). Re-callable any time.
+ */
+void MPU6050::Calibrate()
+{
+    osDelay(50);  /* let any in-flight motion settle */
+
+    constexpr int N = 100;
+    int32_t sum_x = 0, sum_y = 0, sum_z = 0;
+    int valid = 0;
+    uint8_t gbuf[6];
+
+    for (int i = 0; i < N; ++i) {
+        if (HAL_I2C_Mem_Read(_hi2c, DEVICE_ADDR, 0x43, 1, gbuf, 6, 50) == HAL_OK) {
+            sum_x += (int16_t)((gbuf[0] << 8) | gbuf[1]);
+            sum_y += (int16_t)((gbuf[2] << 8) | gbuf[3]);
+            sum_z += (int16_t)((gbuf[4] << 8) | gbuf[5]);
+            ++valid;
+        }
+        osDelay(10);  /* yields so LogTask can drain its queue during cal */
+    }
+
+    if (valid >= N / 2) {
+        gyro_bias_x = (float)sum_x / valid / GYRO_SENSITIVITY;
+        gyro_bias_y = (float)sum_y / valid / GYRO_SENSITIVITY;
+        gyro_bias_z = (float)sum_z / valid / GYRO_SENSITIVITY;
+    }
 }
 
 /**
@@ -67,10 +120,10 @@ void MPU6050::ProcessData() {
     float ay = raw_ay / ACCEL_SENSITIVITY;
     float az = raw_az / ACCEL_SENSITIVITY;
 
-    // Gyro in Degrees Per Second (DPS)
-    gyro_x = raw_gx / GYRO_SENSITIVITY;
-    gyro_y = raw_gy / GYRO_SENSITIVITY;
-    gyro_z = raw_gz / GYRO_SENSITIVITY;
+    // Gyro in Degrees Per Second (DPS), with per-axis DC bias removed.
+    gyro_x = raw_gx / GYRO_SENSITIVITY - gyro_bias_x;
+    gyro_y = raw_gy / GYRO_SENSITIVITY - gyro_bias_y;
+    gyro_z = raw_gz / GYRO_SENSITIVITY - gyro_bias_z;
 
     // Time Delta Calculation
     uint32_t current_tick = HAL_GetTick();

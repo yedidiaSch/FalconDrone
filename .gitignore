@@ -69,3 +69,6 @@ desktop.ini
 venv/
 __pycache__/
 *.pyc
+
+# Telemetry session recordings (created by stm32-flash skill)
+logs/

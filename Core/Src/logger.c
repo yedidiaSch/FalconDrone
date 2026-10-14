@@ -32,16 +32,23 @@ static LogMessage_t currentMsg;
  */
 void Log_ProcessQueue(void)
 {
+    /* Wait for the previous DMA to complete FIRST — the DMA reads straight
+     * from currentMsg, so pulling the next message into it while a transfer
+     * is still running corrupts the line on the wire. */
+    osSemaphoreAcquire(txCompleteSemHandle, osWaitForever);
+
     /* Wait for a message in the queue (blocks here when idle) */
     if (osMessageQueueGet(logQueueHandle, &currentMsg, NULL, osWaitForever) == osOK)
     {
-        /* Wait for previous DMA to complete */
-        osSemaphoreAcquire(txCompleteSemHandle, osWaitForever);
-        
         /* Start DMA transmission */
         HAL_UART_Transmit_DMA(&huart2, (uint8_t*)currentMsg.data, currentMsg.len);
-        
+
         /* Semaphore will be released by Log_TxComplete() when DMA finishes */
+    }
+    else
+    {
+        /* Nothing was sent — hand the semaphore back for the next call. */
+        osSemaphoreRelease(txCompleteSemHandle);
     }
 }
 

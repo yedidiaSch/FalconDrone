@@ -30,6 +30,7 @@
 #include "pwm_esc.h"
 #include "pid.h"
 #include "mixer.h"
+#include "arming.h"
 #include "gpio.h"
 /* USER CODE END Includes */
 
@@ -187,11 +188,16 @@ void MX_FREERTOS_Init(void) {
 void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN StartDefaultTask */
-  /* Infinite loop */
+  /* LD2 heartbeat doubles as the arm-state indicator:
+   * slow = DISARMED, medium = ARMING, fast = ARMED. */
   for(;;)
   {
     HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-    osDelay(1000);
+    switch (Arming_GetState()) {
+    case ARM_STATE_ARMED:  osDelay(100);  break;
+    case ARM_STATE_ARMING: osDelay(250);  break;
+    default:               osDelay(1000); break;
+    }
   }
   /* USER CODE END StartDefaultTask */
 }
@@ -248,9 +254,13 @@ void StartLogTask(void *argument)
  * Pipeline each tick:
  *   1. Wait for fresh IMU sample (sem release from imuTick)
  *   2. Snapshot gyro rates + fused angles
- *   3. Three rate-mode PIDs (setpoint = 0 → self-leveling)
- *   4. Mixer → 4 motor pulse widths
+ *   3. Arming state machine (arming.c) — B1 / PC command / failsafes
+ *   4. If ARMED: three rate-mode PIDs (setpoint = 0 → damps rotation; this
+ *      does NOT self-level — there is no outer angle loop yet) → mixer.
+ *      Otherwise: all motors at ESC_MIN_US and PID state cleared.
  *   5. ESC_SetAllMotors
+ *
+ * Boot state is DISARMED: motors stay at ESC_MIN_US until B1 is held 2 s.
  *
  * SAFETY: base_throttle = 1300 us is BENCH-TEST ONLY (props removed!).
  * With out_limit = 300 each axis can swing the motors symmetrically across
@@ -277,26 +287,21 @@ void StartControlTask(void *argument)
 
     /* Hold idle pulse while ESCs run their startup beep sequence. */
     osDelay(ESC_ARM_DELAY_MS);
-    Log_Print("ESC armed — control loop starting\r\n");
+    Log_Print("ESC ready — DISARMED. Hold B1 2 s to arm.\r\n");
 
     uint32_t last_tick = osKernelGetTickCount();
     uint32_t log_div   = 0;   /* decimate telemetry to 50 Hz — 100 Hz overruns the queue */
 
-    /* B1 user button polling state — edge-detect a press (pull-up: idle high). */
-    GPIO_PinState last_b1 = GPIO_PIN_SET;
-
     for (;;)
     {
-        /* Poll B1 (PC13) — request gyro recal on the press edge. The
-         * external pull-up keeps the line high; press pulls to ground. */
-        const GPIO_PinState b1 = HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin);
-        if (b1 == GPIO_PIN_RESET && last_b1 == GPIO_PIN_SET) {
-            imuRequestCalibration();
-        }
-        last_b1 = b1;
+        /* B1 (PC13) has an external pull-up: idle high, pressed = low. */
+        const uint8_t b1_pressed =
+            (HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin) == GPIO_PIN_RESET);
 
-        /* Block on fresh IMU sample. 100 ms timeout = fail-safe to idle. */
+        /* Block on fresh IMU sample. 100 ms timeout = fail-safe to idle
+         * (Arming_Update disarms on a NULL snapshot while ARMED). */
         if (osSemaphoreAcquire(imuDataReadySemHandle, 100) != osOK) {
+            Arming_Update(osKernelGetTickCount(), b1_pressed, NULL);
             ESC_SetAllMotors(ESC_MIN_US, ESC_MIN_US, ESC_MIN_US, ESC_MIN_US);
             PID_Reset(&pid_roll);
             PID_Reset(&pid_pitch);
@@ -312,34 +317,46 @@ void StartControlTask(void *argument)
         IMUData s;
         imuGetSnapshot(&s);
 
-        /* Rate-mode setpoints. Replace with RC stick input later. */
-        const float roll_rate_sp  = 0.0f;
-        const float pitch_rate_sp = 0.0f;
-        const float yaw_rate_sp   = 0.0f;
+        const ArmState_t arm = Arming_Update(now, b1_pressed, &s);
 
-        const float roll_out  = PID_Update(&pid_roll,  roll_rate_sp,  s.gyro_x, dt);
-        const float pitch_out = PID_Update(&pid_pitch, pitch_rate_sp, s.gyro_y, dt);
-        const float yaw_out   = PID_Update(&pid_yaw,   yaw_rate_sp,   s.gyro_z, dt);
+        uint16_t motors[4] = { ESC_MIN_US, ESC_MIN_US, ESC_MIN_US, ESC_MIN_US };
 
-        /* BENCH-TEST base — props OFF. See header comment before changing. */
-        const float base_throttle = 1300.0f;
+        if (arm == ARM_STATE_ARMED) {
+            /* Rate-mode setpoints. Replace with RC stick input later. */
+            const float roll_rate_sp  = 0.0f;
+            const float pitch_rate_sp = 0.0f;
+            const float yaw_rate_sp   = 0.0f;
 
-        uint16_t motors[4];
-        Mixer_Compute(base_throttle, roll_out, pitch_out, yaw_out,
-                      ESC_MIN_US, ESC_MAX_US, motors);
+            const float roll_out  = PID_Update(&pid_roll,  roll_rate_sp,  s.gyro_x, dt);
+            const float pitch_out = PID_Update(&pid_pitch, pitch_rate_sp, s.gyro_y, dt);
+            const float yaw_out   = PID_Update(&pid_yaw,   yaw_rate_sp,   s.gyro_z, dt);
+
+            /* BENCH-TEST base — props OFF. See header comment before changing. */
+            const float base_throttle = 1300.0f;
+
+            Mixer_Compute(base_throttle, roll_out, pitch_out, yaw_out,
+                          ESC_MIN_US, ESC_MAX_US, motors);
+        } else {
+            /* Not armed: keep PIDs clean so arming starts from zero state. */
+            PID_Reset(&pid_roll);
+            PID_Reset(&pid_pitch);
+            PID_Reset(&pid_yaw);
+        }
 
         ESC_SetAllMotors(motors[0], motors[1], motors[2], motors[3]);
 
         /* Telemetry — one CSV line every 2 ticks (~50 Hz).
          * 100 Hz overruns the 16-deep log queue during motion bursts (~33%
          * loss observed). 50 Hz drains comfortably under UART 115200.
-         * Format: t_ms,roll,pitch,gx,gy,gz,m1,m2,m3,m4 */
+         * Format: t_ms,roll,pitch,gx,gy,gz,m1,m2,m3,m4,arm
+         * arm: 0 = disarmed, 1 = armed, 2 = arming */
         if ((++log_div & 0x1) == 0u) {
-            Log_Printf("%lu,%.1f,%.1f,%.1f,%.1f,%.1f,%u,%u,%u,%u\r\n",
+            Log_Printf("%lu,%.1f,%.1f,%.1f,%.1f,%.1f,%u,%u,%u,%u,%u\r\n",
                        (unsigned long)now,
                        s.roll,   s.pitch,
                        s.gyro_x, s.gyro_y, s.gyro_z,
-                       motors[0], motors[1], motors[2], motors[3]);
+                       motors[0], motors[1], motors[2], motors[3],
+                       (unsigned)arm);
         }
     }
 }

@@ -23,9 +23,9 @@ extern "C" I2C_HandleTypeDef hi2c1;
 extern "C" osSemaphoreId_t imuSemHandle;
 extern "C" osSemaphoreId_t imuDataReadySemHandle;
 
-/* Set by imuRequestCalibration(), consumed by imuTick(). One byte = atomic
- * load/store on Cortex-M4 so a plain volatile is sufficient. */
-static volatile uint8_t s_recal_request = 0;
+/* Set to PENDING by imuRequestCalibration(), advanced by imuTick(). A single
+ * enum word = atomic load/store on Cortex-M4 so a plain volatile is sufficient. */
+static volatile ImuCalState s_cal_state = IMU_CAL_IDLE;
 
 /* Single static instance with TWO arguments */
 static MPU6050 imu(&hi2c1, imuSemHandle);
@@ -59,12 +59,17 @@ void imuTick()
     /* Service a pending calibration request before kicking off the next read.
      * I2C is idle here (no DMA in flight), so blocking reads in Calibrate()
      * are safe. ControlTask will timeout-fallback during the ~1 s window. */
-    if (s_recal_request) {
-        s_recal_request = 0;
+    if (s_cal_state == IMU_CAL_PENDING) {
+        s_cal_state = IMU_CAL_RUNNING;
         Log_Print("[IMU] Calibrating gyro — hold still 1s\r\n");
-        imu.Calibrate();
-        Log_Printf("[IMU] Bias: x=%+.2f y=%+.2f z=%+.2f dps\r\n",
-                   imu.gyro_bias_x, imu.gyro_bias_y, imu.gyro_bias_z);
+        if (imu.Calibrate()) {
+            Log_Printf("[IMU] Bias: x=%+.2f y=%+.2f z=%+.2f dps\r\n",
+                       imu.gyro_bias_x, imu.gyro_bias_y, imu.gyro_bias_z);
+            s_cal_state = IMU_CAL_OK;
+        } else {
+            Log_Print("[IMU] Calibration FAILED — board moved or I2C error\r\n");
+            s_cal_state = IMU_CAL_FAILED;
+        }
         return;
     }
 
@@ -93,7 +98,12 @@ void imuTick()
 
 extern "C" void imuRequestCalibration(void)
 {
-    s_recal_request = 1;
+    s_cal_state = IMU_CAL_PENDING;
+}
+
+extern "C" ImuCalState imuGetCalState(void)
+{
+    return s_cal_state;
 }
 
 extern "C" void imuGetSnapshot(IMUData *out)

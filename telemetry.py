@@ -13,7 +13,15 @@ Reads CSV telemetry from the flight controller over UART2 and renders a
     +-----------------------+---------------------------+
 
 Firmware emits one CSV record every 20 ms (50 Hz):
-    t_ms, roll, pitch, gx, gy, gz, m1, m2, m3, m4
+    t_ms, roll, pitch, gx, gy, gz, m1, m2, m3, m4, arm
+    arm: 0 = disarmed, 1 = armed, 2 = arming
+
+Non-CSV lines (e.g. "[ARM] DISARMED: tilt limit") are printed to the console
+and shown as the last event under the title.
+
+Keys (dashboard window focused):
+    d or space  -> send disarm to the board. Arming is only possible by
+                   holding B1 on the Nucleo for 2 s.
 
 Usage:
     python telemetry.py --port /dev/ttyACM0
@@ -29,7 +37,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 import serial
 
-FIELD_COUNT = 10
+FIELD_COUNT = 11
+ARM_STATES = {0: ('DISARMED', '#888888'), 1: ('ARMED', '#ff4d4d'),
+              2: ('ARMING…', '#ffa94d')}
 ESC_MIN, ESC_MAX = 1000, 2000
 NOMINAL_RATE_HZ = 50
 
@@ -61,6 +71,7 @@ class Telemetry:
         self.gy     = deque(maxlen=max_samples)
         self.gz     = deque(maxlen=max_samples)
         self.m      = [deque(maxlen=max_samples) for _ in range(4)]
+        self.arm    = 0
         self.rx_count = 0
         self.last_rx  = time.time()
 
@@ -73,8 +84,10 @@ class Telemetry:
             r  = float(parts[1]); p  = float(parts[2])
             gx = float(parts[3]); gy = float(parts[4]); gz = float(parts[5])
             m  = [int(float(parts[6 + i])) for i in range(4)]
+            arm = int(parts[10])
         except ValueError:
             return False
+        self.arm = arm
         self.t.append(t / 1000.0)
         self.roll.append(r);   self.pitch.append(p)
         self.gx.append(gx);    self.gy.append(gy);   self.gz.append(gz)
@@ -166,6 +179,10 @@ def build_dashboard(window_s):
     fig.suptitle('FalconDrone — live telemetry',
                  fontsize=14, color='#cccccc', y=0.97)
     status = fig.text(0.5, 0.012, '', ha='center', color='#888', fontsize=8)
+    arm_text = fig.text(0.02, 0.965, 'DISARMED', ha='left', va='center',
+                        fontsize=14, fontweight='bold', color='#888888')
+    event_text = fig.text(0.5, 0.935, 'd / space = disarm   |   hold B1 2 s = arm',
+                          ha='center', va='center', color='#aaaaaa', fontsize=9)
 
     return fig, {
         'horizon': horizon, 'rp_text': rp_text,
@@ -174,6 +191,7 @@ def build_dashboard(window_s):
         'motor_lines': motor_lines,
         'ax_g': ax_g, 'ax_t': ax_t,
         'status': status,
+        'arm_text': arm_text, 'event_text': event_text,
     }
 
 
@@ -193,6 +211,17 @@ def main():
 
     fig, h = build_dashboard(args.window)
     start_time = time.time()
+    link = {'lost': False}
+
+    def on_key(event):
+        if event.key in ('d', ' ') and not link['lost']:
+            try:
+                ser.write(b'd')
+                print('[PC] disarm sent')
+            except (serial.SerialException, OSError) as e:
+                print(f'[PC] disarm FAILED: {e}', file=sys.stderr)
+
+    fig.canvas.mpl_connect('key_press_event', on_key)
 
     def drain_serial():
         while ser.in_waiting > 0:
@@ -208,11 +237,29 @@ def main():
                 continue
             if not line:
                 continue
-            if tel.feed(line) and record_fp is not None:
-                record_fp.write(line + '\n')
+            if tel.feed(line):
+                if record_fp is not None:
+                    record_fp.write(line + '\n')
+            elif not line[0].isdigit():
+                # Firmware event / log message, e.g. "[ARM] ARMED ..."
+                print(line)
+                h['event_text'].set_text(line)
 
     def update(_frame):
-        drain_serial()
+        if link['lost']:
+            return []
+        try:
+            drain_serial()
+        except (serial.SerialException, OSError) as e:
+            # USB cable pulled / board reset hard — stop cleanly instead of
+            # crashing the matplotlib event loop.
+            link['lost'] = True
+            msg = f'SERIAL LINK LOST: {e}'
+            print(msg, file=sys.stderr)
+            h['event_text'].set_text(msg)
+            h['event_text'].set_color('#ff4d4d')
+            fig.canvas.draw_idle()
+            return []
 
         if not tel.t:
             elapsed = time.time() - start_time
@@ -268,7 +315,12 @@ def main():
             f'last sample {age_ms:5.0f} ms ago'
         )
 
-        artists = [h['horizon'], h['rp_text'], h['status']]
+        arm_label, arm_color = ARM_STATES.get(tel.arm, (f'STATE {tel.arm}', '#ffffff'))
+        h['arm_text'].set_text(arm_label)
+        h['arm_text'].set_color(arm_color)
+
+        artists = [h['horizon'], h['rp_text'], h['status'],
+                   h['arm_text'], h['event_text']]
         artists.extend(h['bars'])
         artists.extend(h['bar_texts'])
         artists.extend(h['gyro_lines'])

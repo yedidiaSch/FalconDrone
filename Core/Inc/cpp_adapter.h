@@ -53,16 +53,33 @@ void imuTick();
 void imuGetSnapshot(IMUData *out);
 
 /**
+ * @brief Progress of the most recent gyro calibration request.
+ */
+typedef enum {
+    IMU_CAL_IDLE = 0,   /**< No calibration requested since boot          */
+    IMU_CAL_PENDING,    /**< Requested, IMU task hasn't picked it up yet  */
+    IMU_CAL_RUNNING,    /**< IMU task is sampling (~1 s, board must be still) */
+    IMU_CAL_OK,         /**< Finished, new bias applied                   */
+    IMU_CAL_FAILED      /**< Board moved or I2C failed — old bias kept    */
+} ImuCalState;
+
+/**
  * @brief Request a gyro DC-bias recalibration on the next IMU tick.
  *
- * Sets a flag that imuTick() consumes at the top of its next cycle. Returns
- * immediately. The actual calibration blocks the IMU task for ~1 s — during
- * that window, ControlTask hits its sem timeout and falls back to ESC_MIN_US.
+ * Sets the state to IMU_CAL_PENDING; imuTick() consumes it at the top of its
+ * next cycle. Returns immediately. The actual calibration blocks the IMU task
+ * for ~1 s — during that window, ControlTask hits its sem timeout and falls
+ * back to ESC_MIN_US. Poll imuGetCalState() for the result.
  *
  * Callable from any context (task, ISR-safe). Idempotent — multiple calls
  * before the IMU task picks it up coalesce into one calibration.
  */
 void imuRequestCalibration(void);
+
+/**
+ * @brief Current state of the calibration requested by imuRequestCalibration().
+ */
+ImuCalState imuGetCalState(void);
 
 #ifdef __cplusplus
 }

@@ -61,6 +61,7 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Core/Src/pwm_esc.c
     Core/Src/mixer.c
     Core/Src/pid.c
+    Core/Src/arming.c
     # Add user sources here
 )
 

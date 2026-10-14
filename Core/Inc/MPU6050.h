@@ -45,8 +45,11 @@ public:
      * Blocks for ~1 second (100 samples * 10 ms). The board MUST be still.
      * Subsequent ProcessData() calls subtract the measured bias.
      * Re-callable any time (e.g., after re-leveling on a bench).
+     *
+     * @return true if the new bias was applied; false if the board moved
+     *         during sampling or too many I2C reads failed (old bias kept).
      */
-    void Calibrate();
+    bool Calibrate();
 
     /**
      * @brief Triggers a non-blocking DMA read sequence.

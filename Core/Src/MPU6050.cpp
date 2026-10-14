@@ -34,6 +34,12 @@ MPU6050::MPU6050(I2C_HandleTypeDef* hi2c, osSemaphoreId_t sem)
  * @return true if both writes succeeded.
  */
 bool MPU6050::Init() {
+    /* An MCU reset (RESET button, st-flash) does not power-cycle the sensor.
+     * If the reset landed mid-transfer the MPU6050 can still be holding SDA
+     * low, which leaves the I2C peripheral BUSY forever. Always clock the
+     * bus free before the first transaction. */
+    I2C_Recover(_hi2c);
+
     uint8_t wake_up_data = 0;
     if (HAL_I2C_Mem_Write(_hi2c, DEVICE_ADDR, 0x6B, 1, &wake_up_data, 1, 100) != HAL_OK) {
         return false;
@@ -52,33 +58,51 @@ bool MPU6050::Init() {
  * Caller is responsible for ensuring the board is held still during the
  * ~1.05 s this function blocks.
  *
- * Bias of zero is left in place if too many I2C reads fail (degraded but
- * functional). Re-callable any time.
+ * The previous bias is kept (and false returned) if too many I2C reads fail,
+ * or if any axis swings more than CAL_MAX_SPAN_DPS peak-to-peak — that means
+ * the board moved and the mean would bake the motion in as a fake bias.
+ * Re-callable any time.
  */
-void MPU6050::Calibrate()
+bool MPU6050::Calibrate()
 {
     osDelay(50);  /* let any in-flight motion settle */
 
     constexpr int N = 100;
-    int32_t sum_x = 0, sum_y = 0, sum_z = 0;
+    constexpr float CAL_MAX_SPAN_DPS = 10.0f;
+    constexpr int32_t MAX_SPAN_LSB = (int32_t)(CAL_MAX_SPAN_DPS * GYRO_SENSITIVITY);
+
+    int32_t sum[3] = {0, 0, 0};
+    int16_t lo[3]  = {INT16_MAX, INT16_MAX, INT16_MAX};
+    int16_t hi[3]  = {INT16_MIN, INT16_MIN, INT16_MIN};
     int valid = 0;
     uint8_t gbuf[6];
 
     for (int i = 0; i < N; ++i) {
         if (HAL_I2C_Mem_Read(_hi2c, DEVICE_ADDR, 0x43, 1, gbuf, 6, 50) == HAL_OK) {
-            sum_x += (int16_t)((gbuf[0] << 8) | gbuf[1]);
-            sum_y += (int16_t)((gbuf[2] << 8) | gbuf[3]);
-            sum_z += (int16_t)((gbuf[4] << 8) | gbuf[5]);
+            for (int a = 0; a < 3; ++a) {
+                const int16_t v = (int16_t)((gbuf[2 * a] << 8) | gbuf[2 * a + 1]);
+                sum[a] += v;
+                if (v < lo[a]) lo[a] = v;
+                if (v > hi[a]) hi[a] = v;
+            }
             ++valid;
         }
         osDelay(10);  /* yields so LogTask can drain its queue during cal */
     }
 
-    if (valid >= N / 2) {
-        gyro_bias_x = (float)sum_x / valid / GYRO_SENSITIVITY;
-        gyro_bias_y = (float)sum_y / valid / GYRO_SENSITIVITY;
-        gyro_bias_z = (float)sum_z / valid / GYRO_SENSITIVITY;
+    if (valid < N / 2) {
+        return false;
     }
+    for (int a = 0; a < 3; ++a) {
+        if ((int32_t)hi[a] - (int32_t)lo[a] > MAX_SPAN_LSB) {
+            return false;
+        }
+    }
+
+    gyro_bias_x = (float)sum[0] / valid / GYRO_SENSITIVITY;
+    gyro_bias_y = (float)sum[1] / valid / GYRO_SENSITIVITY;
+    gyro_bias_z = (float)sum[2] / valid / GYRO_SENSITIVITY;
+    return true;
 }
 
 /**
@@ -96,7 +120,14 @@ bool MPU6050::StartUpdateDMA() {
     
     // Start non-blocking DMA read
     HAL_StatusTypeDef status = HAL_I2C_Mem_Read_DMA(_hi2c, DEVICE_ADDR, 0x3B, 1, _buffer, MPU_BLOCK_SIZE);
-    return (status == HAL_OK);
+    if (status != HAL_OK) {
+        // HAL state can be READY while the bus itself is stuck (BUSY flag
+        // set, SDA held low) — the read then fails with HAL_BUSY every tick.
+        // Recover here too, or the IMU never comes back.
+        I2C_Recover(_hi2c);
+        return false;
+    }
+    return true;
 }
 
 /**

@@ -48,14 +48,12 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-extern osSemaphoreId_t imuSemHandle; // Created in CubeMX
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
-void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c); 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -63,6 +61,11 @@ void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c);
 #include <stdio.h>
 #include "usart.h"
 #include "logger.h"
+#include "arming.h"
+#include "imu_service.h"
+
+/* One-byte USART2 RX buffer for PC commands (re-armed after every byte). */
+static uint8_t s_uart_rx_byte;
 
 /* Keep blocking _write for startup messages only */
 int _write(int file, char *ptr, int len) {
@@ -79,21 +82,40 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
     }
 }
 
-void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c) {
-    if (hi2c->Instance == I2C1) {
-        // Signal the Task that data is ready
-        osSemaphoreRelease(imuSemHandle);
+/**
+ * @brief UART RX Complete Callback - PC commands from telemetry.py.
+ *
+ * 'd' or ' ' = disarm. Arming is deliberately NOT possible from the PC —
+ * it needs the physical B1 hold.
+ */
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
+    if (huart->Instance == USART2) {
+        if (s_uart_rx_byte == 'd' || s_uart_rx_byte == ' ') {
+            Arming_RequestDisarm();
+        }
+        HAL_UART_Receive_IT(&huart2, &s_uart_rx_byte, 1);
     }
 }
 
 /**
- * @brief I2C Error Callback - handles bus errors and triggers recovery.
+ * @brief UART Error Callback - an overrun/framing error aborts the RX
+ *        transfer, so restart it or PC commands would stop working.
+ */
+void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) {
+    if (huart->Instance == USART2 && huart->RxState == HAL_UART_STATE_READY) {
+        HAL_UART_Receive_IT(&huart2, &s_uart_rx_byte, 1);
+    }
+}
+
+void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c) {
+    imuOnI2cRxComplete(hi2c);
+}
+
+/**
+ * @brief I2C Error Callback — the IMU service discards the read and recovers.
  */
 void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c) {
-    if (hi2c->Instance == I2C1) {
-        // Release semaphore to unblock task (it will detect the error via timeout/state)
-        osSemaphoreRelease(imuSemHandle);
-    }
+    imuOnI2cError(hi2c);
 }
 /* USER CODE END 0 */
 
@@ -132,7 +154,7 @@ int main(void)
   MX_TIM3_Init();
   MX_USART2_UART_Init();
   /* USER CODE BEGIN 2 */
-
+  HAL_UART_Receive_IT(&huart2, &s_uart_rx_byte, 1);
   /* USER CODE END 2 */
 
   /* Init scheduler */

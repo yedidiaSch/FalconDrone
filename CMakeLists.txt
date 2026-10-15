@@ -56,8 +56,13 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 
 # Add sources to executable
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
-    Core/Src/cpp_adapter.cpp
+    Core/Src/imu_service.cpp
+    Core/Src/attitude_filter.cpp
     Core/Src/MPU6050.cpp
+    Core/Src/pwm_esc.c
+    Core/Src/mixer.c
+    Core/Src/pid.c
+    Core/Src/arming.c
     # Add user sources here
 )
 
@@ -84,4 +89,12 @@ target_link_libraries(${CMAKE_PROJECT_NAME}
 # Add linker flags to enable float support in printf
 target_link_options(${CMAKE_PROJECT_NAME} PRIVATE
     -u _printf_float
+)
+
+# Post-build: produce raw .bin (for st-flash) and .hex (for STM32CubeProgrammer / dfu)
+# alongside the .elf. Sizes are also printed to give a quick flash/RAM read-out.
+add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_OBJCOPY} -O binary  $<TARGET_FILE:${CMAKE_PROJECT_NAME}> ${CMAKE_PROJECT_NAME}.bin
+    COMMAND ${CMAKE_OBJCOPY} -O ihex    $<TARGET_FILE:${CMAKE_PROJECT_NAME}> ${CMAKE_PROJECT_NAME}.hex
+    COMMENT "Generating ${CMAKE_PROJECT_NAME}.bin and ${CMAKE_PROJECT_NAME}.hex"
 )

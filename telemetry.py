@@ -28,7 +28,9 @@ Usage:
     python telemetry.py --port /dev/ttyACM0 --record session.csv
 """
 import argparse
+import queue
 import sys
+import threading
 import time
 from collections import deque
 
@@ -96,6 +98,46 @@ class Telemetry:
         self.rx_count += 1
         self.last_rx = time.time()
         return True
+
+
+class SerialReader(threading.Thread):
+    """Drains the serial port continuously on its own thread.
+
+    Reading only from the matplotlib animation callback left the port
+    unread while the window was being created (several seconds on first
+    run); the 4 KB OS tty buffer overflowed and the CSV lost ~7 s of data.
+    This thread starts before any GUI work, records every CSV line itself,
+    and hands decoded lines to the GUI through a queue.
+    """
+
+    def __init__(self, ser, record_fp):
+        super().__init__(daemon=True)
+        self.ser = ser
+        self.record_fp = record_fp
+        self.lines = queue.Queue()
+        self.error = None          # set to the exception if the link dies
+        self._stop_evt = threading.Event()
+
+    def run(self):
+        while not self._stop_evt.is_set():
+            try:
+                raw = self.ser.readline()
+            except (serial.SerialException, OSError) as e:
+                # USB cable pulled / board reset hard
+                self.error = e
+                return
+            if not raw:
+                continue
+            line = raw.decode('utf-8', errors='ignore').strip()
+            if not line:
+                continue
+            if self.record_fp is not None and line[0].isdigit() \
+                    and line.count(',') == FIELD_COUNT - 1:
+                self.record_fp.write(line + '\n')
+            self.lines.put(line)
+
+    def stop(self):
+        self._stop_evt.set()
 
 
 def build_dashboard(window_s):
@@ -206,6 +248,10 @@ def main():
 
     record_fp = open(args.record, 'a') if args.record else None
 
+    # Start reading before building the GUI — see SerialReader.
+    reader = SerialReader(ser, record_fp)
+    reader.start()
+
     # Hold ~60 s of history at nominal rate, generous headroom.
     tel = Telemetry(max_samples=NOMINAL_RATE_HZ * 60)
 
@@ -223,24 +269,13 @@ def main():
 
     fig.canvas.mpl_connect('key_press_event', on_key)
 
-    def drain_serial():
-        while ser.in_waiting > 0:
+    def drain_lines():
+        while True:
             try:
-                raw = ser.readline()
-            except Exception:
-                break
-            if not raw:
-                break
-            try:
-                line = raw.decode('utf-8', errors='ignore').strip()
-            except Exception:
-                continue
-            if not line:
-                continue
-            if tel.feed(line):
-                if record_fp is not None:
-                    record_fp.write(line + '\n')
-            elif not line[0].isdigit():
+                line = reader.lines.get_nowait()
+            except queue.Empty:
+                return
+            if not tel.feed(line) and not line[0].isdigit():
                 # Firmware event / log message, e.g. "[ARM] ARMED ..."
                 print(line)
                 h['event_text'].set_text(line)
@@ -248,13 +283,12 @@ def main():
     def update(_frame):
         if link['lost']:
             return []
-        try:
-            drain_serial()
-        except (serial.SerialException, OSError) as e:
-            # USB cable pulled / board reset hard — stop cleanly instead of
+        drain_lines()
+        if reader.error is not None:
+            # Reader thread hit a dead link — stop cleanly instead of
             # crashing the matplotlib event loop.
             link['lost'] = True
-            msg = f'SERIAL LINK LOST: {e}'
+            msg = f'SERIAL LINK LOST: {reader.error}'
             print(msg, file=sys.stderr)
             h['event_text'].set_text(msg)
             h['event_text'].set_color('#ff4d4d')
@@ -332,6 +366,8 @@ def main():
     try:
         plt.show()
     finally:
+        reader.stop()
+        reader.join(timeout=1.0)
         if record_fp is not None:
             record_fp.close()
         ser.close()

@@ -118,7 +118,7 @@ If the sensor is mounted differently (Z down, or rotated), the table changes. Th
 - **REAL:** `visual.py:39` still parses `roll, pitch` (2 fields) and will throw on the current 10-field lines.
 - **Fix:** update `visual.py` to take fields 1 and 2, or delete it if it is obsolete.
 
-### 10. `build/` tracked: REAL, but `.gitignore` already covers it
+### 10. `build/` tracked: FIXED (2026-10-15, untracked on `chore/housekeeping`)
 - `.gitignore` already lists `build/`, but 49 files under `build/` were committed earlier, so git keeps tracking them.
 - **Fix:** `git rm -r --cached build && git commit`. Do not add a new ignore rule.
 
@@ -210,3 +210,7 @@ DMA timeouts now abort the in-flight DMA stream before `I2C_Recover`.
 - CSV `t_ms` steps of 20 ms (50 Hz logging)
 - arming still reaches ARMED
 - unplugging SDA gives `[IMU] I2C error` / `DMA timeout` and a disarm, not garbage angles
+
+### 28. `telemetry.py` lost ~7 s of data at startup: FIXED (2026-10-15)
+- Serial was read only inside the matplotlib animation callback. While the window was being created, nothing drained the port, so the 4 KB tty buffer overflowed. Seen as a 7.5 s jump in `t_ms` in the recorded CSV.
+- **Fix:** a `SerialReader` thread starts right after the port opens. It records CSV lines itself and passes decoded lines to the GUI through a queue. Tested on a pty with a 4 s GUI stall: no gaps.

@@ -225,6 +225,15 @@ SECTIONS
   PROVIDE( __bss_start = __tbss_start );
   PROVIDE( __bss_size = __bss_end - __bss_start );
 
+  /* Not zeroed or loaded by the startup code, so it survives a reset
+   * (watchdog post-mortem record). Contents are garbage after power-on. */
+  .noinit (NOLOAD) : ALIGN(4)
+  {
+    *(.noinit)
+    *(.noinit*)
+    . = ALIGN(4);
+  } >RAM
+
   /* User_heap_stack section, used to check that there is enough RAM left */
   ._user_heap_stack (NOLOAD) :
   {

@@ -63,6 +63,8 @@ void MX_FREERTOS_Init(void);
 #include "logger.h"
 #include "arming.h"
 #include "imu_service.h"
+#include "reset_info.h"
+#include "watchdog.h"
 
 /* One-byte USART2 RX buffer for PC commands (re-armed after every byte). */
 static uint8_t s_uart_rx_byte;
@@ -87,12 +89,19 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
  *
  * 'd' or ' ' = disarm. Arming is deliberately NOT possible from the PC —
  * it needs the physical B1 hold.
+ * 'h' (Debug builds only) = watchdog bench test: ControlTask hangs on
+ * purpose, honoured only while DISARMED.
  */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     if (huart->Instance == USART2) {
         if (s_uart_rx_byte == 'd' || s_uart_rx_byte == ' ') {
             Arming_RequestDisarm();
         }
+#ifdef DEBUG
+        else if (s_uart_rx_byte == 'h') {
+            Watchdog_RequestTestHang();
+        }
+#endif
         HAL_UART_Receive_IT(&huart2, &s_uart_rx_byte, 1);
     }
 }
@@ -127,6 +136,8 @@ int main(void)
 {
 
   /* USER CODE BEGIN 1 */
+  /* Before anything can clear the RCC reset flags. */
+  ResetInfo_Capture();
 
   /* USER CODE END 1 */
 
@@ -143,6 +154,7 @@ int main(void)
   SystemClock_Config();
 
   /* USER CODE BEGIN SysInit */
+  ResetInfo_EnsureBrownoutLevel();
 
   /* USER CODE END SysInit */
 

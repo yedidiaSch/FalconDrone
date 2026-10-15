@@ -63,6 +63,8 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Core/Src/mixer.c
     Core/Src/pid.c
     Core/Src/arming.c
+    Core/Src/watchdog.c
+    Core/Src/reset_info.c
     # Add user sources here
 )
 

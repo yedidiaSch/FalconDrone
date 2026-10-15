@@ -214,3 +214,21 @@ DMA timeouts now abort the in-flight DMA stream before `I2C_Recover`.
 ### 28. `telemetry.py` lost ~7 s of data at startup: FIXED (2026-10-15)
 - Serial was read only inside the matplotlib animation callback. While the window was being created, nothing drained the port, so the 4 KB tty buffer overflowed. Seen as a 7.5 s jump in `t_ms` in the recorded CSV.
 - **Fix:** a `SerialReader` thread starts right after the port opens. It records CSV lines itself and passes decoded lines to the GUI through a queue. Tested on a pty with a 4 s GUI stall: no gaps.
+
+## Update 2026-10-16: watchdog, reset cause, brown-out
+
+No fault protection existed: a hung task left the motors at their last PWM, and a reboot left no trace of why.
+
+| # | Gap | Fix |
+|---|---|---|
+| 29 | No watchdog | Supervised IWDG (`watchdog.{h,c}`), ~0.5 s timeout. IMUTask (2 s deadline, covers the 1 s calibration) and ControlTask (300 ms) check in each loop. DefaultTask supervises every 50 ms and refreshes the IWDG only if every task is on time. The stalled task and its silent time are saved in a `.noinit` RAM record that survives the reset. Frozen while a debugger halts the core. |
+| 30 | Reset cause unknown | `reset_info.{h,c}`: `RCC->CSR` latched as the first line of `main()`, then cleared. Boot log: `[SYS] Reset cause: ...`, e.g. `WATCHDOG - ControlTask silent 301 ms`. |
+| 31 | BOR off (factory default): on a sagging BEC the MCU runs down to ~1.7 V with unreliable flash/I2C | BOR option byte set to level 3 (~2.7 V) on first boot; later boots only verify it. Only the BOR_LEV bits are written. |
+
+Debug builds only: sending `h` over the UART makes ControlTask hang on purpose (ignored unless DISARMED).
+
+**Verified on hardware (2026-10-16):**
+- Boot report shows the reset cause (`RESET PIN` after `st-flash reset`).
+- 25 s normal run with no spurious reset.
+- `h` → `[SYS] Reset cause: WATCHDOG - ControlTask silent 301 ms` after the reboot.
+- Option byte at `0x1FFFC000` reads `0xE3` (BOR_LEV = 00 = level 3; RDP still `0xAA`).

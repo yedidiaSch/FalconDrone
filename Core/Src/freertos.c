@@ -32,6 +32,8 @@
 #include "pid.h"
 #include "mixer.h"
 #include "arming.h"
+#include "watchdog.h"
+#include "reset_info.h"
 #include "gpio.h"
 /* USER CODE END Includes */
 
@@ -58,7 +60,7 @@
 osThreadId_t defaultTaskHandle;
 const osThreadAttr_t defaultTask_attributes = {
   .name = "defaultTask",
-  .stack_size = 128 * 4,
+  .stack_size = 256 * 4,
   .priority = (osPriority_t) osPriorityNormal,
 };
 /* Definitions for IMUTask */
@@ -175,16 +177,30 @@ void MX_FREERTOS_Init(void) {
 void StartDefaultTask(void *argument)
 {
   /* USER CODE BEGIN StartDefaultTask */
-  /* LD2 heartbeat doubles as the arm-state indicator:
-   * slow = DISARMED, medium = ARMING, fast = ARMED. */
+  ResetInfo_Report();
+
+  /* Watchdog supervisor + LD2 heartbeat (doubles as the arm-state
+   * indicator: slow = DISARMED, medium = ARMING, fast = ARMED).
+   * Runs at Normal priority, below IMU and Control, so if either of them
+   * hogs the CPU this loop starves and the IWDG fires. */
+  uint32_t last_toggle = osKernelGetTickCount();
   for(;;)
   {
-    HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+    const uint32_t now = osKernelGetTickCount();
+    Watchdog_Supervise(now);
+
+    uint32_t blink_ms;
     switch (Arming_GetState()) {
-    case ARM_STATE_ARMED:  osDelay(100);  break;
-    case ARM_STATE_ARMING: osDelay(250);  break;
-    default:               osDelay(1000); break;
+    case ARM_STATE_ARMED:  blink_ms = 100;  break;
+    case ARM_STATE_ARMING: blink_ms = 250;  break;
+    default:               blink_ms = 1000; break;
     }
+    if (now - last_toggle >= blink_ms) {
+      HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+      last_toggle = now;
+    }
+
+    osDelay(WATCHDOG_SUPERVISE_PERIOD_MS);
   }
   /* USER CODE END StartDefaultTask */
 }
@@ -275,6 +291,17 @@ void StartControlTask(void *argument)
 
     for (;;)
     {
+        Watchdog_CheckIn(WDG_CONTROL);
+
+        /* Watchdog bench test ('h' from the PC, Debug builds): stop checking
+         * in while the motors are at idle. Expect an IWDG reset ~0.5 s later. */
+        if (Watchdog_TestHangRequested() && Arming_GetState() == ARM_STATE_DISARMED) {
+            Log_Print("[WDG] Test: ControlTask hanging on purpose\r\n");
+            for (;;) {
+                osDelay(1000);
+            }
+        }
+
         /* B1 (PC13) has an external pull-up: idle high, pressed = low. */
         const uint8_t b1_pressed =
             (HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin) == GPIO_PIN_RESET);

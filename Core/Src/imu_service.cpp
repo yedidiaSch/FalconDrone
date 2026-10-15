@@ -11,6 +11,7 @@
 #include "attitude_filter.h"
 #include "i2c.h"        /* I2C_Recover — board-specific pins */
 #include "logger.h"
+#include "watchdog.h"
 #include "FreeRTOS.h"
 #include "queue.h"
 #include "semphr.h"
@@ -146,6 +147,9 @@ extern "C" void imuTaskRun(void)
     s_last_sample_ms = next;
 
     for (;;) {
+        /* Deadline (2 s) covers the ~1 s calibration below. */
+        Watchdog_CheckIn(WDG_IMU);
+
         if (s_cal_state == IMU_CAL_PENDING) {
             /* Bus is idle here (no DMA in flight), so Calibrate()'s blocking
              * reads are safe. */

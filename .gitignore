@@ -72,3 +72,6 @@ __pycache__/
 
 # Telemetry session recordings (created by stm32-flash skill)
 logs/
+
+# Personal notes and references — kept local only
+docs/

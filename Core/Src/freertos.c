@@ -25,7 +25,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "cpp_adapter.h"
+#include "imu_service.h"
+#include "i2c.h"
 #include "logger.h"
 #include "pwm_esc.h"
 #include "pid.h"
@@ -87,16 +88,6 @@ osMessageQueueId_t logQueueHandle;
 const osMessageQueueAttr_t logQueue_attributes = {
   .name = "logQueue"
 };
-/* Definitions for imuSem */
-osSemaphoreId_t imuSemHandle;
-const osSemaphoreAttr_t imuSem_attributes = {
-  .name = "imuSem"
-};
-/* Definitions for imuDataReadySem — IMU → ControlTask handoff */
-osSemaphoreId_t imuDataReadySemHandle;
-const osSemaphoreAttr_t imuDataReadySem_attributes = {
-  .name = "imuDataReadySem"
-};
 /* Definitions for txCompleteSem */
 osSemaphoreId_t txCompleteSemHandle;
 const osSemaphoreAttr_t txCompleteSem_attributes = {
@@ -130,17 +121,13 @@ void MX_FREERTOS_Init(void) {
   /* USER CODE END RTOS_MUTEX */
 
   /* Create the semaphores(s) */
-  /* creation of imuSem */
-  imuSemHandle = osSemaphoreNew(1, 0, &imuSem_attributes);
-
-  /* creation of imuDataReadySem */
-  imuDataReadySemHandle = osSemaphoreNew(1, 0, &imuDataReadySem_attributes);
-
   /* creation of txCompleteSem */
   txCompleteSemHandle = osSemaphoreNew(1, 1, &txCompleteSem_attributes);
 
   /* USER CODE BEGIN RTOS_SEMAPHORES */
-  /* add semaphores, ... */
+  /* IMU service owns its DMA semaphore and sample mailbox. Created here so
+   * they exist before any task can touch them. */
+  imuCreate(&hi2c1);
   /* USER CODE END RTOS_SEMAPHORES */
 
   /* USER CODE BEGIN RTOS_TIMERS */
@@ -213,14 +200,8 @@ void StartIMUTask(void *argument)
 {
   /* USER CODE BEGIN StartIMUTask */
   
-  imuInit();
-
-  /* 100 Hz IMU sample rate — matches the control loop. */
-  for(;;)
-  {
-    imuTick();
-    osDelay(10);
-  }
+  /* Fixed 100 Hz read / fuse / publish loop — never returns. */
+  imuTaskRun();
   /* USER CODE END StartIMUTask */
 }
 
@@ -248,12 +229,12 @@ void StartLogTask(void *argument)
 /*
  * ControlTask — Phase 3 attitude controller.
  *
- * Synchronous with the IMU: blocks on imuDataReadySem, runs once per
- * fresh sample. 100 Hz nominal (matches IMU loop).
+ * Synchronous with the IMU: blocks on the IMU mailbox, runs once per
+ * fresh sample. 100 Hz (IMU_PERIOD_MS).
  *
  * Pipeline each tick:
- *   1. Wait for fresh IMU sample (sem release from imuTick)
- *   2. Snapshot gyro rates + fused angles
+ *   1. Wait for the next IMU sample (by-value copy from the mailbox)
+ *   2. dt from the sample timestamps (exact multiples of IMU_PERIOD_MS)
  *   3. Arming state machine (arming.c) — B1 / PC command / failsafes
  *   4. If ARMED: three rate-mode PIDs (setpoint = 0 → damps rotation; this
  *      does NOT self-level — there is no outer angle loop yet) → mixer.
@@ -289,7 +270,7 @@ void StartControlTask(void *argument)
     osDelay(ESC_ARM_DELAY_MS);
     Log_Print("ESC ready — DISARMED. Hold B1 2 s to arm.\r\n");
 
-    uint32_t last_tick = osKernelGetTickCount();
+    uint32_t last_sample_ms = 0;
     uint32_t log_div   = 0;   /* decimate telemetry to 50 Hz — 100 Hz overruns the queue */
 
     for (;;)
@@ -299,8 +280,9 @@ void StartControlTask(void *argument)
             (HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin) == GPIO_PIN_RESET);
 
         /* Block on fresh IMU sample. 100 ms timeout = fail-safe to idle
-         * (Arming_Update disarms on a NULL snapshot while ARMED). */
-        if (osSemaphoreAcquire(imuDataReadySemHandle, 100) != osOK) {
+         * (Arming_Update disarms on a NULL sample while ARMED). */
+        IMUData s;
+        if (!imuWaitSample(&s, 100)) {
             Arming_Update(osKernelGetTickCount(), b1_pressed, NULL);
             ESC_SetAllMotors(ESC_MIN_US, ESC_MIN_US, ESC_MIN_US, ESC_MIN_US);
             PID_Reset(&pid_roll);
@@ -309,13 +291,12 @@ void StartControlTask(void *argument)
             continue;
         }
 
-        const uint32_t now = osKernelGetTickCount();
-        float dt = (float)(now - last_tick) / 1000.0f;
-        last_tick = now;
-        if (dt <= 0.0f || dt > 0.1f) dt = 0.01f;  /* sanity clamp */
-
-        IMUData s;
-        imuGetSnapshot(&s);
+        /* Sample timestamps are scheduled slot times, so dt is exact —
+         * 10 ms normally, 20 ms if the IMU dropped one read. */
+        const uint32_t now = s.t_ms;
+        float dt = (float)(now - last_sample_ms) / 1000.0f;
+        last_sample_ms = now;
+        if (dt <= 0.0f || dt > 0.1f) dt = IMU_PERIOD_MS / 1000.0f;  /* first sample / after a gap */
 
         const ArmState_t arm = Arming_Update(now, b1_pressed, &s);
 

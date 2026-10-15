@@ -6,7 +6,7 @@ extern "C" {
 #endif
 
 #include <stdint.h>
-#include "cpp_adapter.h"
+#include "imu_service.h"
 
 /*
  * Arm / disarm state machine — decides whether the control loop may drive

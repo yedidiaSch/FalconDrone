@@ -1,10 +1,12 @@
 /**
  * @file MPU6050.h
  * @brief Driver class for MPU6050 IMU.
- * 
- * Provides an interface for reading Accelerometer and Gyroscope data
- * from the MPU6050 sensor using I2C with DMA and Semaphore synchronization.
- * 
+ *
+ * Pure sensor I/O: register setup, gyro bias calibration, and a DMA burst
+ * read decoded into physical units. Attitude fusion lives in
+ * attitude_filter.h; task timing, bus recovery and the hand-off to the
+ * control loop live in imu_service.cpp.
+ *
  * @author Yedidya Schwartz
  * @date 2026
  */
@@ -12,39 +14,43 @@
 #ifndef MPU6050_H_
 #define MPU6050_H_
 
-#include "i2c.h"
-#include "cmsis_os2.h" // For Semaphore support
-#include <cmath>
+#include "stm32f4xx_hal.h"
+#include <cstdint>
+
+/** One decoded sensor read. Accel in g, gyro in dps with bias removed. */
+struct ImuSample {
+    float ax, ay, az;
+    float gx, gy, gz;
+};
+
+/** Per-axis gyro zero-rate offset in dps. */
+struct GyroBias {
+    float x, y, z;
+};
 
 /**
  * @class MPU6050
  * @brief Handles MPU6050 sensor operations.
+ *
+ * Constant-initialized (no runtime constructor), so a static instance is
+ * safe before main(). The I2C handle is supplied in Init().
  */
 class MPU6050 {
 public:
-    /**
-     * @brief Constructor for MPU6050 driver.
-     * 
-     * @param hi2c Pointer to the HAL I2C handle used for communication.
-     * @param sem Semaphore handle used for synchronizing DMA completion.
-     */
-    MPU6050(I2C_HandleTypeDef* hi2c, osSemaphoreId_t sem);
+    constexpr MPU6050() = default;
 
     /**
-     * @brief Initializes the sensor.
-     * 
-     * Wakes up the sensor from sleep mode by writing to the Power Management register.
-     * 
-     * @return true if initialization command was successful, false otherwise.
+     * @brief Wakes the sensor and configures the digital low-pass filter.
+     * @param hi2c I2C handle the sensor is attached to.
+     * @return true if both register writes succeeded.
      */
-    bool Init();
-    
+    bool Init(I2C_HandleTypeDef* hi2c);
+
     /**
      * @brief Sample the gyroscope while stationary and store DC bias offsets.
      *
      * Blocks for ~1 second (100 samples * 10 ms). The board MUST be still.
-     * Subsequent ProcessData() calls subtract the measured bias.
-     * Re-callable any time (e.g., after re-leveling on a bench).
+     * Subsequent Decode() calls subtract the measured bias.
      *
      * @return true if the new bias was applied; false if the board moved
      *         during sampling or too many I2C reads failed (old bias kept).
@@ -52,48 +58,33 @@ public:
     bool Calibrate();
 
     /**
-     * @brief Triggers a non-blocking DMA read sequence.
+     * @brief Starts a non-blocking DMA read of ACCEL_XOUT_H..GYRO_ZOUT_L.
      *
-     * Initiates an I2C DMA read of 14 bytes starting from the ACCEL_XOUT_H register.
-     * @return true if DMA started successfully, false if bus is busy.
+     * Completion is reported through the HAL I2C callbacks.
+     * @return false if the HAL refused the transfer (bus busy or stuck).
      */
-    bool StartUpdateDMA();
+    bool StartRead();
 
     /**
-     * @brief Processes the raw buffer after DMA completion.
-     * 
-     * Converts raw byte data into floating point physical units:
-     * - Accelerometer: Gs
-     * - Gyroscope: Degrees per second
-     * - Roll/Pitch: Degrees
+     * @brief Decode the buffer filled by the last completed DMA read.
      */
-    void ProcessData();
+    ImuSample Decode() const;
 
-    float roll;     /**< Calculated Roll angle in degrees */
-    float pitch;    /**< Calculated Pitch angle in degrees */
-    float gyro_x;   /**< Angular velocity X in dps (bias-corrected) */
-    float gyro_y;   /**< Angular velocity Y in dps (bias-corrected) */
-    float gyro_z;   /**< Angular velocity Z in dps (bias-corrected) */
-
-    float gyro_bias_x;  /**< Per-axis DC bias (dps), measured at startup */
-    float gyro_bias_y;
-    float gyro_bias_z;
+    const GyroBias& Bias() const { return _bias; }
 
 private:
-    I2C_HandleTypeDef* _hi2c;   /**< Handle to I2C peripheral */
-    osSemaphoreId_t _sem;       /**< Handle to completion semaphore */
-    uint8_t _buffer[14];        /**< Raw data buffer (Accel, Temp, Gyro) */
-    
-    static const uint16_t DEVICE_ADDR = (0x68 << 1); /**< MPU6050 I2C Address (shifted) */
-    static constexpr float RAD_TO_DEG = 180.0f / M_PI;
+    static constexpr uint16_t kDeviceAddr = (0x68 << 1); /**< AD0 low, HAL 8-bit form */
+    static constexpr uint16_t kRegAccelXoutH = 0x3B;
+    static constexpr uint16_t kRegGyroXoutH  = 0x43;
+    static constexpr uint16_t kBlockSize     = 14;   /**< 6 Accel + 2 Temp + 6 Gyro */
 
     // Sensitivities for MPU6050 (Default settings)
-    static constexpr float ACCEL_SENSITIVITY = 16384.0f; /**< LSB per G (Range +/- 2g) */
-    static constexpr float GYRO_SENSITIVITY  = 131.0f;   /**< LSB per dps (Range +/- 250dps) */
-    static constexpr float MPU_BLOCK_SIZE    = 14;       /**< 6 Accel + 2 Temp + 6 Gyro */
-    static constexpr float ALPHA             = 0.98f;    /**< Complementary Filter coefficient */
+    static constexpr float kAccelLsbPerG   = 16384.0f; /**< Range +/- 2g */
+    static constexpr float kGyroLsbPerDps  = 131.0f;   /**< Range +/- 250dps */
 
-    uint32_t _last_tick; /**< Last update timestamp in ms */
+    I2C_HandleTypeDef* _hi2c = nullptr;
+    uint8_t _buffer[kBlockSize] = {};   /**< DMA target (Accel, Temp, Gyro) */
+    GyroBias _bias = {0.0f, 0.0f, 0.0f};
 };
 
 #endif // MPU6050_H_

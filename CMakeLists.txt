@@ -56,7 +56,8 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 
 # Add sources to executable
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
-    Core/Src/cpp_adapter.cpp
+    Core/Src/imu_service.cpp
+    Core/Src/attitude_filter.cpp
     Core/Src/MPU6050.cpp
     Core/Src/pwm_esc.c
     Core/Src/mixer.c

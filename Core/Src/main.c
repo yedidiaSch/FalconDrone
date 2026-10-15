@@ -48,14 +48,12 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-extern osSemaphoreId_t imuSemHandle; // Created in CubeMX
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 void MX_FREERTOS_Init(void);
 /* USER CODE BEGIN PFP */
-void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c); 
 /* USER CODE END PFP */
 
 /* Private user code ---------------------------------------------------------*/
@@ -64,6 +62,7 @@ void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c);
 #include "usart.h"
 #include "logger.h"
 #include "arming.h"
+#include "imu_service.h"
 
 /* One-byte USART2 RX buffer for PC commands (re-armed after every byte). */
 static uint8_t s_uart_rx_byte;
@@ -109,20 +108,14 @@ void HAL_UART_ErrorCallback(UART_HandleTypeDef *huart) {
 }
 
 void HAL_I2C_MemRxCpltCallback(I2C_HandleTypeDef *hi2c) {
-    if (hi2c->Instance == I2C1) {
-        // Signal the Task that data is ready
-        osSemaphoreRelease(imuSemHandle);
-    }
+    imuOnI2cRxComplete(hi2c);
 }
 
 /**
- * @brief I2C Error Callback - handles bus errors and triggers recovery.
+ * @brief I2C Error Callback — the IMU service discards the read and recovers.
  */
 void HAL_I2C_ErrorCallback(I2C_HandleTypeDef *hi2c) {
-    if (hi2c->Instance == I2C1) {
-        // Release semaphore to unblock task (it will detect the error via timeout/state)
-        osSemaphoreRelease(imuSemHandle);
-    }
+    imuOnI2cError(hi2c);
 }
 /* USER CODE END 0 */
 

@@ -13,7 +13,7 @@ A second pass on the same day re-checked every item against the code. Each issue
 ## Design summary
 
 - **Tasks:** Default (LED), IMU (100 Hz), Control (sem-synced to IMU), Log (UART drain).
-- **Pipeline:** IMU sample -> `imuDataReadySem` -> 3x rate PID -> X-frame mixer -> `ESC_SetAllMotors`.
+- **Pipeline:** IMU sample -> mailbox queue (`imuWaitSample`) -> 3x rate PID -> X-frame mixer -> `ESC_SetAllMotors`.
 - **PID:** P on error, I clamped to `i_limit`, D on measurement, output clamped to `out_limit`.
 - **Mixer:** `M1 = T - r - p - y`, `M2 = T + r + p - y`, `M3 = T + r - p + y`, `M4 = T - r + p + y`, each clamped to 1000-2000 us.
 - **IMU:** complementary filter (ALPHA 0.98), DLPF ~42 Hz, gyro bias from manual B1 calibration.
@@ -126,11 +126,11 @@ If the sensor is mounted differently (Z down, or rotated), the table changes. Th
 - Calibration is manual only (by design, per the commit). Until B1 is pressed the bias is 0, and the typical MPU6050 offset of ±2 dps feeds into the PID as a constant rate error. That gives a steady motor offset (about 1.2 us roll and pitch, about 3 us yaw at current gains). It becomes a real drift once Ki is non-zero.
 - **Fix:** log a warning until calibration has run, or block arming until it has run (ties into 5).
 
-### 12. NEW: `MPU_BLOCK_SIZE` is a `float`: REAL (smell)
+### 12. NEW: `MPU_BLOCK_SIZE` is a `float`: FIXED (2026-10-15)
 - `MPU6050.h:90` has `static constexpr float MPU_BLOCK_SIZE = 14;`, which is passed to `HAL_I2C_Mem_Read_DMA` as a `uint16_t`. It works through implicit conversion but is the wrong type.
 - **Fix:** `static constexpr uint16_t`.
 
-### 13. NEW: `MPU6050::_sem` holds a NULL handle: REAL (dead field)
+### 13. NEW: `MPU6050::_sem` holds a NULL handle: FIXED (2026-10-15)
 - `static MPU6050 imu(&hi2c1, imuSemHandle);` in `cpp_adapter.cpp` runs during C++ static init, before `osSemaphoreNew`, so `_sem` is NULL.
 - It is harmless today because `imuTick()` uses the global `imuSemHandle` directly, but it is a trap if anyone uses `_sem` later.
 - **Fix:** remove the constructor parameter, or assign it in `imuInit()`.
@@ -186,3 +186,27 @@ To rebuild `build/` from scratch: `cmake -B build -DCMAKE_TOOLCHAIN_FILE=cmake/g
 4. Add the angle loop (3) and RC input.
 5. Housekeeping: untrack `build/` (10), fix `visual.py` (9), fix the type and the dead field (12, 13), handle mixer saturation (6).
 6. Tooling: fix the presets (14), the SVD file (15) and the copilot doc (16).
+
+## Update 2026-10-15: `cpp_adapter` design review, all fixed
+
+`cpp_adapter.{h,cpp}` was renamed to **`imu_service.{h,cpp}`**. It had grown from a thin C-to-C++ shim into the IMU service: task loop, calibration, DMA sync, recovery and data hand-off. The C/C++ boundary is still needed because CubeMX generates `main.c` and `freertos.c` as C.
+
+| # | Issue | Fix |
+|---|---|---|
+| 19 | **Bug:** `HAL_I2C_ErrorCallback` released the same semaphore as success, so a failed read was decoded and fed to the PID | The error callback sets `s_dma_error`; the service drops the sample and recovers the bus |
+| 20 | `dt` came from `HAL_GetTick()` (1 ms resolution, ±10% at 10 ms) and the loop was `tick + osDelay(10)` (period drifted past 10 ms) | Fixed-rate `osDelayUntil` loop owned by the service. Each sample carries its scheduled slot time `t_ms`, so filter and PID `dt` are exact (10 ms, or 20 ms after a dropped read). Resyncs after the ~1 s calibration instead of bursting. |
+| 21 | Double-precision `atan2`/`sqrt` linked (software-emulated on the single-precision M4F FPU) | `std::atan2`/`std::sqrt` with float arguments. The binary now links only `atan2f`/`sqrtf`. |
+| 22 | Blocking `printf` in `imuInit` raced LogTask's UART DMA | `Log_Print` |
+| 23 | Hidden coupling: the adapter `extern`-declared `hi2c1` and two semaphores owned by `freertos.c` (`imuDataReadySem` was hand-added inside a CubeMX-generated block) | `imuCreate(&hi2c1)` injects the bus. The service creates its own static semaphore and mailbox. `imuSem` was removed from `freertos.c` and the `.ioc`. The I2C HAL callbacks forward to `imuOnI2cRxComplete`/`imuOnI2cError`. |
+| 24 | Semaphore + global object + `taskENTER_CRITICAL` snapshot | A single-slot FreeRTOS queue used as a mailbox (`xQueueOverwrite` / `xQueueReceive`): wake-up and a by-value copy in one primitive |
+| 25 | C API: `imuInit()` with empty parens (unspecified args in C), redundant `extern "C"` around self-guarded headers | `(void)` signatures; redundant wrappers removed |
+| 26 | `MPU6050` class: public mutable fields, fusion inside the driver, `#include "i2c.h"` (board coupling), duplicate recovery branches | Driver now does bytes to units only (`Decode()` returns `ImuSample`; `Bias()` getter). Fusion moved to `ComplementaryFilter` (`attitude_filter.{h,cpp}`), the seam for Madgwick. The driver includes only `stm32f4xx_hal.h`; bus recovery is the service's job. The filter seeds from the accel angle on the first sample. |
+| 27 | Static object with a runtime-dependent constructor | `constexpr` default constructor; the handle is given in `Init()`. No `_GLOBAL__sub_I_*` constructors in the ELF. |
+
+DMA timeouts now abort the in-flight DMA stream before `I2C_Recover`.
+
+**Status:** builds clean with no warnings. **Not yet verified on hardware** (the board was disconnected). On the next flash, check:
+- `[IMU] Initialization Success!`
+- CSV `t_ms` steps of 20 ms (50 Hz logging)
+- arming still reaches ARMED
+- unplugging SDA gives `[IMU] I2C error` / `DMA timeout` and a disarm, not garbage angles

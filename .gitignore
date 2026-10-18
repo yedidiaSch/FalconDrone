@@ -75,3 +75,12 @@ logs/
 
 # Personal notes and references — kept local only
 docs/
+
+# ESP-IDF controller (controller/) — generated config and fetched components
+controller/sdkconfig
+controller/sdkconfig.old
+controller/managed_components/
+
+# nRF24 host test binary
+shared/nrf24/test/test_nrf24
+!shared/nrf24/test/Makefile

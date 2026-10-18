@@ -29,8 +29,9 @@
 #include "i2c.h"
 #include "logger.h"
 #include "pwm_esc.h"
-#include "pid.h"
-#include "mixer.h"
+#include "flight_ctrl.h"
+#include "flight_input.h"
+#include "uart_cmd.h"
 #include "arming.h"
 #include "watchdog.h"
 #include "reset_info.h"
@@ -243,7 +244,7 @@ void StartLogTask(void *argument)
 /* USER CODE BEGIN Application */
 
 /*
- * ControlTask — Phase 3 attitude controller.
+ * ControlTask — cascaded attitude controller (flight_ctrl.c).
  *
  * Synchronous with the IMU: blocks on the IMU mailbox, runs once per
  * fresh sample. 100 Hz (IMU_PERIOD_MS).
@@ -252,34 +253,19 @@ void StartLogTask(void *argument)
  *   1. Wait for the next IMU sample (by-value copy from the mailbox)
  *   2. dt from the sample timestamps (exact multiples of IMU_PERIOD_MS)
  *   3. Arming state machine (arming.c) — B1 / PC command / failsafes
- *   4. If ARMED: three rate-mode PIDs (setpoint = 0 → damps rotation; this
- *      does NOT self-level — there is no outer angle loop yet) → mixer.
- *      Otherwise: all motors at ESC_MIN_US and PID state cleared.
- *   5. ESC_SetAllMotors
+ *   4. PC line commands (uart_cmd.c) — throttle, mode, gains, trim
+ *   5. If ARMED: FlightInput (throttle ramp) → FlightCtrl (angle loop in
+ *      ANGLE mode → rate PIDs → mixer). Otherwise: motors at ESC_MIN_US,
+ *      PID state and throttle cleared.
+ *   6. ESC_SetAllMotors
  *
  * Boot state is DISARMED: motors stay at ESC_MIN_US until B1 is held 2 s.
- *
- * SAFETY: base_throttle = 1300 us is BENCH-TEST ONLY (props removed!).
- * With out_limit = 300 each axis can swing the motors symmetrically across
- * 1000-1600 us, which is required to observe both sides of the PID response
- * during gain tuning. ESC_MIN_US (1000) makes the response asymmetric
- * because the negative side gets clamped at idle.
- *
- * BEFORE flying with props ON: re-pin base_throttle to ESC_MIN_US, validate
- * gains on a single-axis tethered rig, then choose a hover-throttle base
- * (typically 1400-1600 depending on thrust-to-weight) for the actual flight.
+ * Every arm starts at ESC_MIN_US; throttle then comes only from $t commands,
+ * capped at THROTTLE_MAX_US and ramped at THROTTLE_SLEW_US_S (flight_cfg.h).
  */
 void StartControlTask(void *argument)
 {
-    static PID_t pid_roll, pid_pitch, pid_yaw;
-
-    /* Conservative starting gains — must be tuned on a single-axis rig.
-     * out_limit (300 µs) caps each axis's authority so a runaway PID
-     * cannot saturate the throttle range. */
-    PID_Init(&pid_roll,  0.6f, 0.0f, 0.02f, /*i_limit*/200.0f, /*out_limit*/300.0f);
-    PID_Init(&pid_pitch, 0.6f, 0.0f, 0.02f, 200.0f, 300.0f);
-    PID_Init(&pid_yaw,   1.5f, 0.0f, 0.00f, 200.0f, 300.0f);
-
+    FlightCtrl_Init();
     ESC_Init();
 
     /* Hold idle pulse while ESCs run their startup beep sequence. */
@@ -310,11 +296,11 @@ void StartControlTask(void *argument)
          * (Arming_Update disarms on a NULL sample while ARMED). */
         IMUData s;
         if (!imuWaitSample(&s, 100)) {
-            Arming_Update(osKernelGetTickCount(), b1_pressed, NULL);
+            const ArmState_t arm = Arming_Update(osKernelGetTickCount(), b1_pressed, NULL);
+            UartCmd_Poll(arm);
             ESC_SetAllMotors(ESC_MIN_US, ESC_MIN_US, ESC_MIN_US, ESC_MIN_US);
-            PID_Reset(&pid_roll);
-            PID_Reset(&pid_pitch);
-            PID_Reset(&pid_yaw);
+            FlightCtrl_Idle(NULL);
+            FlightInput_Reset();
             continue;
         }
 
@@ -326,29 +312,19 @@ void StartControlTask(void *argument)
         if (dt <= 0.0f || dt > 0.1f) dt = IMU_PERIOD_MS / 1000.0f;  /* first sample / after a gap */
 
         const ArmState_t arm = Arming_Update(now, b1_pressed, &s);
+        UartCmd_Poll(arm);
 
         uint16_t motors[4] = { ESC_MIN_US, ESC_MIN_US, ESC_MIN_US, ESC_MIN_US };
+        FlightCmd cmd = { .throttle_us = (float)ESC_MIN_US };
+        FlightCtrlDebug dbg = { 0 };
 
         if (arm == ARM_STATE_ARMED) {
-            /* Rate-mode setpoints. Replace with RC stick input later. */
-            const float roll_rate_sp  = 0.0f;
-            const float pitch_rate_sp = 0.0f;
-            const float yaw_rate_sp   = 0.0f;
-
-            const float roll_out  = PID_Update(&pid_roll,  roll_rate_sp,  s.gyro_x, dt);
-            const float pitch_out = PID_Update(&pid_pitch, pitch_rate_sp, s.gyro_y, dt);
-            const float yaw_out   = PID_Update(&pid_yaw,   yaw_rate_sp,   s.gyro_z, dt);
-
-            /* BENCH-TEST base — props OFF. See header comment before changing. */
-            const float base_throttle = 1300.0f;
-
-            Mixer_Compute(base_throttle, roll_out, pitch_out, yaw_out,
-                          ESC_MIN_US, ESC_MAX_US, motors);
+            cmd = FlightInput_Get(dt);
+            FlightCtrl_Update(&s, &cmd, dt, motors, &dbg);
         } else {
-            /* Not armed: keep PIDs clean so arming starts from zero state. */
-            PID_Reset(&pid_roll);
-            PID_Reset(&pid_pitch);
-            PID_Reset(&pid_yaw);
+            /* Not armed: clean PID state and idle throttle for the next arm. */
+            FlightCtrl_Idle(&s);
+            FlightInput_Reset();
         }
 
         ESC_SetAllMotors(motors[0], motors[1], motors[2], motors[3]);
@@ -356,15 +332,20 @@ void StartControlTask(void *argument)
         /* Telemetry — one CSV line every 2 ticks (~50 Hz).
          * 100 Hz overruns the 16-deep log queue during motion bursts (~33%
          * loss observed). 50 Hz drains comfortably under UART 115200.
-         * Format: t_ms,roll,pitch,gx,gy,gz,m1,m2,m3,m4,arm
-         * arm: 0 = disarmed, 1 = armed, 2 = arming */
+         * Format: t_ms,roll,pitch,gx,gy,gz,m1,m2,m3,m4,arm,thr,mode,rsp,psp
+         * arm: 0 = disarmed, 1 = armed, 2 = arming
+         * mode: 0 = rate, 1 = angle
+         * rsp/psp: roll/pitch rate setpoints from the angle loop, deg/s */
         if ((++log_div & 0x1) == 0u) {
-            Log_Printf("%lu,%.1f,%.1f,%.1f,%.1f,%.1f,%u,%u,%u,%u,%u\r\n",
+            Log_Printf("%lu,%.1f,%.1f,%.1f,%.1f,%.1f,%u,%u,%u,%u,%u,%u,%u,%.1f,%.1f\r\n",
                        (unsigned long)now,
                        s.roll,   s.pitch,
                        s.gyro_x, s.gyro_y, s.gyro_z,
                        motors[0], motors[1], motors[2], motors[3],
-                       (unsigned)arm);
+                       (unsigned)arm,
+                       (unsigned)cmd.throttle_us,
+                       (unsigned)FlightCtrl_GetMode(),
+                       dbg.roll_rate_sp, dbg.pitch_rate_sp);
         }
     }
 }

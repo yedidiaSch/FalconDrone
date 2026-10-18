@@ -27,6 +27,11 @@ void PID_Reset(PID_t *pid)
     pid->has_prev         = 0u;
 }
 
+void PID_ResetIntegral(PID_t *pid)
+{
+    pid->integral = 0.0f;
+}
+
 void PID_SetGains(PID_t *pid, float kp, float ki, float kd)
 {
     pid->kp = kp;

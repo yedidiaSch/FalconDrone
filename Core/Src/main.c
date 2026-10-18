@@ -61,7 +61,7 @@ void MX_FREERTOS_Init(void);
 #include <stdio.h>
 #include "usart.h"
 #include "logger.h"
-#include "arming.h"
+#include "uart_cmd.h"
 #include "imu_service.h"
 #include "reset_info.h"
 #include "watchdog.h"
@@ -87,21 +87,13 @@ void HAL_UART_TxCpltCallback(UART_HandleTypeDef *huart) {
 /**
  * @brief UART RX Complete Callback - PC commands from telemetry.py.
  *
- * 'd' or ' ' = disarm. Arming is deliberately NOT possible from the PC —
- * it needs the physical B1 hold.
- * 'h' (Debug builds only) = watchdog bench test: ControlTask hangs on
- * purpose, honoured only while DISARMED.
+ * Bytes go to uart_cmd.c: 'd' / ' ' disarm at once, '$...\n' lines are
+ * parsed later in ControlTask. Arming is deliberately NOT possible from the
+ * PC — it needs the physical B1 hold.
  */
 void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart) {
     if (huart->Instance == USART2) {
-        if (s_uart_rx_byte == 'd' || s_uart_rx_byte == ' ') {
-            Arming_RequestDisarm();
-        }
-#ifdef DEBUG
-        else if (s_uart_rx_byte == 'h') {
-            Watchdog_RequestTestHang();
-        }
-#endif
+        UartCmd_OnRxByte(s_uart_rx_byte);
         HAL_UART_Receive_IT(&huart2, &s_uart_rx_byte, 1);
     }
 }

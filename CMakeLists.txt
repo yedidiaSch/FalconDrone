@@ -62,6 +62,9 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Core/Src/pwm_esc.c
     Core/Src/mixer.c
     Core/Src/pid.c
+    Core/Src/flight_ctrl.c
+    Core/Src/flight_input.c
+    Core/Src/uart_cmd.c
     Core/Src/arming.c
     Core/Src/watchdog.c
     Core/Src/reset_info.c

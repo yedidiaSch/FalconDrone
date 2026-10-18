@@ -13,8 +13,12 @@ Reads CSV telemetry from the flight controller over UART2 and renders a
     +-----------------------+---------------------------+
 
 Firmware emits one CSV record every 20 ms (50 Hz):
-    t_ms, roll, pitch, gx, gy, gz, m1, m2, m3, m4, arm
-    arm: 0 = disarmed, 1 = armed, 2 = arming
+    t_ms, roll, pitch, gx, gy, gz, m1, m2, m3, m4, arm, thr, mode, rsp, psp
+    arm:  0 = disarmed, 1 = armed, 2 = arming
+    thr:  commanded throttle, us
+    mode: 0 = rate, 1 = angle (self-level)
+    rsp/psp: roll/pitch rate setpoints from the angle loop, deg/s
+             (drawn dashed on the gyro plot, so gx should follow rsp)
 
 Non-CSV lines (e.g. "[ARM] DISARMED: tilt limit") are printed to the console
 and shown as the last event under the title.
@@ -22,6 +26,15 @@ and shown as the last event under the title.
 Keys (dashboard window focused):
     d or space  -> send disarm to the board. Arming is only possible by
                    holding B1 on the Nucleo for 2 s.
+    up / down   -> throttle +10 / -10 us (ARMED only)
+
+Commands (type in the terminal, Enter to send; the '$' is added for you):
+    t1350            throttle target, us (ARMED only, capped by firmware)
+    m0 / m1          rate / angle mode (DISARMED only)
+    g rr 0.6 0 0.02  set kp ki kd: rr rp ry (rate), ar ap (angle)
+    L                capture level trim (DISARMED, frame level and still)
+    ?                print mode, gains, trim
+    d                disarm
 
 Usage:
     python telemetry.py --port /dev/ttyACM0
@@ -39,7 +52,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import serial
 
-FIELD_COUNT = 11
+FIELD_COUNT = 15
+MODES = {0: 'RATE', 1: 'ANGLE'}
 ARM_STATES = {0: ('DISARMED', '#888888'), 1: ('ARMED', '#ff4d4d'),
               2: ('ARMING…', '#ffa94d')}
 ESC_MIN, ESC_MAX = 1000, 2000
@@ -73,7 +87,11 @@ class Telemetry:
         self.gy     = deque(maxlen=max_samples)
         self.gz     = deque(maxlen=max_samples)
         self.m      = [deque(maxlen=max_samples) for _ in range(4)]
+        self.rsp    = deque(maxlen=max_samples)
+        self.psp    = deque(maxlen=max_samples)
         self.arm    = 0
+        self.thr    = 1000
+        self.mode   = 0
         self.rx_count = 0
         self.last_rx  = time.time()
 
@@ -87,9 +105,14 @@ class Telemetry:
             gx = float(parts[3]); gy = float(parts[4]); gz = float(parts[5])
             m  = [int(float(parts[6 + i])) for i in range(4)]
             arm = int(parts[10])
+            thr = int(parts[11]); mode = int(parts[12])
+            rsp = float(parts[13]); psp = float(parts[14])
         except ValueError:
             return False
         self.arm = arm
+        self.thr = thr
+        self.mode = mode
+        self.rsp.append(rsp); self.psp.append(psp)
         self.t.append(t / 1000.0)
         self.roll.append(r);   self.pitch.append(p)
         self.gx.append(gx);    self.gy.append(gy);   self.gz.append(gz)
@@ -199,7 +222,11 @@ def build_dashboard(window_s):
     for label, color in zip(GYRO_LABELS, GYRO_COLORS):
         (ln,) = ax_g.plot([], [], color=color, lw=1.5, label=label)
         gyro_lines.append(ln)
-    ax_g.legend(loc='upper right', fontsize=8, framealpha=0.3)
+    sp_lines = []
+    for label, color in zip(('roll-rate sp', 'pitch-rate sp'), GYRO_COLORS[:2]):
+        (ln,) = ax_g.plot([], [], color=color, lw=1.0, ls='--', label=label)
+        sp_lines.append(ln)
+    ax_g.legend(loc='upper right', fontsize=8, framealpha=0.3, ncol=2)
 
     # ---------- Motor history ----------
     ax_t = fig.add_subplot(gs[1, 1])
@@ -223,17 +250,20 @@ def build_dashboard(window_s):
     status = fig.text(0.5, 0.012, '', ha='center', color='#888', fontsize=8)
     arm_text = fig.text(0.02, 0.965, 'DISARMED', ha='left', va='center',
                         fontsize=14, fontweight='bold', color='#888888')
-    event_text = fig.text(0.5, 0.935, 'd / space = disarm   |   hold B1 2 s = arm',
+    flight_text = fig.text(0.98, 0.965, '', ha='right', va='center',
+                           fontsize=11, color='#cccccc')
+    event_text = fig.text(0.5, 0.935, 'd / space = disarm   |   hold B1 2 s = arm   |   up/down = throttle',
                           ha='center', va='center', color='#aaaaaa', fontsize=9)
 
     return fig, {
         'horizon': horizon, 'rp_text': rp_text,
         'bars': bars, 'bar_texts': bar_texts,
-        'gyro_lines': gyro_lines,
+        'gyro_lines': gyro_lines, 'sp_lines': sp_lines,
         'motor_lines': motor_lines,
         'ax_g': ax_g, 'ax_t': ax_t,
         'status': status,
         'arm_text': arm_text, 'event_text': event_text,
+        'flight_text': flight_text,
     }
 
 
@@ -259,15 +289,43 @@ def main():
     start_time = time.time()
     link = {'lost': False}
 
+    tx_lock = threading.Lock()
+
+    def send(data, what):
+        if link['lost']:
+            return
+        try:
+            with tx_lock:
+                ser.write(data)
+            print(f'[PC] {what} sent')
+        except (serial.SerialException, OSError) as e:
+            print(f'[PC] {what} FAILED: {e}', file=sys.stderr)
+
     def on_key(event):
-        if event.key in ('d', ' ') and not link['lost']:
-            try:
-                ser.write(b'd')
-                print('[PC] disarm sent')
-            except (serial.SerialException, OSError) as e:
-                print(f'[PC] disarm FAILED: {e}', file=sys.stderr)
+        if event.key in ('d', ' '):
+            send(b'd', 'disarm')
+        elif event.key == 'up':
+            send(b'$t+10\n', 'throttle +10')
+        elif event.key == 'down':
+            send(b'$t-10\n', 'throttle -10')
 
     fig.canvas.mpl_connect('key_press_event', on_key)
+
+    def command_prompt():
+        """Terminal commands -> '$<cmd>\\n' line commands (see module doc)."""
+        while True:
+            try:
+                cmd = input().strip()
+            except (EOFError, KeyboardInterrupt):
+                return
+            if not cmd:
+                continue
+            if cmd == 'd':
+                send(b'd', 'disarm')
+            else:
+                send(('$' + cmd.lstrip('$') + '\n').encode(), cmd)
+
+    threading.Thread(target=command_prompt, daemon=True).start()
 
     def drain_lines():
         while True:
@@ -336,6 +394,9 @@ def main():
         for ln, src in zip(h['gyro_lines'], (tel.gx, tel.gy, tel.gz)):
             ln.set_data(t_arr, take(src))
 
+        for ln, src in zip(h['sp_lines'], (tel.rsp, tel.psp)):
+            ln.set_data(t_arr, take(src))
+
         # Motor history
         for i, ln in enumerate(h['motor_lines']):
             ln.set_data(t_arr, take(tel.m[i]))
@@ -352,12 +413,15 @@ def main():
         arm_label, arm_color = ARM_STATES.get(tel.arm, (f'STATE {tel.arm}', '#ffffff'))
         h['arm_text'].set_text(arm_label)
         h['arm_text'].set_color(arm_color)
+        h['flight_text'].set_text(
+            f'{MODES.get(tel.mode, "?")}   throttle {tel.thr} us')
 
         artists = [h['horizon'], h['rp_text'], h['status'],
-                   h['arm_text'], h['event_text']]
+                   h['arm_text'], h['event_text'], h['flight_text']]
         artists.extend(h['bars'])
         artists.extend(h['bar_texts'])
         artists.extend(h['gyro_lines'])
+        artists.extend(h['sp_lines'])
         artists.extend(h['motor_lines'])
         return artists
 

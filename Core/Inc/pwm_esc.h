@@ -24,7 +24,10 @@ extern "C" {
  *   M3  Front-Left   CCW  TIM3_CH1  PA6
  *   M4  Rear-Right   CCW  TIM3_CH2  PA7
  *
- * PWM: 50 Hz, 1 µs resolution (timer tick = 1 µs, period = 20 000 ticks)
+ * PWM: 400 Hz, 1 µs resolution (timer tick = 1 µs, period = 2 500 ticks).
+ * 400 Hz lets every 100 Hz control output reach the motors within 2.5 ms
+ * (at 50 Hz every second command was overwritten before it was sent).
+ * Fallback if an ESC misbehaves at 400 Hz: period 4999 (200 Hz) in the .ioc.
  * ESC signal range: 1000 µs (min/armed) to 2000 µs (full throttle)
  */
 
@@ -39,7 +42,7 @@ extern "C" {
 #define ESC_OFF_US      0u      /* No pulse — ESC receives no signal        */
 
 #define ESC_ARM_DELAY_MS    4000u   /* Time to hold ESC_MIN_US before ESCs are armed */
-#define ESC_UPDATE_PERIOD_MS  20u   /* 50 Hz motor update cadence                    */
+#define ESC_PWM_HZ          400u    /* PWM frame rate (TIM2/TIM3 ARR = 2499)          */
 
 /* Start PWM output on all four channels at ESC_MIN_US. Call once before arming. */
 void ESC_Init(void);

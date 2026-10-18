@@ -20,7 +20,7 @@ extern "C" {
 #include <stdbool.h>
 
 /** Maximum length of a single log message */
-#define LOG_MSG_MAX_LEN     96
+#define LOG_MSG_MAX_LEN     128
 
 /** Size of the message struct for queue creation */
 #define LOG_MSG_STRUCT_SIZE (LOG_MSG_MAX_LEN + sizeof(uint16_t))

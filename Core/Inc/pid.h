@@ -45,6 +45,11 @@ void  PID_Init(PID_t *pid,
 /* Zero internal state. Call when arming or after a long pause. */
 void  PID_Reset(PID_t *pid);
 
+/* Zero only the integral, keeping derivative history. Used to hold the
+ * I-term at zero while the drone sits on the ground (no wind-up before
+ * lift-off). */
+void  PID_ResetIntegral(PID_t *pid);
+
 /* Live gain update (e.g. from a tuning UI). Internal state is preserved. */
 void  PID_SetGains(PID_t *pid, float kp, float ki, float kd);
 

@@ -89,3 +89,8 @@ shared/nrf24/test/test_nrf24
 Core/test/test_rc_link
 Core/test/test_tune_seq
 !Core/test/Makefile
+
+# Controller host test binary + screen previews
+controller/test/test_ui
+controller/test/screens/
+!controller/test/Makefile

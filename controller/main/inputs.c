@@ -8,7 +8,7 @@
 #include <stdlib.h>
 
 /* ---- Calibration — adjust after watching the raw values in the log ------ */
-#define SLIDER_RAW_MIN     150    /* raw at the "zero" end (and below → 0)    */
+#define SLIDER_RAW_MIN     250    /* raw at the "zero" end (and below → 0)    */
 #define SLIDER_RAW_MAX    3950    /* raw at the "full" end (and above → max)  */
 #define SLIDER_INVERT        0    /* 1 if pushing the slider up lowers raw    */
 

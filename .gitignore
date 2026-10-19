@@ -87,4 +87,5 @@ shared/nrf24/test/test_nrf24
 
 # Core host test binary
 Core/test/test_rc_link
+Core/test/test_tune_seq
 !Core/test/Makefile

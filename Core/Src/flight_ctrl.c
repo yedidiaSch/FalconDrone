@@ -14,6 +14,9 @@ static FlightMode_t s_mode = FLIGHT_MODE_DEFAULT;
 static float s_trim_roll  = TRIM_ROLL_DEG;
 static float s_trim_pitch = TRIM_PITCH_DEG;
 
+static FlightAxis_t s_test_axis = FLIGHT_AXIS_NONE;
+static float        s_test_value;
+
 static uint8_t  s_trim_active;
 static uint32_t s_trim_count;
 static float    s_trim_sum_roll, s_trim_sum_pitch;
@@ -43,11 +46,14 @@ void FlightCtrl_Update(const IMUData *imu, const FlightCmd *cmd, float dt,
 
     /* Pilot setpoints: stick = target angle (ANGLE) or rotation rate (RATE). */
     const float rp_scale = angle_mode ? ANGLE_MAX_DEG : STICK_RATE_MAX_DPS;
-    const float ref[FLIGHT_AXIS_COUNT] = {
+    float ref[FLIGHT_AXIS_COUNT] = {
         cmd->roll  * rp_scale,
         cmd->pitch * rp_scale,
         cmd->yaw   * STICK_YAW_MAX_DPS,
     };
+    if (s_test_axis < FLIGHT_AXIS_COUNT) {
+        ref[s_test_axis] = s_test_value;
+    }
 
     float roll_rate_sp  = ref[FLIGHT_AXIS_ROLL];
     float pitch_rate_sp = ref[FLIGHT_AXIS_PITCH];
@@ -76,6 +82,9 @@ void FlightCtrl_Update(const IMUData *imu, const FlightCmd *cmd, float dt,
 
     dbg->roll_rate_sp  = roll_rate_sp;
     dbg->pitch_rate_sp = pitch_rate_sp;
+    dbg->yaw_rate_sp   = yaw_rate_sp;
+    dbg->roll_ref      = angle_mode ? ref[FLIGHT_AXIS_ROLL]  : 0.0f;
+    dbg->pitch_ref     = angle_mode ? ref[FLIGHT_AXIS_PITCH] : 0.0f;
 }
 
 static void trim_capture_step(const IMUData *imu)
@@ -119,6 +128,12 @@ void FlightCtrl_SetMode(FlightMode_t mode)
 FlightMode_t FlightCtrl_GetMode(void)
 {
     return s_mode;
+}
+
+void FlightCtrl_SetTestInput(FlightAxis_t axis, float value)
+{
+    s_test_axis  = axis;
+    s_test_value = value;
 }
 
 void FlightCtrl_SetGains(FlightLoop_t loop, float kp, float ki, float kd)

@@ -34,6 +34,7 @@
 #include "uart_cmd.h"
 #include "arming.h"
 #include "rc_service.h"
+#include "tuning.h"
 #include "flight_cfg.h"
 #include "watchdog.h"
 #include "reset_info.h"
@@ -323,7 +324,7 @@ static ArmState_t pilot_and_arming(uint32_t now_ms, const IMUData *imu, PilotInp
         .throttle_low = !pilot->rc_up || pilot->rc.throttle <= RC_THROTTLE_ARM_MAX,
     };
     const ArmState_t arm = Arming_Update(now_ms, &in, imu);
-    UartCmd_Poll(arm);
+    UartCmd_Poll(arm, now_ms);
     return arm;
 }
 
@@ -362,7 +363,8 @@ static void ControlTask_Run(void)
         IMUData s;
         if (!imuWaitSample(&s, 100)) {
             const uint32_t now = osKernelGetTickCount();
-            (void)pilot_and_arming(now, NULL, &pilot);
+            const ArmState_t arm = pilot_and_arming(now, NULL, &pilot);
+            Tuning_Tick(now, arm, NULL, NULL);   /* aborts a running test */
             ESC_SetAllMotors(ESC_MIN_US, ESC_MIN_US, ESC_MIN_US, ESC_MIN_US);
             FlightCtrl_Idle(NULL);
             FlightInput_Reset();
@@ -392,15 +394,22 @@ static void ControlTask_Run(void)
                                       RcLink_Axis(pilot.rc.yaw));
             }
             cmd = FlightInput_Get(dt);
+            Tuning_Tick(now, arm, &s, &cmd);     /* may override one axis setpoint */
             FlightCtrl_Update(&s, &cmd, dt, motors, &dbg);
         } else {
             /* Not armed: clean PID state and idle throttle for the next arm. */
+            Tuning_Tick(now, arm, &s, NULL);
             FlightCtrl_Idle(&s);
             FlightInput_Reset();
         }
         s_reported_throttle_us = (uint16_t)cmd.throttle_us;
 
         ESC_SetAllMotors(motors[0], motors[1], motors[2], motors[3]);
+
+        /* Tuning log (100 Hz, one axis) replaces the CSV while it is on. */
+        if (Tuning_Log(now, &s, &cmd, &dbg, motors)) {
+            continue;
+        }
 
         /* Telemetry — one CSV line every 2 ticks (~50 Hz).
          * 100 Hz overruns the 16-deep log queue during motion bursts (~33%

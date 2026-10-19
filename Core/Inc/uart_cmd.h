@@ -26,6 +26,11 @@ extern "C" {
  *                     ar ap (angle roll/pitch)        (any time)
  *   $L                capture level trim, 2 s still   (DISARMED only)
  *   $?                print mode, gains, trim, radio link
+ *   $s r 60 300 3     step test: axis r|p|y, amp (deg/s, or deg in ANGLE
+ *                     mode), step ms (default 300 / 800 in ANGLE), reps
+ *                     (default 3) — ARMED, props on a rig (tuning.h)
+ *   $x                stop the step test
+ *   $l1 r / $l0       fast tuning log on (axis r|p|y) / off
  *
  * Arming stays physical (B1 or controller button hold) — there is no arm
  * command.
@@ -35,7 +40,7 @@ extern "C" {
 void UartCmd_OnRxByte(uint8_t byte);
 
 /* Parse and execute a pending line command, if any. ControlTask only. */
-void UartCmd_Poll(ArmState_t arm);
+void UartCmd_Poll(ArmState_t arm, uint32_t now_ms);
 
 #ifdef __cplusplus
 }

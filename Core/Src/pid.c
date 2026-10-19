@@ -25,6 +25,7 @@ void PID_Reset(PID_t *pid)
     pid->integral         = 0.0f;
     pid->prev_measurement = 0.0f;
     pid->has_prev         = 0u;
+    pid->p_term = pid->i_term = pid->d_term = pid->output = 0.0f;
 }
 
 void PID_ResetIntegral(PID_t *pid)
@@ -57,9 +58,10 @@ float PID_Update(PID_t *pid, float setpoint, float measurement, float dt)
     pid->prev_measurement = measurement;
     pid->has_prev = 1u;
 
-    const float output = pid->kp * error
-                       + pid->ki * pid->integral
-                       - pid->kd * d_meas;
+    pid->p_term = pid->kp * error;
+    pid->i_term = pid->ki * pid->integral;
+    pid->d_term = -pid->kd * d_meas;
+    pid->output = clampf(pid->p_term + pid->i_term + pid->d_term, pid->out_limit);
 
-    return clampf(output, pid->out_limit);
+    return pid->output;
 }

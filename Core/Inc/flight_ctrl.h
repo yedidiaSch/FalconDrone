@@ -46,12 +46,16 @@ typedef enum {
     FLIGHT_AXIS_PITCH,
     FLIGHT_AXIS_YAW,
     FLIGHT_AXIS_COUNT,
+    FLIGHT_AXIS_NONE = FLIGHT_AXIS_COUNT,
 } FlightAxis_t;
 
 /* Intermediate signals, for telemetry. */
 typedef struct {
     float roll_rate_sp;    /* deg/s, input of the rate loops */
     float pitch_rate_sp;
+    float yaw_rate_sp;
+    float roll_ref;        /* deg, angle setpoint (ANGLE mode, else 0) */
+    float pitch_ref;
 } FlightCtrlDebug;
 
 void FlightCtrl_Init(void);
@@ -66,6 +70,12 @@ void FlightCtrl_Idle(const IMUData *imu);
 
 void          FlightCtrl_SetMode(FlightMode_t mode);
 FlightMode_t  FlightCtrl_GetMode(void);
+
+/* Tuning step input (tuning.c): replaces the stick setpoint of one axis
+ * with `value` in physical units — deg for roll/pitch in ANGLE mode, deg/s
+ * otherwise. FLIGHT_AXIS_NONE turns it off. Not clamped by the stick limits;
+ * the caller validates the amplitude. */
+void          FlightCtrl_SetTestInput(FlightAxis_t axis, float value);
 
 void          FlightCtrl_SetGains(FlightLoop_t loop, float kp, float ki, float kd);
 const PID_t  *FlightCtrl_GetPid(FlightLoop_t loop);

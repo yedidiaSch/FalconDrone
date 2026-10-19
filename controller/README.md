@@ -1,6 +1,6 @@
 # FalconDrone Controller (ESP32)
 
-Handheld radio controller for FalconDrone: a slider for throttle, a joystick for roll/pitch with its push button as the arm button, an SSD1306 OLED for status. It talks to the drone over ESP-NOW (default, through the bridge ESP32 on the drone, see `bridge/README.md`) or an nRF24L01+.
+Handheld radio controller for FalconDrone: a throttle potentiometer (knob or slider), a joystick for roll/pitch, an ARM switch and an ANGLE/RATE mode switch, and an SSD1306 OLED for status. It talks to the drone over ESP-NOW (default, through the bridge ESP32 on the drone, see `bridge/README.md`) or an nRF24L01+.
 
 ## Layout
 
@@ -73,12 +73,13 @@ DISARMED            RATE    state (inverted when ARMED), drone's flight mode
 THR [█████    ]  45%  ┌──┐  slider
 OUT 1000us            │ ·│  throttle the drone is commanding
 TX 100% RX  98%       └──┘  packets acked by the drone / received by it; stick box
-HOLD BTN 2s TO ARM          what to do next (inverted = warning)
+ARM SWITCH TO ARM           what to do next (inverted = warning)
 ```
 
 - **Top line:** `NO RADIO` means the controller's own radio didn't start. `NO LINK` means the drone isn't replying.
 - **Bottom line without a link:** `SEARCHING FOR DRONE` = nothing on the other end answers (bridge / drone radio off or out of range). `NO REPLY FROM DRONE` = the radio on the drone gets our packets but the STM32 doesn't answer (UART wiring, STM32 not running, wrong transport built).
-- **Arm progress:** while the stick button is held, the bottom line shows a bar that fills over the 2 s the drone needs.
+- **Mode (top right):** the drone's mode. It blinks while the MODE switch asks for the other one; the drone takes it at the next disarm.
+- **`ARM SW OFF, THEN ON`:** the ARM switch is ON but the drone didn't arm (it was already ON when the link came up, the throttle was up, or arming failed). Flip it OFF and ON again.
 - **Preview without hardware:** `make -C controller/test screens` writes every screen as an image to `controller/test/screens/`.
 - **Display problems:**
   - Picture upside down: set `OLED_ROTATE_180` in `main/oled.c`.
@@ -89,7 +90,8 @@ HOLD BTN 2s TO ARM          what to do next (inverted = warning)
 
 Constants at the top of `main/inputs.c`:
 
-- `SLIDER_RAW_MIN` / `SLIDER_RAW_MAX`: raw values at the slider's two ends. Set `SLIDER_INVERT` if "up" reads lower.
+- `SLIDER_RAW_MIN` / `SLIDER_RAW_MAX`: raw values at the throttle pot's two ends. Set `SLIDER_INVERT` if "up" reads lower. Each read drops the highest and lowest of 8 ADC samples; the zero threshold sits above the remaining jitter (~250 raw).
+- `ARM_SW_ON_LEVEL` / `MODE_ANGLE_LEVEL`: GPIO level of each switch in its ON / ANGLE position. It depends on which end pin went to GND; the log shows `raw ... arm= mode=`.
 - `STICK_INVERT_X` / `STICK_INVERT_Y`: set so stick right gives `roll > 0` and stick back (toward you) gives `pitch > 0`.
 - The stick center is measured at every boot, so don't touch the stick while powering up.
 
@@ -99,17 +101,20 @@ See `main/board.h` (controller). With ESP-NOW the controller needs no radio wiri
 
 ## Using it
 
-- **Arm:** slider at zero, hold the stick button 2 s. The drone refuses with the slider up.
-- **Disarm:** press the stick button.
+- **Arm:** throttle at zero, ARM switch OFF→ON. The drone refuses with the throttle up, and a switch that is already ON never arms: flip it OFF and ON.
+- **Disarm:** ARM switch OFF, at any moment. This is the emergency stop.
+- **Mode:** MODE switch, ANGLE or RATE. Applied while disarmed only.
 - **Failsafe:** the drone disarms if packets stop for 250 ms, or if a controller connects while it is armed from B1.
-- **Throttle:** slider 0..1000 maps to 1000..`THROTTLE_MAX_US` µs, slew-limited.
+- **Throttle:** 0..1000 maps to 1000..`THROTTLE_MAX_US` µs, slew-limited.
+- **Stick button:** sent to the drone (`RC_FLAG_BUTTON`) but has no action yet.
 - **Stick:** full stick = `ANGLE_MAX_DEG` tilt in ANGLE mode, `STICK_RATE_MAX_DPS` in RATE mode.
 
 ## Dry test (no props)
 
 1. Drone on USB with `telemetry.py`: expect `[RC] Radio ready (bridge)`, then `[RC] Link up` once the controller runs.
 2. `$?` prints `[RC] ... thr= roll= pitch=`. Move each input and check the sign.
-3. Slider up, hold button: `[ARM] Refused: throttle not at zero`.
-4. Slider to zero, hold button 2 s: ARMED. Slider moves `thr` and the motors.
-5. RATE mode, stick right: `rsp` positive and the left-side motors speed up. Check pitch the same way.
-6. While armed, unplug the controller: `[RC] Link lost`, then `DISARMED: radio link lost`.
+3. Throttle up, ARM switch ON: `[ARM] Refused: throttle not at zero`.
+4. Throttle to zero, ARM switch OFF→ON: ARMED. The throttle moves `thr` and the motors. ARM OFF: `DISARMED: arm switch off`.
+5. MODE switch while disarmed: `[MODE] ANGLE (controller switch)`. While armed: nothing until the next disarm.
+6. RATE mode, stick right: `rsp` positive and the left-side motors speed up. Check pitch the same way.
+7. While armed, unplug the controller: `[RC] Link lost`, then `DISARMED: radio link lost`.

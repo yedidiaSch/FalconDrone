@@ -8,7 +8,7 @@
 #include <stdlib.h>
 
 /* ---- Calibration — adjust after watching the raw values in the log ------ */
-#define SLIDER_RAW_MIN     250    /* raw at the "zero" end (and below → 0)    */
+#define SLIDER_RAW_MIN     300    /* raw at the "zero" end (and below → 0)    */
 #define SLIDER_RAW_MAX    3950    /* raw at the "full" end (and above → max)  */
 #define SLIDER_INVERT        0    /* 1 if pushing the slider up lowers raw    */
 
@@ -17,8 +17,11 @@
 #define STICK_INVERT_X       0    /* set so stick right → roll > 0            */
 #define STICK_INVERT_Y       0    /* set so stick back (toward you) → pitch > 0 */
 
+#define ARM_SW_ON_LEVEL      1    /* GPIO level of the ARM switch when ON     */
+#define MODE_ANGLE_LEVEL     1    /* GPIO level of the MODE switch on ANGLE   */
+
 #define ADC_RAW_MAX       4095
-#define OVERSAMPLE           4
+#define OVERSAMPLE           8    /* per read; the highest and lowest dropped */
 #define CENTER_SAMPLES      32
 
 static const char *TAG = "inputs";
@@ -26,7 +29,22 @@ static const char *TAG = "inputs";
 static adc_oneshot_unit_handle_t s_adc;
 static adc_channel_t s_ch_throttle, s_ch_x, s_ch_y;
 static int s_center_x, s_center_y;
-static bool s_btn_last_raw, s_btn_state;
+/* Accept a new level only when two reads in a row agree (20 ms apart). */
+typedef struct {
+    bool last_raw;
+    bool state;
+} Debounce;
+
+static Debounce s_btn, s_arm, s_mode;
+
+static bool debounce(Debounce *d, bool raw)
+{
+    if (raw == d->last_raw) {
+        d->state = raw;
+    }
+    d->last_raw = raw;
+    return d->state;
+}
 
 static esp_err_t add_channel(gpio_num_t pin, adc_channel_t *ch)
 {
@@ -51,6 +69,21 @@ static int read_avg(adc_channel_t ch, int n)
         sum += raw;
     }
     return sum / n;
+}
+
+/* OVERSAMPLE reads, highest and lowest dropped: the ESP32 ADC throws
+ * occasional spikes of a few hundred counts that a plain average lets through. */
+static int read_trimmed(adc_channel_t ch)
+{
+    int sum = 0, lo = ADC_RAW_MAX, hi = 0;
+    for (int i = 0; i < OVERSAMPLE; i++) {
+        int raw = 0;
+        adc_oneshot_read(s_adc, ch, &raw);
+        sum += raw;
+        if (raw < lo) lo = raw;
+        if (raw > hi) hi = raw;
+    }
+    return (sum - lo - hi) / (OVERSAMPLE - 2);
 }
 
 static int clampi(int v, int lo, int hi)
@@ -91,7 +124,7 @@ esp_err_t inputs_init(void)
     if (err != ESP_OK) return err;
 
     const gpio_config_t sw = {
-        .pin_bit_mask = 1ULL << PIN_STICK_SW,
+        .pin_bit_mask = (1ULL << PIN_STICK_SW) | (1ULL << PIN_ARM_SW) | (1ULL << PIN_MODE_SW),
         .mode         = GPIO_MODE_INPUT,
         .pull_up_en   = GPIO_PULLUP_ENABLE,
     };
@@ -114,20 +147,18 @@ esp_err_t inputs_init(void)
 
 void inputs_read(Inputs *in)
 {
-    in->raw_throttle = read_avg(s_ch_throttle, OVERSAMPLE);
-    in->raw_x        = read_avg(s_ch_x, OVERSAMPLE);
-    in->raw_y        = read_avg(s_ch_y, OVERSAMPLE);
+    in->raw_throttle = read_trimmed(s_ch_throttle);
+    in->raw_x        = read_trimmed(s_ch_x);
+    in->raw_y        = read_trimmed(s_ch_y);
 
     in->throttle = slider(in->raw_throttle);
     in->roll     = stick_axis(in->raw_x, s_center_x, STICK_INVERT_X);
     in->pitch    = stick_axis(in->raw_y, s_center_y, STICK_INVERT_Y);
 
-    /* Active low. Accept a new level only when two reads in a row agree
-     * (reads are 20 ms apart). */
-    const bool raw = gpio_get_level(PIN_STICK_SW) == 0;
-    if (raw == s_btn_last_raw) {
-        s_btn_state = raw;
-    }
-    s_btn_last_raw = raw;
-    in->button = s_btn_state;
+    in->raw_arm  = gpio_get_level(PIN_ARM_SW);
+    in->raw_mode = gpio_get_level(PIN_MODE_SW);
+
+    in->button = debounce(&s_btn,  gpio_get_level(PIN_STICK_SW) == 0);   /* active low */
+    in->arm    = debounce(&s_arm,  in->raw_arm  == ARM_SW_ON_LEVEL);
+    in->angle  = debounce(&s_mode, in->raw_mode == MODE_ANGLE_LEVEL);
 }

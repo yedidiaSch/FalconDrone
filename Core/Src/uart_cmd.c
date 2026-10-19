@@ -116,6 +116,10 @@ static void cmd_mode(const char *arg, ArmState_t arm)
         Log_Print("[CMD] mode change rejected: disarm first\r\n");
         return;
     }
+    if (RcService_Link()->state == RC_LINK_UP) {
+        Log_Print("[CMD] mode change rejected: the controller's mode switch sets it\r\n");
+        return;
+    }
     if (arg[0] == '0') {
         FlightCtrl_SetMode(FLIGHT_MODE_RATE);
     } else if (arg[0] == '1') {

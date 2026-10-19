@@ -11,6 +11,8 @@
  *   OLED        SSD1306 128x64, VCC→3V3, GND, SDA→D21, SCL→D22
  *   Slider      ends→3V3/GND, wiper→D34
  *   Joystick    VRx→D32, VRy→D33, SW→D25
+ *   Switches    ARM: middle pin→D26, one end pin→GND (other end free)
+ *               MODE: middle pin→D27, one end pin→GND (other end free)
  *
  * Analog inputs must stay on ADC1 (GPIO32-39): ADC2 is unusable while the
  * Wi-Fi driver is active, so it is avoided altogether.
@@ -37,5 +39,10 @@
 
 /* Joystick push button, active low (internal pull-up) */
 #define PIN_STICK_SW    GPIO_NUM_25
+
+/* Slide switches to GND, internal pull-up. Which level means ON is set in
+ * inputs.c (depends on which end pin was wired to GND). */
+#define PIN_ARM_SW      GPIO_NUM_26
+#define PIN_MODE_SW     GPIO_NUM_27
 
 #endif /* BOARD_H */

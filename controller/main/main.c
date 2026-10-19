@@ -7,8 +7,9 @@
  *      to the drone's bridge, or nRF24) and wait for the radio-level ACK
  *   3. pick up the drone's newest RcAck status
  *
- * Arming happens on the drone: hold the stick button 2 s with the slider at
- * zero; press it again to disarm. The drone disarms by itself if packets
+ * Arming happens on the drone: flip the ARM switch OFF→ON with the throttle
+ * at zero; ARM OFF disarms at once. The MODE switch picks ANGLE/RATE, taken
+ * by the drone while disarmed. The drone also disarms by itself if packets
  * stop for RC_LINK_TIMEOUT_MS.
  *
  * Status goes to the OLED (ui.c, 10 Hz) and to the serial monitor twice a
@@ -45,12 +46,13 @@ static void radio_init(void)
         Inputs in;
         inputs_read(&in);
         const UiState ui = { .radio_ok = false, .throttle = in.throttle,
-                             .roll = in.roll, .pitch = in.pitch, .button = in.button };
+                             .roll = in.roll, .pitch = in.pitch,
+                             .arm_sw = in.arm, .angle_sw = in.angle };
         ui_publish(&ui);
         ESP_LOGE(TAG, "%s radio not ready — check wiring; retrying "
-                      "(thr=%u roll=%+d pitch=%+d btn=%d raw thr=%d x=%d y=%d)",
-                 radio_link_name(), (unsigned)in.throttle, in.roll, in.pitch, in.button,
-                 in.raw_throttle, in.raw_x, in.raw_y);
+                      "(thr=%u roll=%+d pitch=%+d arm=%d angle=%d | raw thr=%d x=%d y=%d arm=%d mode=%d)",
+                 radio_link_name(), (unsigned)in.throttle, in.roll, in.pitch, in.arm, in.angle,
+                 in.raw_throttle, in.raw_x, in.raw_y, in.raw_arm, in.raw_mode);
         vTaskDelay(pdMS_TO_TICKS(500));
     }
     ESP_LOGI(TAG, "radio ready (%s)", radio_link_name());
@@ -70,7 +72,7 @@ static void radio_task(void *arg)
     unsigned sent = 0, acked = 0;
     uint8_t  tx_pct = 0;
     TickType_t last_status = xTaskGetTickCount();
-    TickType_t button_down = 0;
+    TickType_t arm_on_since = 0;      /* 0 = ARM switch OFF */
 
     TickType_t wake = xTaskGetTickCount();
     for (;;) {
@@ -81,7 +83,9 @@ static void radio_task(void *arg)
 
         const RcPacket pkt = {
             .seq      = seq++,
-            .flags    = in.button ? RC_FLAG_ARM_REQ : 0,
+            .flags    = (uint8_t)((in.arm    ? RC_FLAG_ARM    : 0u) |
+                                  (in.angle  ? RC_FLAG_ANGLE  : 0u) |
+                                  (in.button ? RC_FLAG_BUTTON : 0u)),
             .throttle = in.throttle,
             .roll     = in.roll,
             .pitch    = in.pitch,
@@ -100,10 +104,10 @@ static void radio_task(void *arg)
         }
 
         const bool drone_fresh = have_ack && (now - last_ack) <= pdMS_TO_TICKS(ACK_STALE_MS);
-        if (in.button && button_down == 0) {
-            button_down = now ? now : 1;     /* 0 means "not held" */
-        } else if (!in.button) {
-            button_down = 0;
+        if (in.arm && arm_on_since == 0) {
+            arm_on_since = now ? now : 1;
+        } else if (!in.arm) {
+            arm_on_since = 0;
         }
         const UiState ui = {
             .radio_ok          = true,
@@ -116,8 +120,9 @@ static void radio_task(void *arg)
             .throttle          = in.throttle,
             .roll              = in.roll,
             .pitch             = in.pitch,
-            .button            = in.button,
-            .button_held_ms    = button_down ? (uint32_t)pdTICKS_TO_MS(now - button_down) : 0u,
+            .arm_sw            = in.arm,
+            .angle_sw          = in.angle,
+            .arm_sw_on_ms      = arm_on_since ? (uint32_t)pdTICKS_TO_MS(now - arm_on_since) : 0u,
         };
         ui_publish(&ui);
 
@@ -125,13 +130,14 @@ static void radio_task(void *arg)
             const unsigned link = sent ? acked * 100u / sent : 0u;
             tx_pct = (uint8_t)link;
             if (drone_fresh) {
-                ESP_LOGI(TAG, "thr=%4u roll=%+5d pitch=%+5d btn=%d | tx %3u%% | drone %-8s thr=%uus rx=%u%%",
-                         in.throttle, in.roll, in.pitch, in.button, link,
+                ESP_LOGI(TAG, "thr=%4u roll=%+5d pitch=%+5d arm=%d angle=%d | tx %3u%% | drone %-8s thr=%uus rx=%u%%",
+                         in.throttle, in.roll, in.pitch, in.arm, in.angle, link,
                          arm_name(drone.arm_state), drone.throttle_us, drone.link_pct);
             } else {
-                ESP_LOGW(TAG, "thr=%4u roll=%+5d pitch=%+5d btn=%d | tx %3u%% | no reply from drone (raw thr=%d x=%d y=%d)",
-                         in.throttle, in.roll, in.pitch, in.button, link,
-                         in.raw_throttle, in.raw_x, in.raw_y);
+                ESP_LOGW(TAG, "thr=%4u roll=%+5d pitch=%+5d arm=%d angle=%d | tx %3u%% | no reply from drone "
+                              "(raw thr=%d x=%d y=%d arm=%d mode=%d)",
+                         in.throttle, in.roll, in.pitch, in.arm, in.angle, link,
+                         in.raw_throttle, in.raw_x, in.raw_y, in.raw_arm, in.raw_mode);
             }
             sent = acked = 0;
             last_status = now;

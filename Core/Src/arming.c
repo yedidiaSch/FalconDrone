@@ -25,6 +25,10 @@ static uint8_t  s_btn_prev;
 static uint8_t  s_btn_consumed;
 static uint32_t s_btn_press_ms;
 
+/* ARM switch level last tick. Starts (and resets without a controller) as
+ * ON, so a switch already ON when the link comes up is not an OFF→ON flip. */
+static uint8_t  s_sw_prev = 1;
+
 static void disarm(const char *reason)
 {
     if (s_state != ARM_STATE_DISARMED) {
@@ -48,6 +52,33 @@ static uint8_t is_level_and_still(const IMUData *imu, const char **reason)
     return 1;
 }
 
+static void start_arming(uint32_t now_ms, const char *msg)
+{
+    s_state = ARM_STATE_ARMING;
+    s_phase = PHASE_CALIBRATING;
+    s_phase_start_ms = now_ms;
+    imuRequestCalibration();
+    Log_Print(msg);
+}
+
+static void handle_switch(uint32_t now_ms, const ArmInputs *in)
+{
+    if (!in->has_switch) {
+        s_sw_prev = 1;
+        return;
+    }
+    if (!in->arm_switch) {
+        disarm("arm switch off");
+    } else if (!s_sw_prev && s_state == ARM_STATE_DISARMED) {
+        if (!in->throttle_low) {
+            Log_Print("[ARM] Refused: throttle not at zero — switch OFF, throttle down, switch ON\r\n");
+        } else {
+            start_arming(now_ms, "[ARM] Arming — keep the drone still\r\n");
+        }
+    }
+    s_sw_prev = in->arm_switch;
+}
+
 static void handle_button(uint32_t now_ms, uint8_t pressed, uint8_t throttle_low)
 {
     if (pressed && !s_btn_prev) {
@@ -65,11 +96,7 @@ static void handle_button(uint32_t now_ms, uint8_t pressed, uint8_t throttle_low
         if (!throttle_low) {
             Log_Print("[ARM] Refused: throttle not at zero\r\n");
         } else {
-            s_state = ARM_STATE_ARMING;
-            s_phase = PHASE_CALIBRATING;
-            s_phase_start_ms = now_ms;
-            imuRequestCalibration();
-            Log_Print("[ARM] Arming — release the button and keep the board still\r\n");
+            start_arming(now_ms, "[ARM] Arming — release the button and keep the board still\r\n");
         }
     }
 
@@ -79,6 +106,7 @@ static void handle_button(uint32_t now_ms, uint8_t pressed, uint8_t throttle_low
 ArmState_t Arming_Update(uint32_t now_ms, const ArmInputs *in, const IMUData *imu)
 {
     handle_button(now_ms, in->button, in->throttle_low);
+    handle_switch(now_ms, in);   /* after B1: the switch has the last word */
 
     if (s_disarm_request) {
         s_disarm_request = 0;
@@ -109,7 +137,7 @@ ArmState_t Arming_Update(uint32_t now_ms, const ArmInputs *in, const IMUData *im
                 disarm(reason);
             } else if ((now_ms - s_phase_start_ms) >= ARM_CHECK_MS) {
                 s_state = ARM_STATE_ARMED;
-                Log_Print("[ARM] ARMED — press the button or 'd' on the PC to disarm\r\n");
+                Log_Print("[ARM] ARMED — ARM switch OFF, B1 or 'd' on the PC disarms\r\n");
             }
         }
         break;

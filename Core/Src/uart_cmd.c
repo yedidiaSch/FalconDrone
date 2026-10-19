@@ -4,6 +4,7 @@
 #include "flight_input.h"
 #include "logger.h"
 #include "rc_service.h"
+#include "tuning.h"
 #include "watchdog.h"
 #include <stdlib.h>
 #include <string.h>
@@ -157,7 +158,62 @@ static void cmd_gains(const char *arg)
                s_loop_names[loop], k[0], k[1], k[2]);
 }
 
-void UartCmd_Poll(ArmState_t arm)
+static FlightAxis_t parse_axis(const char **p)
+{
+    while (**p == ' ') (*p)++;
+    FlightAxis_t axis = FLIGHT_AXIS_NONE;
+    switch (**p) {
+    case 'r': axis = FLIGHT_AXIS_ROLL;  break;
+    case 'p': axis = FLIGHT_AXIS_PITCH; break;
+    case 'y': axis = FLIGHT_AXIS_YAW;   break;
+    default:  return FLIGHT_AXIS_NONE;
+    }
+    (*p)++;
+    return axis;
+}
+
+/* $s <r|p|y> <amp> [step_ms] [reps=3]
+ * Default step: 300 ms for a rate response, 800 ms for an angle response. */
+static void cmd_step_test(const char *arg, ArmState_t arm, uint32_t now_ms)
+{
+    const char *p = arg;
+    const FlightAxis_t axis = parse_axis(&p);
+
+    char *end;
+    const float amp = strtof(p, &end);
+    if (axis == FLIGHT_AXIS_NONE || end == p) {
+        Log_Print("[TUNE] usage: $s <r|p|y> <amp> [step_ms] [reps]\r\n");
+        return;
+    }
+    p = end;
+    unsigned long step_ms = strtoul(p, &end, 10);
+    if (end == p) {
+        step_ms = (FlightCtrl_GetMode() == FLIGHT_MODE_ANGLE && axis != FLIGHT_AXIS_YAW)
+                ? 800u : 300u;
+    }
+    p = end;
+    unsigned long reps = strtoul(p, &end, 10);
+    if (end == p) reps = 3;
+
+    if (step_ms > 0xFFFFu) step_ms = 0xFFFFu;   /* rejected by the range check */
+    if (reps > 0xFFu)      reps    = 0xFFu;
+    Tuning_Start(axis, amp, (uint16_t)step_ms, (uint8_t)reps, arm, now_ms);
+}
+
+/* $l1 [r|p|y] / $l0 */
+static void cmd_tune_log(const char *arg)
+{
+    if (arg[0] == '0') {
+        Tuning_SetLog(false, FLIGHT_AXIS_NONE);
+    } else if (arg[0] == '1') {
+        const char *p = &arg[1];
+        Tuning_SetLog(true, parse_axis(&p));
+    } else {
+        Log_Print("[TUNE] usage: $l1 [r|p|y] | $l0\r\n");
+    }
+}
+
+void UartCmd_Poll(ArmState_t arm, uint32_t now_ms)
 {
     if (!s_line_ready) {
         return;
@@ -171,6 +227,9 @@ void UartCmd_Poll(ArmState_t arm)
     case 't': cmd_throttle(&line[1], arm); break;
     case 'm': cmd_mode(&line[1], arm);     break;
     case 'g': cmd_gains(&line[1]);         break;
+    case 's': cmd_step_test(&line[1], arm, now_ms); break;
+    case 'x': Tuning_Abort("stopped from the PC"); break;
+    case 'l': cmd_tune_log(&line[1]);      break;
     case 'L':
         if (arm == ARM_STATE_DISARMED) {
             FlightCtrl_StartTrimCapture();

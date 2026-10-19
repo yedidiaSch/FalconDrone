@@ -36,6 +36,12 @@ typedef struct {
     float integral;
     float prev_measurement;
     uint8_t has_prev;  /* 0 on first call → skip derivative term     */
+
+    /* Terms of the last PID_Update(), for the tuning log. */
+    float p_term;
+    float i_term;
+    float d_term;
+    float output;      /* clamped sum                                */
 } PID_t;
 
 void  PID_Init(PID_t *pid,

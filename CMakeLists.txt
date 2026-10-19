@@ -72,6 +72,8 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Core/Src/rc_link.c
     Core/Src/rc_service.c
     Core/Src/nrf24_port_stm32.c
+    Core/Src/tune_seq.c
+    Core/Src/tuning.c
     shared/nrf24/src/nrf24.c
     # Add user sources here
 )

@@ -33,14 +33,25 @@ Commands (type in the terminal, Enter to send; the '$' is added for you):
     m0 / m1          rate / angle mode (DISARMED only)
     g rr 0.6 0 0.02  set kp ki kd: rr rp ry (rate), ar ap (angle)
     L                capture level trim (DISARMED, frame level and still)
-    ?                print mode, gains, trim
+    ?                print mode, gains, trim, radio
+    s r 60 300 3     automatic step test: axis, amp, step ms, reps
+                     (ARMED, PROPS ON, DRONE ON A RIG)
+    x                stop the step test
+    l1 r / l0        100 Hz tuning log on (axis) / off
     d                disarm
+
+Tuning: every "T,..." line and every "[...]" message after the first
+tuning line goes to logs/tune_<time>.log. When a step test ends, the
+analyzer (tools/tune_analyze.py) runs on it and prints the measurements and
+the next suggested $g command. During a test the gyro panel shows the tested
+axis: measured rate (solid) vs setpoint (dashed).
 
 Usage:
     python telemetry.py --port /dev/ttyACM0
     python telemetry.py --port /dev/ttyACM0 --record session.csv
 """
 import argparse
+import os
 import queue
 import sys
 import threading
@@ -52,7 +63,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 import serial
 
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), 'tools'))
+import tune_analyze  # noqa: E402
+
 FIELD_COUNT = 15
+TUNE_FIELDS = 13          # T,t_ms,seg,ref,sp,meas,ang,p,i,d,u,thr,sat
+TUNE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'logs')
 MODES = {0: 'RATE', 1: 'ANGLE'}
 ARM_STATES = {0: ('DISARMED', '#888888'), 1: ('ARMED', '#ff4d4d'),
               2: ('ARMING…', '#ffa94d')}
@@ -94,6 +110,28 @@ class Telemetry:
         self.mode   = 0
         self.rx_count = 0
         self.last_rx  = time.time()
+        # Tuning log (100 Hz, one axis)
+        self.tune_t    = deque(maxlen=max_samples)
+        self.tune_sp   = deque(maxlen=max_samples)
+        self.tune_meas = deque(maxlen=max_samples)
+        self.tune_axis = 'r'
+        self.last_tune_rx = 0.0
+
+    def feed_tune(self, line):
+        parts = line.split(',')
+        if len(parts) != TUNE_FIELDS:
+            return
+        try:
+            t, sp, meas = float(parts[1]), float(parts[4]), float(parts[5])
+        except ValueError:
+            return
+        self.tune_t.append(t / 1000.0)
+        self.tune_sp.append(sp)
+        self.tune_meas.append(meas)
+        self.last_tune_rx = time.time()
+
+    def tune_live(self):
+        return time.time() - self.last_tune_rx < 1.0
 
     def feed(self, line):
         parts = line.split(',')
@@ -137,6 +175,8 @@ class SerialReader(threading.Thread):
         super().__init__(daemon=True)
         self.ser = ser
         self.record_fp = record_fp
+        self.tune_fp = None        # opened at the first tuning line
+        self.tune_path = None
         self.lines = queue.Queue()
         self.error = None          # set to the exception if the link dies
         self._stop_evt = threading.Event()
@@ -157,7 +197,27 @@ class SerialReader(threading.Thread):
             if self.record_fp is not None and line[0].isdigit() \
                     and line.count(',') == FIELD_COUNT - 1:
                 self.record_fp.write(line + '\n')
+            self.capture_tuning(line)
             self.lines.put(line)
+
+    def capture_tuning(self, line):
+        """Tuning lines (+ firmware messages around them) → logs/tune_*.log.
+
+        Written here, before the line reaches the GUI, so the file is
+        complete when the GUI sees "[TUNE] done" and runs the analyzer."""
+        is_t = line.startswith('T,')
+        if self.tune_fp is None:
+            if not (is_t or line.startswith('[TUNE]')):
+                return
+            os.makedirs(TUNE_DIR, exist_ok=True)
+            self.tune_path = os.path.join(
+                TUNE_DIR, time.strftime('tune_%Y%m%d_%H%M%S.log'))
+            self.tune_fp = open(self.tune_path, 'a')
+            print(f'[PC] tuning log: {self.tune_path}')
+        if is_t or line.startswith('['):
+            self.tune_fp.write(line + '\n')
+            if not is_t:
+                self.tune_fp.flush()
 
     def stop(self):
         self._stop_evt.set()
@@ -333,10 +393,35 @@ def main():
                 line = reader.lines.get_nowait()
             except queue.Empty:
                 return
+            if line.startswith('T,'):
+                tel.feed_tune(line)
+                continue
             if not tel.feed(line) and not line[0].isdigit():
                 # Firmware event / log message, e.g. "[ARM] ARMED ..."
                 print(line)
                 h['event_text'].set_text(line)
+                if line.startswith('[TUNE] start'):
+                    tel.tune_axis = tune_analyze.parse_start(line).get('axis', 'r')
+                    tel.tune_t.clear(); tel.tune_sp.clear(); tel.tune_meas.clear()
+                elif line.startswith(('[TUNE] done', '[TUNE] aborted')):
+                    analyze_last_test()
+
+    def analyze_last_test():
+        if reader.tune_path is None:
+            return
+        reader.tune_fp.flush()
+        with open(reader.tune_path, errors='ignore') as fp:
+            tests = tune_analyze.parse_log(fp)
+        if not tests:
+            return
+        res = tune_analyze.analyze(tests[-1])
+        print()
+        print(tune_analyze.report(res))
+        print(f'   (log: {reader.tune_path})')
+        print()
+        adv = res['advice']
+        h['event_text'].set_text(f'TUNE {adv["verdict"]}: {adv["why"]}'
+                                 + (f'  →  {adv["command"]}' if adv['command'] else ''))
 
     def update(_frame):
         if link['lost']:
@@ -390,12 +475,30 @@ def main():
             )
             h['bar_texts'][i].set_text(str(v))
 
-        # Gyro time series
-        for ln, src in zip(h['gyro_lines'], (tel.gx, tel.gy, tel.gz)):
-            ln.set_data(t_arr, take(src))
+        # Gyro time series — or, during a step test, the tested axis at 100 Hz
+        if tel.tune_live() and tel.tune_t:
+            tt = np.fromiter(tel.tune_t, dtype=float)
+            tt -= tt[-1]
+            keep = tt >= -args.window
+            k = {'r': 0, 'p': 1, 'y': 2}.get(tel.tune_axis, 0)
+            for i, ln in enumerate(h['gyro_lines']):
+                if i == k:
+                    ln.set_data(tt[keep], np.fromiter(tel.tune_meas, dtype=float)[keep])
+                else:
+                    ln.set_data([], [])
+            h['sp_lines'][0].set_data(tt[keep], np.fromiter(tel.tune_sp, dtype=float)[keep])
+            h['sp_lines'][0].set_color(GYRO_COLORS[k])
+            h['sp_lines'][1].set_data([], [])
+            h['ax_g'].set_title(f'TUNING {tel.tune_axis}: rate (solid) vs setpoint (dashed), 100 Hz',
+                                color='#ffd43b')
+        else:
+            h['ax_g'].set_title('Gyro rates  (deg/s)', color='#dddddd')
+            h['sp_lines'][0].set_color(GYRO_COLORS[0])
+            for ln, src in zip(h['gyro_lines'], (tel.gx, tel.gy, tel.gz)):
+                ln.set_data(t_arr, take(src))
 
-        for ln, src in zip(h['sp_lines'], (tel.rsp, tel.psp)):
-            ln.set_data(t_arr, take(src))
+            for ln, src in zip(h['sp_lines'], (tel.rsp, tel.psp)):
+                ln.set_data(t_arr, take(src))
 
         # Motor history
         for i, ln in enumerate(h['motor_lines']):
@@ -434,6 +537,8 @@ def main():
         reader.join(timeout=1.0)
         if record_fp is not None:
             record_fp.close()
+        if reader.tune_fp is not None:
+            reader.tune_fp.close()
         ser.close()
 
 

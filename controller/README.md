@@ -10,7 +10,11 @@ controller/                ESP-IDF project
 │   ├── main.c             app_main + radio task (50 Hz send, read drone status)
 │   ├── inputs.c           slider / stick / button → packet values, calibration constants
 │   ├── nrf24_port_esp32.c nRF24 board glue (SPI3, CE pin)
+│   ├── ui.c / oled.c      screen task (10 Hz) + SSD1306 over I2C
+│   ├── ui_draw.c          screen layout (pure C)
+│   ├── gfx.c, font5x7.h   framebuffer, text, bars
 │   └── board.h            pin map + wiring notes
+├── test/                  host tests for the screen: make -C controller/test
 └── sdkconfig.defaults     tracked config (sdkconfig itself is generated)
 shared/
 ├── rc_protocol/           RcPacket / RcAck — the same header is used by the STM32 firmware
@@ -43,6 +47,24 @@ I (...) controller: thr=   0 roll=   +0 pitch=   +0 btn=0 | tx 100% | drone DISA
 ```
 
 `tx` = packets the drone acknowledged, `rx` = packets the drone received. Without the drone the line reads `no reply from drone` and shows raw ADC values, which is what you need to calibrate.
+
+## Screen
+
+```
+DISARMED            RATE    state (inverted when ARMED), drone's flight mode
+THR [█████    ]  45%  ┌──┐  slider
+OUT 1000us            │ ·│  throttle the drone is commanding
+TX 100% RX  98%       └──┘  packets acked by the drone / received by it; stick box
+HOLD BTN 2s TO ARM          what to do next (inverted = warning)
+```
+
+- **Top line:** `NO RADIO` means the controller's own nRF24 isn't answering. `NO LINK` means the drone isn't replying.
+- **Arm progress:** while the stick button is held, the bottom line shows a bar that fills over the 2 s the drone needs.
+- **Preview without hardware:** `make -C controller/test screens` writes every screen as an image to `controller/test/screens/`.
+- **Display problems:**
+  - Picture upside down: set `OLED_ROTATE_180` in `main/oled.c`.
+  - Picture shifted by 2 px, or garbage: the display is probably an SH1106 (common on 1.3" modules) rather than an SSD1306.
+  - Without a display, the controller still works and logs a warning.
 
 ## Calibration
 

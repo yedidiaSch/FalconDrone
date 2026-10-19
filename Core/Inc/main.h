@@ -69,6 +69,10 @@ void Error_Handler(void);
 #define NRF_CE_GPIO_Port GPIOB
 #define NRF_CSN_Pin GPIO_PIN_12
 #define NRF_CSN_GPIO_Port GPIOB
+#define BRIDGE_TX_Pin GPIO_PIN_9
+#define BRIDGE_TX_GPIO_Port GPIOA
+#define BRIDGE_RX_Pin GPIO_PIN_10
+#define BRIDGE_RX_GPIO_Port GPIOA
 #define TMS_Pin GPIO_PIN_13
 #define TMS_GPIO_Port GPIOA
 #define TCK_Pin GPIO_PIN_14

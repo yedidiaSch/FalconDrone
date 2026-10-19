@@ -94,3 +94,11 @@ Core/test/test_tune_seq
 controller/test/test_ui
 controller/test/screens/
 !controller/test/Makefile
+
+# ESP-IDF bridge (bridge/) — generated config
+bridge/sdkconfig
+bridge/sdkconfig.old
+
+# Frame codec host test binary
+shared/rc_protocol/test/test_rc_frame
+!shared/rc_protocol/test/Makefile

@@ -66,9 +66,11 @@ static void hint(Gfx *g, const UiState *s)
     bool warn = false;
 
     if (!s->radio_ok) {
-        text = "CHECK nRF24 WIRING"; warn = true;
+        text = "RADIO NOT FOUND"; warn = true;
     } else if (!s->drone_link) {
-        text = "NO REPLY FROM DRONE";
+        /* tx_pct > 0: our packets arrive (nRF24 ACK / bridge), but the
+         * flight controller does not answer. */
+        text = s->tx_pct > 0 ? "NO REPLY FROM DRONE" : "SEARCHING FOR DRONE";
     } else if (s->arm_state == ARM_ARMED) {
         text = "BUTTON = DISARM";
     } else if (s->arm_state == ARM_ARMING) {

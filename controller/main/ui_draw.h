@@ -19,12 +19,13 @@
 #include "gfx.h"
 
 typedef struct {
-    bool     radio_ok;          /* nRF24 initialized                     */
+    bool     radio_ok;          /* radio hardware initialized            */
     bool     drone_link;        /* fresh RcAck from the drone            */
     uint8_t  arm_state;         /* RcAck.arm_state (valid with link)     */
     uint8_t  mode;              /* RcAck.mode                            */
     uint16_t drone_throttle_us; /* RcAck.throttle_us                     */
-    uint8_t  tx_pct;            /* packets ACKed by the drone, %         */
+    uint8_t  tx_pct;            /* packets acknowledged by the drone's
+                                   radio (nRF24) or bridge (ESP-NOW), %  */
     uint8_t  rx_pct;            /* RcAck.link_pct                        */
     uint16_t throttle;          /* slider, 0..RC_THROTTLE_MAX            */
     int16_t  roll, pitch;       /* stick, -RC_AXIS_MAX..+RC_AXIS_MAX     */

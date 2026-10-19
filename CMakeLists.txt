@@ -71,12 +71,28 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Core/Src/logger.c
     Core/Src/rc_link.c
     Core/Src/rc_service.c
-    Core/Src/nrf24_port_stm32.c
     Core/Src/tune_seq.c
     Core/Src/tuning.c
-    shared/nrf24/src/nrf24.c
+    shared/rc_protocol/src/rc_frame.c
     # Add user sources here
 )
+
+# Radio transport: BRIDGE = ESP32 ESP-NOW bridge on USART1, NRF24 = nRF24 on SPI2.
+#   cmake --preset Debug -DFALCON_RC_RADIO=NRF24
+set(FALCON_RC_RADIO "BRIDGE" CACHE STRING "Radio transport: BRIDGE or NRF24")
+set_property(CACHE FALCON_RC_RADIO PROPERTY STRINGS BRIDGE NRF24)
+if(FALCON_RC_RADIO STREQUAL "NRF24")
+    target_sources(${CMAKE_PROJECT_NAME} PRIVATE
+        Core/Src/rc_radio_nrf24.c
+        Core/Src/nrf24_port_stm32.c
+        shared/nrf24/src/nrf24.c
+    )
+elseif(FALCON_RC_RADIO STREQUAL "BRIDGE")
+    target_sources(${CMAKE_PROJECT_NAME} PRIVATE Core/Src/rc_radio_bridge.c)
+else()
+    message(FATAL_ERROR "FALCON_RC_RADIO must be BRIDGE or NRF24, got '${FALCON_RC_RADIO}'")
+endif()
+message(STATUS "FalconDrone radio transport: ${FALCON_RC_RADIO}")
 
 # Add include paths
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE

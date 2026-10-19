@@ -3,8 +3,9 @@
  *
  * radio_task, every RC_PERIOD_MS (50 Hz):
  *   1. read slider, stick and button (inputs.c)
- *   2. send one RcPacket (nRF24 PTX, auto-ACK with retries)
- *   3. wait for the result; the ACK carries the drone's RcAck status
+ *   2. send one RcPacket over the radio transport (radio_link.h: ESP-NOW
+ *      to the drone's bridge, or nRF24) and wait for the radio-level ACK
+ *   3. pick up the drone's newest RcAck status
  *
  * Arming happens on the drone: hold the stick button 2 s with the slider at
  * zero; press it again to disarm. The drone disarms by itself if packets
@@ -14,19 +15,16 @@
  * second.
  */
 
-#include <string.h>
 #include "esp_log.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "board.h"
 #include "inputs.h"
-#include "nrf24.h"
-#include "nrf24_port_esp32.h"
+#include "radio_link.h"
 #include "rc_protocol.h"
 #include "ui.h"
 
-#define TX_WAIT_MAX_MS   10      /* worst case with 5 retries is ~4 ms        */
-#define ACK_STALE_MS     250     /* no ACK payload this long → drone unknown  */
+#define ACK_STALE_MS     250     /* no RcAck this long → drone unknown        */
 #define STATUS_PERIOD_MS 500
 
 static const char *TAG = "controller";
@@ -41,42 +39,27 @@ static const char *arm_name(uint8_t s)
     }
 }
 
-static void radio_init(Nrf24 *radio)
+static void radio_init(void)
 {
-    Nrf24Port port;
-    ESP_ERROR_CHECK(nrf24_port_esp32_init(&port));
-
-    const Nrf24Config cfg = {
-        .role           = NRF24_ROLE_PTX,
-        .channel        = RC_CHANNEL,
-        .rate           = NRF24_RATE_1MBPS,
-        .power          = NRF24_PA_LOW,   /* bench: modules sit close together */
-        .address        = RC_ADDRESS,
-        .retries        = RC_RETRIES,
-        .retry_delay_us = RC_RETRY_DELAY_US,
-    };
-
-    vTaskDelay(pdMS_TO_TICKS(100));       /* nRF24 power-on reset */
-    while (nrf24_init(radio, &port, &cfg) != NRF24_OK) {
+    while (!radio_link_init()) {
         Inputs in;
         inputs_read(&in);
         const UiState ui = { .radio_ok = false, .throttle = in.throttle,
                              .roll = in.roll, .pitch = in.pitch, .button = in.button };
         ui_publish(&ui);
-        ESP_LOGE(TAG, "nRF24 not found — check wiring and the 3V3 capacitor; retrying "
+        ESP_LOGE(TAG, "%s radio not ready — check wiring; retrying "
                       "(thr=%u roll=%+d pitch=%+d btn=%d raw thr=%d x=%d y=%d)",
-                 (unsigned)in.throttle, in.roll, in.pitch, in.button,
+                 radio_link_name(), (unsigned)in.throttle, in.roll, in.pitch, in.button,
                  in.raw_throttle, in.raw_x, in.raw_y);
         vTaskDelay(pdMS_TO_TICKS(500));
     }
-    ESP_LOGI(TAG, "radio ready, channel %u", (unsigned)RC_CHANNEL);
+    ESP_LOGI(TAG, "radio ready (%s)", radio_link_name());
 }
 
 static void radio_task(void *arg)
 {
     (void)arg;
-    Nrf24 radio;
-    radio_init(&radio);
+    radio_init();
 
     uint8_t  seq = 0;
     RcAck    drone = { 0 };
@@ -104,25 +87,16 @@ static void radio_task(void *arg)
             .pitch    = in.pitch,
             .yaw      = 0,
         };
-        nrf24_send(&radio, &pkt, sizeof(pkt));
+        const bool delivered = radio_link_send(&pkt);
         sent++;
 
-        Nrf24TxResult res = NRF24_TX_PENDING;
-        uint8_t ack[NRF24_MAX_PAYLOAD];
-        uint8_t ack_len = 0;
-        for (int ms = 0; ms < TX_WAIT_MAX_MS && res == NRF24_TX_PENDING; ms++) {
-            vTaskDelay(1);
-            res = nrf24_poll_tx(&radio, ack, &ack_len);
-        }
-
         const TickType_t now = xTaskGetTickCount();
-        if (res == NRF24_TX_OK) {
+        if (delivered) {
             acked++;
-            if (ack_len == sizeof(RcAck)) {
-                memcpy(&drone, ack, sizeof(drone));
-                last_ack = now;
-                have_ack = true;
-            }
+        }
+        if (radio_link_take_ack(&drone)) {
+            last_ack = now;
+            have_ack = true;
         }
 
         const bool drone_fresh = have_ack && (now - last_ack) <= pdMS_TO_TICKS(ACK_STALE_MS);

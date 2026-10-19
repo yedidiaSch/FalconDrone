@@ -1,0 +1,16 @@
+menu "FalconDrone"
+
+    choice FALCON_RADIO
+        prompt "Radio transport"
+        default FALCON_RADIO_ESPNOW
+        help
+            How the controller talks to the drone. The STM32 side must match
+            (FALCON_RC_RADIO in the root CMakeLists.txt).
+
+        config FALCON_RADIO_ESPNOW
+            bool "ESP-NOW to the bridge ESP32 on the drone"
+        config FALCON_RADIO_NRF24
+            bool "nRF24L01+ on VSPI"
+    endchoice
+
+endmenu

@@ -1,0 +1,6 @@
+# Applied when sdkconfig is first generated. The target (esp32 / esp32c3) is
+# chosen with `idf.py set-target`.
+
+CONFIG_FREERTOS_HZ=1000
+CONFIG_BT_ENABLED=n
+CONFIG_LOG_DEFAULT_LEVEL_INFO=y

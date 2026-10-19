@@ -11,11 +11,12 @@ extern "C" {
 #include "rc_protocol.h"
 
 /*
- * Drone end of the radio link: nRF24 in PRX mode on SPI2, polled from
- * ControlTask once per tick (100 Hz; the controller sends at 50 Hz).
+ * Drone end of the radio link, polled from ControlTask once per tick
+ * (100 Hz; the controller sends at 50 Hz). The transport — ESP-NOW bridge
+ * or nRF24 — is behind rc_radio.h.
  *
- * Each poll drains the RX FIFO, updates the link supervisor and queues an
- * RcAck so the controller's next packet gets fresh drone status back.
+ * Each poll takes the received packets, updates the link supervisor and
+ * replies with an RcAck carrying fresh drone status.
  *
  * A missing radio is not fatal: the drone keeps flying on the PC tether and
  * init is retried every 2 s, so a loose wire can be fixed without a reset.

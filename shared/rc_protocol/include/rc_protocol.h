@@ -25,12 +25,17 @@
 #define RC_ADDRESS          { 0x46, 0x41, 0x4C, 0x43, 0x4E }  /* "FALCN"      */
 #define RC_PERIOD_MS        20u     /* controller sends at 50 Hz               */
 #define RC_LINK_TIMEOUT_MS  250u    /* drone: no packet this long → disarm     */
+#define RC_RETRIES          5u      /* auto-retransmits per packet             */
+#define RC_RETRY_DELAY_US   500u    /* >= 500 us needed for ACK payloads @1Mbps */
 
 /* ---- Controller → drone ------------------------------------------------- */
 #define RC_THROTTLE_MAX     1000
 #define RC_AXIS_MAX         1000
 
 #define RC_FLAG_ARM_REQ     (1u << 0)   /* button held: request arm / disarm */
+
+/* The drone refuses to arm unless throttle is at or below this. */
+#define RC_THROTTLE_ARM_MAX 50
 
 typedef struct __attribute__((packed)) {
     uint8_t  seq;        /* increments every packet — detects lost packets  */

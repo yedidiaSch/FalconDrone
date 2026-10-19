@@ -22,8 +22,12 @@ extern "C" {
 /** Maximum length of a single log message */
 #define LOG_MSG_MAX_LEN     128
 
-/** Size of the message struct for queue creation */
-#define LOG_MSG_STRUCT_SIZE (LOG_MSG_MAX_LEN + sizeof(uint16_t))
+/** One queue item. The queue is created in freertos.c (CubeMX-generated)
+ *  with sizeof(LogMessage_t) — the type name is set in falconDrone.ioc. */
+typedef struct {
+    char data[LOG_MSG_MAX_LEN];
+    uint16_t len;
+} LogMessage_t;
 
 /** Number of messages the queue can hold */
 #define LOG_QUEUE_SIZE      16

@@ -18,12 +18,12 @@ static volatile uint8_t s_disarm_request = 0;
 static ArmingPhase_t s_phase;
 static uint32_t      s_phase_start_ms;
 
-/* B1 edge / hold tracking. `consumed` stops one press from triggering two
+/* Button edge / hold tracking. `consumed` stops one press from triggering two
  * actions — e.g. the press that disarms must be released before a new
  * 2 s hold can arm again. */
-static uint8_t  s_b1_prev;
-static uint8_t  s_b1_consumed;
-static uint32_t s_b1_press_ms;
+static uint8_t  s_btn_prev;
+static uint8_t  s_btn_consumed;
+static uint32_t s_btn_press_ms;
 
 static void disarm(const char *reason)
 {
@@ -48,33 +48,37 @@ static uint8_t is_level_and_still(const IMUData *imu, const char **reason)
     return 1;
 }
 
-static void handle_button(uint32_t now_ms, uint8_t pressed)
+static void handle_button(uint32_t now_ms, uint8_t pressed, uint8_t throttle_low)
 {
-    if (pressed && !s_b1_prev) {
-        s_b1_press_ms = now_ms;
-        s_b1_consumed = 0;
+    if (pressed && !s_btn_prev) {
+        s_btn_press_ms = now_ms;
+        s_btn_consumed = 0;
         if (s_state != ARM_STATE_DISARMED) {
-            disarm("B1 pressed");
-            s_b1_consumed = 1;
+            disarm("button pressed");
+            s_btn_consumed = 1;
         }
     }
 
-    if (pressed && !s_b1_consumed && s_state == ARM_STATE_DISARMED &&
-        (now_ms - s_b1_press_ms) >= ARM_HOLD_MS) {
-        s_b1_consumed = 1;
-        s_state = ARM_STATE_ARMING;
-        s_phase = PHASE_CALIBRATING;
-        s_phase_start_ms = now_ms;
-        imuRequestCalibration();
-        Log_Print("[ARM] Arming — release B1 and keep the board still\r\n");
+    if (pressed && !s_btn_consumed && s_state == ARM_STATE_DISARMED &&
+        (now_ms - s_btn_press_ms) >= ARM_HOLD_MS) {
+        s_btn_consumed = 1;
+        if (!throttle_low) {
+            Log_Print("[ARM] Refused: throttle not at zero\r\n");
+        } else {
+            s_state = ARM_STATE_ARMING;
+            s_phase = PHASE_CALIBRATING;
+            s_phase_start_ms = now_ms;
+            imuRequestCalibration();
+            Log_Print("[ARM] Arming — release the button and keep the board still\r\n");
+        }
     }
 
-    s_b1_prev = pressed;
+    s_btn_prev = pressed;
 }
 
-ArmState_t Arming_Update(uint32_t now_ms, uint8_t b1_pressed, const IMUData *imu)
+ArmState_t Arming_Update(uint32_t now_ms, const ArmInputs *in, const IMUData *imu)
 {
-    handle_button(now_ms, b1_pressed);
+    handle_button(now_ms, in->button, in->throttle_low);
 
     if (s_disarm_request) {
         s_disarm_request = 0;
@@ -105,7 +109,7 @@ ArmState_t Arming_Update(uint32_t now_ms, uint8_t b1_pressed, const IMUData *imu
                 disarm(reason);
             } else if ((now_ms - s_phase_start_ms) >= ARM_CHECK_MS) {
                 s_state = ARM_STATE_ARMED;
-                Log_Print("[ARM] ARMED — press B1 or 'd' on the PC to disarm\r\n");
+                Log_Print("[ARM] ARMED — press the button or 'd' on the PC to disarm\r\n");
             }
         }
         break;
@@ -131,4 +135,9 @@ ArmState_t Arming_GetState(void)
 void Arming_RequestDisarm(void)
 {
     s_disarm_request = 1;
+}
+
+void Arming_Disarm(const char *reason)
+{
+    disarm(reason);
 }

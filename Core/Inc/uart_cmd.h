@@ -19,15 +19,16 @@ extern "C" {
  * ' ' are ordinary characters. Lines are parsed in ControlTask context by
  * UartCmd_Poll():
  *
- *   $t1350            throttle target, us             (ARMED only)
- *   $t+10 / $t-10     nudge throttle target           (ARMED only)
+ *   $t1350            throttle target, us             (ARMED, no radio link)
+ *   $t+10 / $t-10     nudge throttle target           (ARMED, no radio link)
  *   $m0 / $m1         RATE / ANGLE mode               (DISARMED only)
  *   $g rr 0.6 0 0.02  set kp ki kd of a loop: rr rp ry (rate roll/pitch/yaw),
  *                     ar ap (angle roll/pitch)        (any time)
  *   $L                capture level trim, 2 s still   (DISARMED only)
- *   $?                print mode, gains, trim
+ *   $?                print mode, gains, trim, radio link
  *
- * Arming stays physical (B1 hold) — there is no arm command.
+ * Arming stays physical (B1 or controller button hold) — there is no arm
+ * command.
  */
 
 /* Feed one received byte. Called from HAL_UART_RxCpltCallback (ISR). */

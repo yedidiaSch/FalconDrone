@@ -84,3 +84,7 @@ controller/managed_components/
 # nRF24 host test binary
 shared/nrf24/test/test_nrf24
 !shared/nrf24/test/Makefile
+
+# Core host test binary
+Core/test/test_rc_link
+!Core/test/Makefile

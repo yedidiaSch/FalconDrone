@@ -4,6 +4,7 @@
 
 static float s_target_us = (float)ESC_MIN_US;
 static float s_current_us = (float)ESC_MIN_US;
+static float s_roll, s_pitch, s_yaw;
 
 static float clamp_throttle(float us)
 {
@@ -12,10 +13,25 @@ static float clamp_throttle(float us)
     return us;
 }
 
+static float clamp_stick(float v)
+{
+    if (v < -1.0f) return -1.0f;
+    if (v >  1.0f) return  1.0f;
+    return v;
+}
+
 void FlightInput_Reset(void)
 {
     s_target_us  = (float)ESC_MIN_US;
     s_current_us = (float)ESC_MIN_US;
+    s_roll = s_pitch = s_yaw = 0.0f;
+}
+
+void FlightInput_SetSticks(float roll, float pitch, float yaw)
+{
+    s_roll  = clamp_stick(roll);
+    s_pitch = clamp_stick(pitch);
+    s_yaw   = clamp_stick(yaw);
 }
 
 void FlightInput_SetThrottle(float target_us)
@@ -39,9 +55,9 @@ FlightCmd FlightInput_Get(float dt)
 
     const FlightCmd cmd = {
         .throttle_us = s_current_us,
-        .roll_deg    = 0.0f,
-        .pitch_deg   = 0.0f,
-        .yaw_dps     = 0.0f,
+        .roll        = s_roll,
+        .pitch       = s_pitch,
+        .yaw         = s_yaw,
     };
     return cmd;
 }

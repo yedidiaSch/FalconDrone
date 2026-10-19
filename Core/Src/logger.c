@@ -12,12 +12,6 @@
 #include <stdio.h>
 #include <stdarg.h>
 
-/* Message structure for the queue */
-typedef struct {
-    char data[LOG_MSG_MAX_LEN];
-    uint16_t len;
-} LogMessage_t;
-
 /* External handles - created in freertos.c */
 extern osMessageQueueId_t logQueueHandle;
 extern osSemaphoreId_t txCompleteSemHandle;

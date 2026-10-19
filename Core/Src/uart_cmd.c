@@ -3,6 +3,7 @@
 #include "flight_ctrl.h"
 #include "flight_input.h"
 #include "logger.h"
+#include "rc_service.h"
 #include "watchdog.h"
 #include <stdlib.h>
 #include <string.h>
@@ -54,6 +55,15 @@ void UartCmd_OnRxByte(uint8_t byte)
 
 static const char *const s_loop_names[LOOP_COUNT] = { "rr", "rp", "ry", "ar", "ap" };
 
+static const char *link_name(RcLinkState st)
+{
+    switch (st) {
+    case RC_LINK_UP:   return "UP";
+    case RC_LINK_LOST: return "LOST";
+    default:           return "NONE";
+    }
+}
+
 static void print_config(void)
 {
     float trim_r, trim_p;
@@ -66,12 +76,23 @@ static void print_config(void)
         Log_Printf("[CFG] %s kp=%.3f ki=%.3f kd=%.4f\r\n",
                    s_loop_names[i], pid->kp, pid->ki, pid->kd);
     }
+
+    const RcLink *link = RcService_Link();
+    Log_Printf("[RC] radio=%s link=%s %u%% thr=%u roll=%d pitch=%d flags=0x%02x\r\n",
+               RcService_RadioOk() ? "ok" : "MISSING",
+               link_name(link->state), (unsigned)link->link_pct,
+               (unsigned)link->last.throttle, (int)link->last.roll,
+               (int)link->last.pitch, (unsigned)link->last.flags);
 }
 
 static void cmd_throttle(const char *arg, ArmState_t arm)
 {
     if (arm != ARM_STATE_ARMED) {
         Log_Print("[CMD] throttle rejected: not armed\r\n");
+        return;
+    }
+    if (RcService_Link()->state == RC_LINK_UP) {
+        Log_Print("[CMD] throttle rejected: the controller has the throttle\r\n");
         return;
     }
     char *end;

@@ -33,6 +33,8 @@
 #include "flight_input.h"
 #include "uart_cmd.h"
 #include "arming.h"
+#include "rc_service.h"
+#include "flight_cfg.h"
 #include "watchdog.h"
 #include "reset_info.h"
 #include "gpio.h"
@@ -82,10 +84,9 @@ const osThreadAttr_t LogTask_attributes = {
 osThreadId_t ControlTaskHandle;
 const osThreadAttr_t ControlTask_attributes = {
   .name = "ControlTask",
-  .stack_size = 512 * 4,
+  .stack_size = 768 * 4,
   .priority = (osPriority_t) osPriorityHigh,
 };
-
 /* Definitions for logQueue */
 osMessageQueueId_t logQueueHandle;
 const osMessageQueueAttr_t logQueue_attributes = {
@@ -99,7 +100,7 @@ const osSemaphoreAttr_t txCompleteSem_attributes = {
 
 /* Private function prototypes -----------------------------------------------*/
 /* USER CODE BEGIN FunctionPrototypes */
-
+static void ControlTask_Run(void);
 /* USER CODE END FunctionPrototypes */
 
 void StartDefaultTask(void *argument);
@@ -139,7 +140,7 @@ void MX_FREERTOS_Init(void) {
 
   /* Create the queue(s) */
   /* creation of logQueue */
-  logQueueHandle = osMessageQueueNew (16, LOG_MSG_STRUCT_SIZE, &logQueue_attributes);
+  logQueueHandle = osMessageQueueNew (16, sizeof(LogMessage_t), &logQueue_attributes);
 
   /* USER CODE BEGIN RTOS_QUEUES */
   /* add queues, ... */
@@ -240,6 +241,22 @@ void StartLogTask(void *argument)
   /* USER CODE END StartLogTask */
 }
 
+/* USER CODE BEGIN Header_StartControlTask */
+/**
+* @brief Function implementing the ControlTask thread.
+* @param argument: Not used
+* @retval None
+*/
+/* USER CODE END Header_StartControlTask */
+void StartControlTask(void *argument)
+{
+  /* USER CODE BEGIN StartControlTask */
+
+  /* Attitude control loop (below) — never returns. */
+  ControlTask_Run();
+  /* USER CODE END StartControlTask */
+}
+
 /* Private application code --------------------------------------------------*/
 /* USER CODE BEGIN Application */
 
@@ -252,25 +269,75 @@ void StartLogTask(void *argument)
  * Pipeline each tick:
  *   1. Wait for the next IMU sample (by-value copy from the mailbox)
  *   2. dt from the sample timestamps (exact multiples of IMU_PERIOD_MS)
- *   3. Arming state machine (arming.c) — B1 / PC command / failsafes
- *   4. PC line commands (uart_cmd.c) — throttle, mode, gains, trim
- *   5. If ARMED: FlightInput (throttle ramp) → FlightCtrl (angle loop in
- *      ANGLE mode → rate PIDs → mixer). Otherwise: motors at ESC_MIN_US,
- *      PID state and throttle cleared.
- *   6. ESC_SetAllMotors
+ *   3. Radio (rc_service.c) — newest controller packet, link state
+ *   4. Arming state machine (arming.c) — B1 / controller button / PC / failsafes
+ *   5. PC line commands (uart_cmd.c) — throttle, mode, gains, trim
+ *   6. If ARMED: pilot input (radio, or $t from the PC when no radio) →
+ *      FlightInput (throttle ramp) → FlightCtrl (angle loop in ANGLE mode →
+ *      rate PIDs → mixer). Otherwise: motors at ESC_MIN_US, PID state and
+ *      throttle cleared.
+ *   7. ESC_SetAllMotors
  *
- * Boot state is DISARMED: motors stay at ESC_MIN_US until B1 is held 2 s.
- * Every arm starts at ESC_MIN_US; throttle then comes only from $t commands,
- * capped at THROTTLE_MAX_US and ramped at THROTTLE_SLEW_US_S (flight_cfg.h).
+ * Boot state is DISARMED: motors stay at ESC_MIN_US until the arm button
+ * (B1 or the controller's stick button) is held 2 s. Every arm starts at
+ * ESC_MIN_US.
+ *
+ * Pilot source: the radio while its link is UP, otherwise the PC ($t).
+ * A change of source while armed disarms — that covers the failsafe (radio
+ * lost for RC_LINK_TIMEOUT_MS) and stops a controller that connects
+ * mid-flight from taking over with its slider wherever it happens to be.
  */
-void StartControlTask(void *argument)
+
+typedef struct {
+    uint8_t  rc_up;     /* 1 = radio is the pilot source this tick */
+    RcPacket rc;        /* newest packet, valid when rc_up         */
+} PilotInput;
+
+static uint16_t s_reported_throttle_us = ESC_MIN_US;
+
+/* Poll the radio, apply the source-change failsafe, run the arming step. */
+static ArmState_t pilot_and_arming(uint32_t now_ms, const IMUData *imu, PilotInput *pilot)
+{
+    static uint8_t prev_rc_up = 0;
+
+    const RcAck status = {
+        .arm_state   = (uint8_t)Arming_GetState(),
+        .mode        = (uint8_t)FlightCtrl_GetMode(),
+        .throttle_us = s_reported_throttle_us,
+    };
+    pilot->rc_up = (RcService_Poll(now_ms, &status, &pilot->rc) == RC_LINK_UP);
+
+    if (pilot->rc_up != prev_rc_up && Arming_GetState() != ARM_STATE_DISARMED) {
+        Arming_Disarm(pilot->rc_up ? "controller connected while armed"
+                                   : "radio link lost");
+    }
+    prev_rc_up = pilot->rc_up;
+
+    /* B1 (PC13) has an external pull-up: idle high, pressed = low. */
+    const uint8_t b1_pressed =
+        (HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin) == GPIO_PIN_RESET);
+
+    const ArmInputs in = {
+        .button       = b1_pressed ||
+                        (pilot->rc_up && (pilot->rc.flags & RC_FLAG_ARM_REQ) != 0u),
+        .throttle_low = !pilot->rc_up || pilot->rc.throttle <= RC_THROTTLE_ARM_MAX,
+    };
+    const ArmState_t arm = Arming_Update(now_ms, &in, imu);
+    UartCmd_Poll(arm);
+    return arm;
+}
+
+static void ControlTask_Run(void)
 {
     FlightCtrl_Init();
     ESC_Init();
 
     /* Hold idle pulse while ESCs run their startup beep sequence. */
     osDelay(ESC_ARM_DELAY_MS);
-    Log_Print("ESC ready — DISARMED. Hold B1 2 s to arm.\r\n");
+    Log_Print("ESC ready — DISARMED. Hold B1 or the controller button 2 s to arm.\r\n");
+
+    /* Long past the nRF24's 100 ms power-on reset. */
+    RcService_Init(osKernelGetTickCount());
 
     uint32_t last_sample_ms = 0;
     uint32_t log_div   = 0;   /* decimate telemetry to 50 Hz — 100 Hz overruns the queue */
@@ -288,19 +355,18 @@ void StartControlTask(void *argument)
             }
         }
 
-        /* B1 (PC13) has an external pull-up: idle high, pressed = low. */
-        const uint8_t b1_pressed =
-            (HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin) == GPIO_PIN_RESET);
+        PilotInput pilot;
 
         /* Block on fresh IMU sample. 100 ms timeout = fail-safe to idle
          * (Arming_Update disarms on a NULL sample while ARMED). */
         IMUData s;
         if (!imuWaitSample(&s, 100)) {
-            const ArmState_t arm = Arming_Update(osKernelGetTickCount(), b1_pressed, NULL);
-            UartCmd_Poll(arm);
+            const uint32_t now = osKernelGetTickCount();
+            (void)pilot_and_arming(now, NULL, &pilot);
             ESC_SetAllMotors(ESC_MIN_US, ESC_MIN_US, ESC_MIN_US, ESC_MIN_US);
             FlightCtrl_Idle(NULL);
             FlightInput_Reset();
+            s_reported_throttle_us = ESC_MIN_US;
             continue;
         }
 
@@ -311,14 +377,20 @@ void StartControlTask(void *argument)
         last_sample_ms = now;
         if (dt <= 0.0f || dt > 0.1f) dt = IMU_PERIOD_MS / 1000.0f;  /* first sample / after a gap */
 
-        const ArmState_t arm = Arming_Update(now, b1_pressed, &s);
-        UartCmd_Poll(arm);
+        const ArmState_t arm = pilot_and_arming(now, &s, &pilot);
 
         uint16_t motors[4] = { ESC_MIN_US, ESC_MIN_US, ESC_MIN_US, ESC_MIN_US };
         FlightCmd cmd = { .throttle_us = (float)ESC_MIN_US };
         FlightCtrlDebug dbg = { 0 };
 
         if (arm == ARM_STATE_ARMED) {
+            if (pilot.rc_up) {
+                FlightInput_SetThrottle((float)ESC_MIN_US +
+                    RcLink_Throttle(pilot.rc.throttle) * (THROTTLE_MAX_US - (float)ESC_MIN_US));
+                FlightInput_SetSticks(RcLink_Axis(pilot.rc.roll),
+                                      RcLink_Axis(pilot.rc.pitch),
+                                      RcLink_Axis(pilot.rc.yaw));
+            }
             cmd = FlightInput_Get(dt);
             FlightCtrl_Update(&s, &cmd, dt, motors, &dbg);
         } else {
@@ -326,6 +398,7 @@ void StartControlTask(void *argument)
             FlightCtrl_Idle(&s);
             FlightInput_Reset();
         }
+        s_reported_throttle_us = (uint16_t)cmd.throttle_us;
 
         ESC_SetAllMotors(motors[0], motors[1], motors[2], motors[3]);
 
@@ -335,7 +408,7 @@ void StartControlTask(void *argument)
          * Format: t_ms,roll,pitch,gx,gy,gz,m1,m2,m3,m4,arm,thr,mode,rsp,psp
          * arm: 0 = disarmed, 1 = armed, 2 = arming
          * mode: 0 = rate, 1 = angle
-         * rsp/psp: roll/pitch rate setpoints from the angle loop, deg/s */
+         * rsp/psp: roll/pitch rate setpoints sent to the rate loop, deg/s */
         if ((++log_div & 0x1) == 0u) {
             Log_Printf("%lu,%.1f,%.1f,%.1f,%.1f,%.1f,%u,%u,%u,%u,%u,%u,%u,%.1f,%.1f\r\n",
                        (unsigned long)now,

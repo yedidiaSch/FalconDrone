@@ -39,19 +39,30 @@ void FlightCtrl_Init(void)
 void FlightCtrl_Update(const IMUData *imu, const FlightCmd *cmd, float dt,
                        uint16_t motors[4], FlightCtrlDebug *dbg)
 {
-    float roll_rate_sp  = 0.0f;
-    float pitch_rate_sp = 0.0f;
+    const uint8_t angle_mode = (s_mode == FLIGHT_MODE_ANGLE);
 
-    if (s_mode == FLIGHT_MODE_ANGLE) {
-        roll_rate_sp  = PID_Update(&s_pid[LOOP_ANGLE_ROLL],  cmd->roll_deg,
+    /* Pilot setpoints: stick = target angle (ANGLE) or rotation rate (RATE). */
+    const float rp_scale = angle_mode ? ANGLE_MAX_DEG : STICK_RATE_MAX_DPS;
+    const float ref[FLIGHT_AXIS_COUNT] = {
+        cmd->roll  * rp_scale,
+        cmd->pitch * rp_scale,
+        cmd->yaw   * STICK_YAW_MAX_DPS,
+    };
+
+    float roll_rate_sp  = ref[FLIGHT_AXIS_ROLL];
+    float pitch_rate_sp = ref[FLIGHT_AXIS_PITCH];
+    if (angle_mode) {
+        /* The angle loop turns the angle error into a rate setpoint. */
+        roll_rate_sp  = PID_Update(&s_pid[LOOP_ANGLE_ROLL],  ref[FLIGHT_AXIS_ROLL],
                                    imu->roll  - s_trim_roll,  dt);
-        pitch_rate_sp = PID_Update(&s_pid[LOOP_ANGLE_PITCH], cmd->pitch_deg,
+        pitch_rate_sp = PID_Update(&s_pid[LOOP_ANGLE_PITCH], ref[FLIGHT_AXIS_PITCH],
                                    imu->pitch - s_trim_pitch, dt);
     }
+    const float yaw_rate_sp = ref[FLIGHT_AXIS_YAW];
 
     const float roll_out  = PID_Update(&s_pid[LOOP_RATE_ROLL],  roll_rate_sp,  imu->gyro_x, dt);
     const float pitch_out = PID_Update(&s_pid[LOOP_RATE_PITCH], pitch_rate_sp, imu->gyro_y, dt);
-    const float yaw_out   = PID_Update(&s_pid[LOOP_RATE_YAW],   cmd->yaw_dps,  imu->gyro_z, dt);
+    const float yaw_out   = PID_Update(&s_pid[LOOP_RATE_YAW],   yaw_rate_sp,   imu->gyro_z, dt);
 
     /* On the ground: hold the I-terms at zero (no wind-up before lift-off). */
     if (cmd->throttle_us < LIFTOFF_US) {

@@ -5,7 +5,8 @@
  * ESP32-WROOM-32 DevKit pin map. Everything runs at 3.3 V — including the
  * joystick (its "+5V" pin goes to 3V3: more than 3.3 V on a GPIO damages it).
  *
- *   nRF24L01+   VCC→3V3 (+ 10-100 uF cap at the module), GND,
+ *   nRF24L01+   only with the nRF24 transport (menuconfig), not needed
+ *               for ESP-NOW. VCC→3V3 (+ 10-100 uF cap at the module), GND,
  *               CE→D4, CSN→D5, SCK→D18, MOSI→D23, MISO→D19
  *   OLED        SSD1306 128x64, VCC→3V3, GND, SDA→D21, SCL→D22
  *   Slider      ends→3V3/GND, wiper→D34

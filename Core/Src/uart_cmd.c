@@ -4,6 +4,7 @@
 #include "flight_input.h"
 #include "logger.h"
 #include "rc_service.h"
+#include "rc_radio.h"
 #include "tuning.h"
 #include "watchdog.h"
 #include <stdlib.h>
@@ -79,8 +80,8 @@ static void print_config(void)
     }
 
     const RcLink *link = RcService_Link();
-    Log_Printf("[RC] radio=%s link=%s %u%% thr=%u roll=%d pitch=%d flags=0x%02x\r\n",
-               RcService_RadioOk() ? "ok" : "MISSING",
+    Log_Printf("[RC] radio=%s %s link=%s %u%% thr=%u roll=%d pitch=%d flags=0x%02x\r\n",
+               RcRadio_Name(), RcService_RadioOk() ? "ok" : "MISSING",
                link_name(link->state), (unsigned)link->link_pct,
                (unsigned)link->last.throttle, (int)link->last.roll,
                (int)link->last.pitch, (unsigned)link->last.flags);

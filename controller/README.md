@@ -1,6 +1,6 @@
 # FalconDrone Controller (ESP32)
 
-Handheld radio controller for FalconDrone: a slider for throttle, a joystick for roll/pitch with its push button as the arm button, an SSD1306 OLED for status, and an nRF24L01+ radio talking to the drone.
+Handheld radio controller for FalconDrone: a slider for throttle, a joystick for roll/pitch with its push button as the arm button, an SSD1306 OLED for status. It talks to the drone over ESP-NOW (default, through the bridge ESP32 on the drone, see `bridge/README.md`) or an nRF24L01+.
 
 ## Layout
 
@@ -9,7 +9,11 @@ controller/                ESP-IDF project
 ├── main/
 │   ├── main.c             app_main + radio task (50 Hz send, read drone status)
 │   ├── inputs.c           slider / stick / button → packet values, calibration constants
+│   ├── radio_link.h       radio transport interface
+│   ├── radio_espnow.c     ESP-NOW transport (pairs with the bridge automatically)
+│   ├── radio_nrf24.c      nRF24 transport
 │   ├── nrf24_port_esp32.c nRF24 board glue (SPI3, CE pin)
+│   ├── Kconfig.projbuild  menuconfig: FalconDrone → Radio transport
 │   ├── ui.c / oled.c      screen task (10 Hz) + SSD1306 over I2C
 │   ├── ui_draw.c          screen layout (pure C)
 │   ├── gfx.c, font5x7.h   framebuffer, text, bars
@@ -17,7 +21,8 @@ controller/                ESP-IDF project
 ├── test/                  host tests for the screen: make -C controller/test
 └── sdkconfig.defaults     tracked config (sdkconfig itself is generated)
 shared/
-├── rc_protocol/           RcPacket / RcAck — the same header is used by the STM32 firmware
+├── rc_protocol/           RcPacket / RcAck + rc_frame framing — also used by the STM32 firmware
+├── espnow_wifi/           Wi-Fi + ESP-NOW startup shared with the bridge
 └── nrf24/                 portable nRF24L01+ driver (+ host tests)
 ```
 
@@ -27,6 +32,17 @@ shared/
 2. Run **ESP-IDF: Configure ESP-IDF Extension** → Express → latest stable release.
 3. Serial access without sudo (log out and back in afterwards):
    `sudo usermod -aG dialout $USER`
+
+## Radio transport
+
+Picked in `idf.py menuconfig` → **FalconDrone → Radio transport**:
+
+| Transport | Controller hardware | Drone side | STM32 build |
+|---|---|---|---|
+| **ESP-NOW** (default) | none extra (built-in Wi-Fi) | bridge ESP32 on USART1, see `bridge/` | `FALCON_RC_RADIO=BRIDGE` (default) |
+| nRF24 | nRF24L01+ on VSPI | nRF24 on SPI2 | `FALCON_RC_RADIO=NRF24` |
+
+Both sides must use the same transport. Switching the STM32: `cmake --preset Debug -DFALCON_RC_RADIO=NRF24`.
 
 ## Build & flash
 
@@ -42,11 +58,13 @@ Expected output (twice a second once the drone answers):
 
 ```
 I (...) inputs: stick center x=1890 y=1925
-I (...) controller: radio ready, channel 108
+I (...) espnow: ESP-NOW up on Wi-Fi channel 1, my MAC ... — looking for the bridge
+I (...) controller: radio ready (ESP-NOW)
+I (...) espnow: paired with bridge 24:6f:28:...
 I (...) controller: thr=   0 roll=   +0 pitch=   +0 btn=0 | tx 100% | drone DISARMED thr=1000us rx=100%
 ```
 
-`tx` = packets the drone acknowledged, `rx` = packets the drone received. Without the drone the line reads `no reply from drone` and shows raw ADC values, which is what you need to calibrate.
+`tx` = packets the drone's radio (nRF24) or the bridge (ESP-NOW) acknowledged, `rx` = packets the flight controller received. Without the drone the line reads `no reply from drone` and shows raw ADC values, which is what you need to calibrate.
 
 ## Screen
 
@@ -58,7 +76,8 @@ TX 100% RX  98%       └──┘  packets acked by the drone / received by it;
 HOLD BTN 2s TO ARM          what to do next (inverted = warning)
 ```
 
-- **Top line:** `NO RADIO` means the controller's own nRF24 isn't answering. `NO LINK` means the drone isn't replying.
+- **Top line:** `NO RADIO` means the controller's own radio didn't start. `NO LINK` means the drone isn't replying.
+- **Bottom line without a link:** `SEARCHING FOR DRONE` = nothing on the other end answers (bridge / drone radio off or out of range). `NO REPLY FROM DRONE` = the radio on the drone gets our packets but the STM32 doesn't answer (UART wiring, STM32 not running, wrong transport built).
 - **Arm progress:** while the stick button is held, the bottom line shows a bar that fills over the 2 s the drone needs.
 - **Preview without hardware:** `make -C controller/test screens` writes every screen as an image to `controller/test/screens/`.
 - **Display problems:**
@@ -76,7 +95,7 @@ Constants at the top of `main/inputs.c`:
 
 ## Wiring
 
-See `main/board.h` (controller) and `Core/Inc/nrf24_port_stm32.h` (drone: SPI2 on CN10, PB1/PB12-15). Everything runs on **3.3 V**. Put a 10–100 µF capacitor across each nRF24's VCC/GND pins, right at the module.
+See `main/board.h` (controller). With ESP-NOW the controller needs no radio wiring at all. The drone side is in `bridge/main/board.h` (ESP-NOW) or `Core/Inc/nrf24_port_stm32.h` (nRF24: SPI2 on CN10, PB1/PB12-15). Everything runs on **3.3 V** logic. With nRF24, put a 10–100 µF capacitor across each module's VCC/GND pins.
 
 ## Using it
 
@@ -88,7 +107,7 @@ See `main/board.h` (controller) and `Core/Inc/nrf24_port_stm32.h` (drone: SPI2 o
 
 ## Dry test (no props)
 
-1. Drone on USB with `telemetry.py`: expect `[RC] Radio ready`, then `[RC] Link up` once the controller runs.
+1. Drone on USB with `telemetry.py`: expect `[RC] Radio ready (bridge)`, then `[RC] Link up` once the controller runs.
 2. `$?` prints `[RC] ... thr= roll= pitch=`. Move each input and check the sign.
 3. Slider up, hold button: `[ARM] Refused: throttle not at zero`.
 4. Slider to zero, hold button 2 s: ARMED. Slider moves `thr` and the motors.

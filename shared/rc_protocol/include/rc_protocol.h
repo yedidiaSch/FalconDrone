@@ -7,10 +7,15 @@
  * format cannot drift between them.
  *
  *   Controller ──RcPacket (50 Hz)──▶ Drone
- *   Controller ◀──RcAck (ACK payload)── Drone
+ *   Controller ◀──RcAck (one per packet)── Drone
  *
- * The drone answers inside the nRF24 auto-ACK, so status comes back without
- * a second radio exchange or switching the controller to RX.
+ * Two interchangeable transports, picked at build time on each side:
+ *
+ *   ESP-NOW (default)  controller ESP32 ⇄ bridge ESP32 on the drone ⇄ UART
+ *                      ⇄ STM32. Packets travel inside rc_frame.h frames.
+ *   nRF24              controller nRF24 (PTX) ⇄ drone nRF24 (PRX on SPI2).
+ *                      The drone answers inside the auto-ACK, so status
+ *                      comes back without a second radio exchange.
  *
  * Stick values are normalized (deadband and center calibration already
  * applied on the controller). The drone decides what full stick means
@@ -19,12 +24,18 @@
 
 #include <stdint.h>
 
-/* ---- Radio settings (both ends must match) ------------------------------- */
+/* ---- Timing (both transports) -------------------------------------------- */
+#define RC_PERIOD_MS        20u     /* controller sends at 50 Hz               */
+#define RC_LINK_TIMEOUT_MS  250u    /* drone: no packet this long → disarm     */
+
+/* ---- ESP-NOW + bridge settings (all three boards must match) ------------- */
+#define RC_WIFI_CHANNEL     1u      /* 2.412 GHz                                */
+#define RC_BRIDGE_BAUD      115200u /* bridge ⇄ STM32 UART                      */
+
+/* ---- nRF24 settings (both ends must match) ------------------------------- */
 #define RC_CHANNEL          108u    /* 2.508 GHz — above Wi-Fi channels 1-13   */
 #define RC_DATA_RATE_KBPS   1000u   /* 1 Mbps; some clone chips lack 250 kbps  */
 #define RC_ADDRESS          { 0x46, 0x41, 0x4C, 0x43, 0x4E }  /* "FALCN"      */
-#define RC_PERIOD_MS        20u     /* controller sends at 50 Hz               */
-#define RC_LINK_TIMEOUT_MS  250u    /* drone: no packet this long → disarm     */
 #define RC_RETRIES          5u      /* auto-retransmits per packet             */
 #define RC_RETRY_DELAY_US   500u    /* >= 500 us needed for ACK payloads @1Mbps */
 
@@ -46,7 +57,7 @@ typedef struct __attribute__((packed)) {
     int16_t  yaw;        /* 0 until a second stick exists                   */
 } RcPacket;
 
-/* ---- Drone → controller (ACK payload) ------------------------------------ */
+/* ---- Drone → controller -------------------------------------------------- */
 typedef struct __attribute__((packed)) {
     uint8_t  seq;        /* seq of the last RcPacket the drone received     */
     uint8_t  arm_state;  /* 0 disarmed, 1 armed, 2 arming (ArmState_t)       */
@@ -55,7 +66,7 @@ typedef struct __attribute__((packed)) {
     uint16_t throttle_us;/* throttle the drone is actually commanding       */
 } RcAck;
 
-/* nRF24 payloads are at most 32 bytes. */
+/* nRF24 payloads are at most 32 bytes; rc_frame.h payloads 16. */
 _Static_assert(sizeof(RcPacket) == 10, "RcPacket layout changed");
 _Static_assert(sizeof(RcAck) == 6, "RcAck layout changed");
 

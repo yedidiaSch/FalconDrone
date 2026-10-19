@@ -15,7 +15,11 @@
 /* ---- Angle loop (outer, self-level) -------------------------------------- */
 #define ANGLE_KP                  2.0f  /* (deg/s) per deg — start low, see design doc §6 phase B */
 #define ANGLE_MAX_RATE_DPS      150.0f  /* clamp on the rate setpoint the angle loop may request */
-#define ANGLE_MAX_DEG            15.0f  /* stick limit once RC input exists */
+#define ANGLE_MAX_DEG            15.0f  /* full stick in ANGLE mode = this tilt */
+
+/* ---- Stick → rate setpoints ---------------------------------------------- */
+#define STICK_RATE_MAX_DPS       90.0f  /* full roll/pitch stick in RATE mode */
+#define STICK_YAW_MAX_DPS        90.0f  /* full yaw stick (no yaw stick yet)  */
 
 /* Level trim: filter angle when the FRAME sits level. Measure with $L on a
  * known-flat surface and copy the logged values here. */

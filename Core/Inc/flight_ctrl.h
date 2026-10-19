@@ -15,10 +15,10 @@ extern "C" {
  * Cascaded attitude controller — owns every PID, the flight mode and the
  * level trim. ControlTask calls Update() while ARMED and Idle() otherwise.
  *
- *   ANGLE mode:  angle sp ─▶ [angle P] ─▶ rate sp ─▶ [rate PID] ─▶ mixer
- *   RATE  mode:               rate sp = 0 ─────────▶ [rate PID] ─▶ mixer
+ *   ANGLE mode:  stick × ANGLE_MAX_DEG ─▶ [angle P] ─▶ rate sp ─▶ [rate PID] ─▶ mixer
+ *   RATE  mode:  stick × STICK_RATE_MAX_DPS ─────────▶ rate sp ─▶ [rate PID] ─▶ mixer
  *
- * Yaw is always a rate loop (setpoint FlightCmd.yaw_dps).
+ * Yaw is always a rate loop (setpoint FlightCmd.yaw * STICK_YAW_MAX_DPS).
  *
  * The rate PIDs integrate only while throttle > LIFTOFF_US, so a drone
  * sitting tilted on the ground cannot wind up an I-term and flip on lift-off.
@@ -41,9 +41,16 @@ typedef enum {
     LOOP_COUNT
 } FlightLoop_t;
 
+typedef enum {
+    FLIGHT_AXIS_ROLL = 0,
+    FLIGHT_AXIS_PITCH,
+    FLIGHT_AXIS_YAW,
+    FLIGHT_AXIS_COUNT,
+} FlightAxis_t;
+
 /* Intermediate signals, for telemetry. */
 typedef struct {
-    float roll_rate_sp;    /* deg/s, output of the angle loop (0 in RATE mode) */
+    float roll_rate_sp;    /* deg/s, input of the rate loops */
     float pitch_rate_sp;
 } FlightCtrlDebug;
 

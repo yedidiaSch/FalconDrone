@@ -8,9 +8,12 @@ extern "C" {
 /*
  * Pilot command source for the control loop.
  *
- * Today the throttle comes from the PC over UART ($t commands, tether tests
- * only) and the angle / yaw setpoints are fixed at zero. The RC receiver will
- * later fill the same FlightCmd, so ControlTask does not change.
+ * Two sources feed it (ControlTask decides which):
+ *   - radio link up: throttle and sticks from the controller, every tick
+ *   - no radio:      throttle from the PC over UART ($t commands), sticks 0
+ *
+ * Sticks are normalized (-1..+1). FlightCtrl turns them into setpoints for
+ * the current mode: degrees in ANGLE mode, deg/s in RATE mode.
  *
  * Throttle rules:
  *   - the target is only accepted while ARMED and is clamped to
@@ -24,9 +27,9 @@ extern "C" {
 
 typedef struct {
     float throttle_us;   /* collective, ESC_MIN_US .. THROTTLE_MAX_US */
-    float roll_deg;      /* angle setpoint (angle mode)               */
-    float pitch_deg;
-    float yaw_dps;       /* yaw rate setpoint                         */
+    float roll;          /* stick, -1..+1, + = roll right             */
+    float pitch;         /* stick, -1..+1, + = nose up                */
+    float yaw;           /* stick, -1..+1, + = yaw right (nose right) */
 } FlightCmd;
 
 void FlightInput_Reset(void);
@@ -36,6 +39,9 @@ void FlightInput_SetThrottle(float target_us);
 
 /* Relative nudge, us (e.g. +10 / -10 from the arrow keys). */
 void FlightInput_NudgeThrottle(float delta_us);
+
+/* Stick positions, -1..+1 each (clamped). FlightInput_Reset() centers them. */
+void FlightInput_SetSticks(float roll, float pitch, float yaw);
 
 /* Advance the throttle ramp by dt seconds and return the current command. */
 FlightCmd FlightInput_Get(float dt);

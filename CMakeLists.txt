@@ -68,12 +68,19 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Core/Src/arming.c
     Core/Src/watchdog.c
     Core/Src/reset_info.c
+    Core/Src/logger.c
+    Core/Src/rc_link.c
+    Core/Src/rc_service.c
+    Core/Src/nrf24_port_stm32.c
+    shared/nrf24/src/nrf24.c
     # Add user sources here
 )
 
 # Add include paths
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user defined include paths
+    shared/rc_protocol/include
+    shared/nrf24/include
 )
 
 # Add project symbols (macros)

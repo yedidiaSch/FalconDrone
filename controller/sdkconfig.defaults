@@ -1,0 +1,13 @@
+# Applied when sdkconfig is first generated. Change settings here (or via
+# menuconfig + copy back) — controller/sdkconfig itself is not tracked.
+
+CONFIG_IDF_TARGET="esp32"
+CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
+
+# 1 ms tick so vTaskDelayUntil can hold the 50 Hz radio period exactly.
+CONFIG_FREERTOS_HZ=1000
+
+# Radio is the nRF24, not the ESP32's own — keep Bluetooth out of the build.
+CONFIG_BT_ENABLED=n
+
+CONFIG_LOG_DEFAULT_LEVEL_INFO=y

@@ -43,9 +43,13 @@
 #define RC_THROTTLE_MAX     1000
 #define RC_AXIS_MAX         1000
 
-#define RC_FLAG_ARM_REQ     (1u << 0)   /* button held: request arm / disarm */
+/* Switch levels, sent in every packet. The drone arms on an ARM OFF→ON flip
+ * with the throttle at or below RC_THROTTLE_ARM_MAX, and disarms the moment
+ * ARM reads OFF. MODE is applied only while disarmed. */
+#define RC_FLAG_ARM         (1u << 0)   /* arm switch ON                       */
+#define RC_FLAG_ANGLE       (1u << 1)   /* mode switch: ANGLE (else RATE)      */
+#define RC_FLAG_BUTTON      (1u << 2)   /* stick button held — no action yet   */
 
-/* The drone refuses to arm unless throttle is at or below this. */
 #define RC_THROTTLE_ARM_MAX 50
 
 typedef struct __attribute__((packed)) {

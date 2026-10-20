@@ -10,7 +10,7 @@
  *   │ THR [██████····]  45%   ┌────┐ │  local slider
  *   │ OUT 1350us              │ ·  │ │  throttle the drone is commanding
  *   │ TX 100%  RX  98%        └────┘ │  link both ways, stick position box
- *   │ HOLD BTN 2s TO ARM             │  what to do next / what is wrong
+ *   │ ARM SWITCH TO ARM              │  what to do next / what is wrong
  *   └────────────────────────────────┘
  */
 
@@ -29,8 +29,9 @@ typedef struct {
     uint8_t  rx_pct;            /* RcAck.link_pct                        */
     uint16_t throttle;          /* slider, 0..RC_THROTTLE_MAX            */
     int16_t  roll, pitch;       /* stick, -RC_AXIS_MAX..+RC_AXIS_MAX     */
-    bool     button;
-    uint32_t button_held_ms;    /* how long the button has been held     */
+    bool     arm_sw;            /* ARM switch ON                         */
+    bool     angle_sw;          /* MODE switch on ANGLE                  */
+    uint32_t arm_sw_on_ms;      /* how long the ARM switch has been ON   */
     uint32_t now_ms;            /* for blinking                          */
 } UiState;
 

@@ -15,7 +15,7 @@ static int s_checks, s_failed;
     if (!(cond)) { s_failed++; printf("FAIL %s:%d  %s\n", __FILE__, __LINE__, #cond); } \
 } while (0)
 
-static const RcPacket PKT = { .seq = 7, .flags = RC_FLAG_ARM_REQ, .throttle = 512,
+static const RcPacket PKT = { .seq = 7, .flags = RC_FLAG_ARM | RC_FLAG_ANGLE, .throttle = 512,
                               .roll = -300, .pitch = 1000, .yaw = 0 };
 
 /* Feed a buffer; returns how many frames completed. */

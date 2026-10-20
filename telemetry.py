@@ -24,8 +24,9 @@ Non-CSV lines (e.g. "[ARM] DISARMED: tilt limit") are printed to the console
 and shown as the last event under the title.
 
 Keys (dashboard window focused):
-    d or space  -> send disarm to the board. Arming is only possible by
-                   holding B1 on the Nucleo for 2 s.
+    d or space  -> send disarm to the board. Arming is only possible with
+                   the controller's ARM switch (OFF→ON), or by holding B1 on
+                   the Nucleo for 2 s.
     up / down   -> throttle +10 / -10 us (ARMED only)
 
 Commands (type in the terminal, Enter to send; the '$' is added for you):
@@ -312,7 +313,7 @@ def build_dashboard(window_s):
                         fontsize=14, fontweight='bold', color='#888888')
     flight_text = fig.text(0.98, 0.965, '', ha='right', va='center',
                            fontsize=11, color='#cccccc')
-    event_text = fig.text(0.5, 0.935, 'd / space = disarm   |   hold B1 2 s = arm   |   up/down = throttle',
+    event_text = fig.text(0.5, 0.935, 'd / space = disarm   |   ARM switch or hold B1 2 s = arm   |   up/down = throttle',
                           ha='center', va='center', color='#aaaaaa', fontsize=9)
 
     return fig, {

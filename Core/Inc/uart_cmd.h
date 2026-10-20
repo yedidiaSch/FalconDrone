@@ -21,7 +21,7 @@ extern "C" {
  *
  *   $t1350            throttle target, us             (ARMED, no radio link)
  *   $t+10 / $t-10     nudge throttle target           (ARMED, no radio link)
- *   $m0 / $m1         RATE / ANGLE mode               (DISARMED only)
+ *   $m0 / $m1         RATE / ANGLE mode               (DISARMED, no radio link)
  *   $g rr 0.6 0 0.02  set kp ki kd of a loop: rr rp ry (rate roll/pitch/yaw),
  *                     ar ap (angle roll/pitch)        (any time)
  *   $L                capture level trim, 2 s still   (DISARMED only)
@@ -32,8 +32,8 @@ extern "C" {
  *   $x                stop the step test
  *   $l1 r / $l0       fast tuning log on (axis r|p|y) / off
  *
- * Arming stays physical (B1 or controller button hold) — there is no arm
- * command.
+ * Arming stays physical (controller ARM switch or B1 hold) — there is no
+ * arm command.
  */
 
 /* Feed one received byte. Called from HAL_UART_RxCpltCallback (ISR). */

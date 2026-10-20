@@ -2,10 +2,11 @@
 #define INPUTS_H
 
 /*
- * Slider, joystick and stick button → RcPacket-ready values.
+ * Throttle pot, joystick, stick button and the ARM / MODE switches →
+ * RcPacket-ready values.
  *
  * The stick center is measured at boot: leave the stick alone while the
- * controller powers up. inputs_read() is a dozen ADC conversions (~1 ms), so
+ * controller powers up. inputs_read() is 48 ADC conversions (~2 ms), so
  * it runs inside the radio task, right before each packet.
  */
 
@@ -18,7 +19,10 @@ typedef struct {
     int16_t  roll;        /* -RC_AXIS_MAX .. +RC_AXIS_MAX     */
     int16_t  pitch;
     bool     button;      /* debounced, true while held       */
+    bool     arm;         /* ARM switch ON (debounced)        */
+    bool     angle;       /* MODE switch on ANGLE (debounced) */
     int      raw_throttle, raw_x, raw_y;   /* for calibration */
+    int      raw_arm, raw_mode;            /* GPIO levels     */
 } Inputs;
 
 esp_err_t inputs_init(void);

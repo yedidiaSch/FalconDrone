@@ -122,6 +122,31 @@ static void test_ui_states(void)
     s.now_ms = 400;
     ui_render(&g, &s);
     CHECK(count_on(&c, 0, 55, GFX_W, 9) > count_on(&g, 0, 55, GFX_W, 9));
+
+    /* ARM switch left ON without the drone arming: an inverted warning
+     * replaces the plain hint once ARM_STUCK_MS has passed. */
+    s = base;
+    ui_render(&g, &s);
+    const int plain = count_on(&g, 0, 55, GFX_W, 9);
+    s.arm_sw = true; s.arm_sw_on_ms = 100;          /* just flipped: no warning yet */
+    ui_render(&g, &s);
+    CHECK(count_on(&g, 0, 55, GFX_W, 9) < 3 * plain);
+    s.arm_sw_on_ms = 2000;
+    ui_render(&g, &s);
+    CHECK(count_on(&g, 0, 55, GFX_W, 9) > 3 * plain);
+
+    /* Mode switch differs from the drone's mode: the mode text blinks. */
+    s = base;                                       /* drone RATE */
+    s.angle_sw = true;
+    s.now_ms = 0;
+    ui_render(&g, &s);
+    const int on = count_on(&g, 100, 0, 28, 9);
+    s.now_ms = 400;
+    ui_render(&g, &s);
+    CHECK(on > 0 && count_on(&g, 100, 0, 28, 9) == 0);
+    s.angle_sw = false;                             /* agrees again: steady */
+    ui_render(&g, &s);
+    CHECK(count_on(&g, 100, 0, 28, 9) > 0);
 }
 
 static void write_pgm(const char *dir, const char *name, const Gfx *g)
@@ -157,15 +182,17 @@ static void write_screens(const char *dir)
         { "2_no_link",      { .radio_ok = true, .tx_pct = 0, .throttle = 120 } },
         { "3_disarmed",     base },
         { "4_throttle_up",  base },
-        { "5_holding",      base },
+        { "5_arm_sw_stuck", base },
         { "6_armed",        base },
         { "7_armed_angle",  base },
     };
     shots[3].s.throttle = 450;
-    shots[4].s.button = true;  shots[4].s.button_held_ms = 1300;
+    shots[4].s.arm_sw = true;  shots[4].s.arm_sw_on_ms = 2000;
     shots[5].s.arm_state = 1;  shots[5].s.throttle = 620; shots[5].s.drone_throttle_us = 1310;
+    shots[5].s.arm_sw = true;
     shots[5].s.roll = 300;     shots[5].s.pitch = -700;
-    shots[6].s = shots[5].s;   shots[6].s.mode = 1; shots[6].s.rx_pct = 76;
+    shots[6].s = shots[5].s;   shots[6].s.mode = 1; shots[6].s.angle_sw = true;
+    shots[6].s.rx_pct = 76;
     for (size_t i = 0; i < sizeof(shots) / sizeof(shots[0]); i++) {
         ui_render(&g, &shots[i].s);
         write_pgm(dir, shots[i].name, &g);

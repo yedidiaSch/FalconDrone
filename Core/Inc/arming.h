@@ -10,20 +10,27 @@ extern "C" {
 
 /*
  * Arm / disarm state machine — decides whether the control loop may drive
- * the motors. The arm button is the user button B1 (blue, PC13) OR the
- * controller's stick button, whichever is pressed — both behave the same.
+ * the motors. Two ways to arm:
  *
- *   DISARMED ──hold button 2 s──▶ ARMING ──cal OK + 0.5 s level & still──▶ ARMED
- *       ▲                            │                                        │
- *       └──── any failure / button press / PC 'd' / radio lost ◀──────────────┘
+ *   - the controller's ARM switch (radio link UP): an OFF→ON flip arms,
+ *     OFF disarms at once. A switch that is already ON when the link comes
+ *     up, or when an arm attempt failed, must go OFF and ON again.
+ *   - the user button B1 (blue, PC13) held 2 s, for the PC-tethered bench.
+ *     While a controller is connected its switch still rules: B1 cannot
+ *     keep the drone armed with the switch OFF.
+ *
+ *   DISARMED ──switch ON / B1 2 s──▶ ARMING ──cal OK + 0.5 s level & still──▶ ARMED
+ *       ▲                               │                                        │
+ *       └── any failure / switch OFF / B1 press / PC 'd' / radio lost ◀──────────┘
  *
  * ARMING runs a fresh gyro calibration (board must be still for ~1 s), then
  * a pre-arm check window. Any failed check aborts back to DISARMED with the
- * reason logged over UART. A 2 s hold is refused while the radio throttle
- * is above zero (throttle_low == 0).
+ * reason logged over UART. Arming is refused while the radio throttle is
+ * above zero (throttle_low == 0).
  *
  * While ARMED, any of these disarms immediately:
- *   - a button press (the press edge, not the release)
+ *   - the ARM switch reading OFF
+ *   - a B1 press (the press edge, not the release)
  *   - a 'd' or ' ' byte received on USART2 (telemetry.py sends it)
  *   - no fresh IMU sample for 100 ms (caller passes imu == NULL)
  *   - |roll| or |pitch| beyond ARM_DISARM_TILT_DEG (crash / tip-over)
@@ -46,7 +53,9 @@ typedef enum {
 #define ARM_DISARM_TILT_DEG    60.0f  /* armed: beyond this = crash, disarm     */
 
 typedef struct {
-    uint8_t button;        /* 1 while B1 or the controller's arm button is held */
+    uint8_t button;        /* 1 while B1 is held                                */
+    uint8_t has_switch;    /* 1 = controller connected (radio link UP)          */
+    uint8_t arm_switch;    /* its ARM switch is ON (valid with has_switch)      */
     uint8_t throttle_low;  /* 0 = radio throttle above zero: refuse to arm      */
 } ArmInputs;
 

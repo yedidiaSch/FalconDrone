@@ -271,7 +271,8 @@ void StartControlTask(void *argument)
  *   1. Wait for the next IMU sample (by-value copy from the mailbox)
  *   2. dt from the sample timestamps (exact multiples of IMU_PERIOD_MS)
  *   3. Radio (rc_service.c) — newest controller packet, link state
- *   4. Arming state machine (arming.c) — B1 / controller button / PC / failsafes
+ *   4. Arming state machine (arming.c) — controller ARM switch / B1 / PC /
+ *      failsafes; the controller's mode switch while disarmed
  *   5. PC line commands (uart_cmd.c) — throttle, mode, gains, trim
  *   6. If ARMED: pilot input (radio, or $t from the PC when no radio) →
  *      FlightInput (throttle ramp) → FlightCtrl (angle loop in ANGLE mode →
@@ -279,8 +280,8 @@ void StartControlTask(void *argument)
  *      throttle cleared.
  *   7. ESC_SetAllMotors
  *
- * Boot state is DISARMED: motors stay at ESC_MIN_US until the arm button
- * (B1 or the controller's stick button) is held 2 s. Every arm starts at
+ * Boot state is DISARMED: motors stay at ESC_MIN_US until the controller's
+ * ARM switch goes OFF→ON (or B1 is held 2 s). Every arm starts at
  * ESC_MIN_US.
  *
  * Pilot source: the radio while its link is UP, otherwise the PC ($t).
@@ -319,11 +320,24 @@ static ArmState_t pilot_and_arming(uint32_t now_ms, const IMUData *imu, PilotInp
         (HAL_GPIO_ReadPin(B1_GPIO_Port, B1_Pin) == GPIO_PIN_RESET);
 
     const ArmInputs in = {
-        .button       = b1_pressed ||
-                        (pilot->rc_up && (pilot->rc.flags & RC_FLAG_ARM_REQ) != 0u),
+        .button       = b1_pressed,
+        .has_switch   = pilot->rc_up,
+        .arm_switch   = pilot->rc_up && (pilot->rc.flags & RC_FLAG_ARM) != 0u,
         .throttle_low = !pilot->rc_up || pilot->rc.throttle <= RC_THROTTLE_ARM_MAX,
     };
     const ArmState_t arm = Arming_Update(now_ms, &in, imu);
+
+    /* Mode switch: applied only while disarmed, so flipping it in flight
+     * waits for the next landing. */
+    if (pilot->rc_up && arm == ARM_STATE_DISARMED) {
+        const FlightMode_t want = (pilot->rc.flags & RC_FLAG_ANGLE) ? FLIGHT_MODE_ANGLE
+                                                                    : FLIGHT_MODE_RATE;
+        if (want != FlightCtrl_GetMode()) {
+            FlightCtrl_SetMode(want);
+            Log_Printf("[MODE] %s (controller switch)\r\n",
+                       want == FLIGHT_MODE_ANGLE ? "ANGLE" : "RATE");
+        }
+    }
     UartCmd_Poll(arm, now_ms);
     return arm;
 }

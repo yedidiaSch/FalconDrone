@@ -2,7 +2,9 @@
 #include "rc_protocol.h"
 #include <stdio.h>
 
-#define ARM_HOLD_MS 2000u   /* drone side: arming.h ARM_HOLD_MS */
+/* ARM switch ON this long with the drone still disarmed: the flip was not
+ * accepted (switch was already ON, throttle up, or arming failed). */
+#define ARM_STUCK_MS 600u
 
 enum { ARM_DISARMED = 0, ARM_ARMED = 1, ARM_ARMING = 2 };
 
@@ -39,8 +41,12 @@ static void header(Gfx *g, const UiState *s)
     }
     gfx_text(g, 1, 1, title, 2, !inverted);
 
-    if (s->radio_ok && s->drone_link) {
-        const char *mode = s->mode == 1 ? "ANGL" : "RATE";
+    /* The drone's mode with a link, else what the switch asks for. Blinks
+     * while the two differ — the drone takes the switch only when disarmed. */
+    const bool angle = s->drone_link ? s->mode == 1 : s->angle_sw;
+    const bool pending = s->drone_link && s->angle_sw != (s->mode == 1);
+    if (!pending || blink(s)) {
+        const char *mode = angle ? "ANGL" : "RATE";
         gfx_text(g, GFX_W - gfx_text_width(mode, 1), 1, mode, 1, !inverted);
     }
 }
@@ -72,20 +78,16 @@ static void hint(Gfx *g, const UiState *s)
          * flight controller does not answer. */
         text = s->tx_pct > 0 ? "NO REPLY FROM DRONE" : "SEARCHING FOR DRONE";
     } else if (s->arm_state == ARM_ARMED) {
-        text = "BUTTON = DISARM";
+        text = "ARM SWITCH OFF=STOP";
     } else if (s->arm_state == ARM_ARMING) {
         text = "KEEP DRONE STILL";
     } else if (s->throttle > RC_THROTTLE_ARM_MAX) {
         if (!blink(s)) return;
         text = "THROTTLE TO ZERO"; warn = true;
-    } else if (s->button) {
-        /* Hold progress — the drone arms at ARM_HOLD_MS. */
-        gfx_text(g, 0, y, "ARM", 1, true);
-        const uint32_t held = s->button_held_ms > ARM_HOLD_MS ? ARM_HOLD_MS : s->button_held_ms;
-        gfx_bar(g, 22, y - 1, GFX_W - 22, 9, (int)held, (int)ARM_HOLD_MS);
-        return;
+    } else if (s->arm_sw && s->arm_sw_on_ms >= ARM_STUCK_MS) {
+        text = "ARM SW OFF, THEN ON"; warn = true;
     } else {
-        text = "HOLD BTN 2s TO ARM";
+        text = "ARM SWITCH TO ARM";
     }
 
     if (warn) {

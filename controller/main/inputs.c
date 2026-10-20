@@ -21,7 +21,14 @@
 #define MODE_ANGLE_LEVEL     1    /* GPIO level of the MODE switch on ANGLE   */
 
 #define ADC_RAW_MAX       4095
-#define OVERSAMPLE           8    /* per read; the highest and lowest dropped */
+#define OVERSAMPLE          16    /* per read; the highest and lowest dropped */
+
+/* Low-pass on top (exponential, per 20 ms read). Wi-Fi transmit bursts move
+ * the 3.3 V rail, and every pot reading with it. 0.25 → ~70 ms time
+ * constant on the throttle; the stick gets a lighter 0.5 (~30 ms) so it
+ * stays responsive. */
+#define THROTTLE_LPF       0.25f
+#define STICK_LPF          0.5f
 #define CENTER_SAMPLES      32
 
 static const char *TAG = "inputs";
@@ -29,6 +36,7 @@ static const char *TAG = "inputs";
 static adc_oneshot_unit_handle_t s_adc;
 static adc_channel_t s_ch_throttle, s_ch_x, s_ch_y;
 static int s_center_x, s_center_y;
+static float s_thr_f = -1.0f, s_x_f, s_y_f;   /* filtered raw; < 0 = not started */
 /* Accept a new level only when two reads in a row agree (20 ms apart). */
 typedef struct {
     bool last_raw;
@@ -151,9 +159,18 @@ void inputs_read(Inputs *in)
     in->raw_x        = read_trimmed(s_ch_x);
     in->raw_y        = read_trimmed(s_ch_y);
 
-    in->throttle = slider(in->raw_throttle);
-    in->roll     = stick_axis(in->raw_x, s_center_x, STICK_INVERT_X);
-    in->pitch    = stick_axis(in->raw_y, s_center_y, STICK_INVERT_Y);
+    if (s_thr_f < 0.0f) {                  /* first read: start from it */
+        s_thr_f = (float)in->raw_throttle;
+        s_x_f   = (float)in->raw_x;
+        s_y_f   = (float)in->raw_y;
+    }
+    s_thr_f += THROTTLE_LPF * ((float)in->raw_throttle - s_thr_f);
+    s_x_f   += STICK_LPF    * ((float)in->raw_x - s_x_f);
+    s_y_f   += STICK_LPF    * ((float)in->raw_y - s_y_f);
+
+    in->throttle = slider((int)(s_thr_f + 0.5f));
+    in->roll     = stick_axis((int)(s_x_f + 0.5f), s_center_x, STICK_INVERT_X);
+    in->pitch    = stick_axis((int)(s_y_f + 0.5f), s_center_y, STICK_INVERT_Y);
 
     in->raw_arm  = gpio_get_level(PIN_ARM_SW);
     in->raw_mode = gpio_get_level(PIN_MODE_SW);

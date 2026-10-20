@@ -6,7 +6,7 @@
  * RcPacket-ready values.
  *
  * The stick center is measured at boot: leave the stick alone while the
- * controller powers up. inputs_read() is 24 ADC conversions (~1 ms), so
+ * controller powers up. inputs_read() is 48 ADC conversions (~2 ms), so
  * it runs inside the radio task, right before each packet.
  */
 

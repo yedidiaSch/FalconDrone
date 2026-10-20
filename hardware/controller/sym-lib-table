@@ -1,0 +1,4 @@
+(sym_lib_table
+	(version 7)
+	(lib (name "falcon_rc") (type "KiCad") (uri "${KIPRJMOD}/falcon_rc.kicad_sym") (options "") (descr "FalconDrone controller parts"))
+)

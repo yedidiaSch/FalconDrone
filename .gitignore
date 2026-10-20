@@ -103,3 +103,8 @@ bridge/sdkconfig.old
 # Frame codec host test binary
 shared/rc_protocol/test/test_rc_frame
 !shared/rc_protocol/test/Makefile
+
+# KiCad (hardware/) — per-user view state, footprint cache, autosave backups
+*.kicad_prl
+fp-info-cache
+*-backups/

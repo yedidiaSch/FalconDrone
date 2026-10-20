@@ -6,6 +6,8 @@ Writes build/jlcpcb/ (like the flight controller's export_fab.py):
   falcon_rc_gerbers.zip   gerbers + Excellon drills (upload as the PCB)
   falcon_rc_bom.csv       Comment, Designator, Footprint, LCSC (assembly BOM)
   falcon_rc_cpl.csv       Designator, Val, Package, Mid X, Mid Y, Rotation, Layer
+and build/pcbway/falcon_rc_pcbway_bom.csv: the same parts by manufacturer part
+number, for ordering from PCBWay with the same gerbers zip and CPL.
 
 Every part is assembled: SMD on the back by reflow, through-hole parts on
 the front (sticks, toggles, tact switches, LEDs, sockets) by JLCPCB's THT
@@ -139,6 +141,40 @@ def write_bom(fps):
     return path, groups
 
 
+def write_pcbway_bom(fps):
+    """PCBWay's BOM layout: manufacturer + MPN per line (PARTS keeps them as one
+    "Maker MPN (note)" string), passives by description, LCSC as a cross-reference."""
+    groups = {}
+    for fp in fps:
+        lcsc, mpn = part_for(fp)
+        pkg = str(fp.GetFPID().GetLibItemName())
+        groups.setdefault((lcsc, mpn, pkg), []).append(fp)
+    path = os.path.join(HERE, "build", "pcbway", PROJECT + "_pcbway_bom.csv")
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, "w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["Item", "Designator", "Qty", "Manufacturer", "Manufacturer Part Number",
+                    "Description", "Package", "Type", "Notes", "LCSC (reference)"])
+        lines = sorted(groups.items(), key=lambda kv: natural(min(fp.GetReference() for fp in kv[1])))
+        for i, ((lcsc, mpn, pkg), group) in enumerate(lines, 1):
+            refs = sorted((fp.GetReference() for fp in group), key=natural)
+            ref = refs[0]
+            if ref in PARTS:
+                words = mpn.split(" ", 2) if " " in mpn else ["", mpn]
+                maker, number = (words[0], words[1]) if len(words) > 1 else ("", words[0])
+                note, desc = (words[2] if len(words) > 2 else ""), group[0].GetValue()
+                note = "" if note == "(Global Sourcing)" else note     # JLCPCB-only remark
+            else:
+                size = pkg.split("_")[1]
+                maker = number = note = ""
+                desc = (f"Resistor {mpn}Ω 1% {size}" if ref.startswith("R")
+                        else f"Capacitor {mpn}F MLCC X5R/X7R 16 V or higher {size}")
+            tht = not group[0].GetAttributes() & pcbnew.FP_SMD
+            w.writerow([i, ",".join(refs), len(refs), maker, number, desc, pkg,
+                        "THT" if tht else "SMD", note, lcsc])
+    return path
+
+
 def write_cpl(fps):
     path = os.path.join(OUT, PROJECT + "_cpl.csv")
     with open(path, "w", newline="") as f:
@@ -207,9 +243,10 @@ def main():
     zpath, files = write_gerbers(pcb)
     bom, groups = write_bom(fps)
     cpl = write_cpl(fps)
+    pcbway = write_pcbway_bom(fps)
     smd = sum(1 for fp in fps if fp.GetAttributes() & pcbnew.FP_SMD)
     print(f"wrote {zpath} ({len(files)} files)\nwrote {bom}: {len(groups)} lines\n"
-          f"wrote {cpl}: {len(fps)} parts ({smd} SMD, {len(fps) - smd} THT)")
+          f"wrote {cpl}: {len(fps)} parts ({smd} SMD, {len(fps) - smd} THT)\nwrote {pcbway}")
     skipped = [fp.GetReference() for fp in board.GetFootprints() if not assembled(fp)]
     print(f"not assembled: {', '.join(sorted(skipped, key=natural))}")
     if "--stock" in sys.argv:

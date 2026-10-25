@@ -30,7 +30,7 @@ line in JLCPCB's BOM matcher when you upload `build/jlcpcb/falcon_fc_bom.csv`
 | D2 | SMAJ5.0A (SMA) | C499731 | many makers; any 5 V / 400 W SMA TVS will do |
 | J1, J6 | JST SM03B-GHS-TB | C514175 | |
 | J3, J5 | JST SM06B-GHS-TB | C133065 | low stock at times |
-| SW1, SW2 | C&K PTS810 SJM | C116501 | |
+| SW1, SW2 | C&K PTS810 SJG | C221895 | |
 | R, C, FB1, D1 | 0603/0805 passives, green LED, 600R ferrite | matcher picks | all common basic parts |
 
 ## Not by JLCPCB SMT

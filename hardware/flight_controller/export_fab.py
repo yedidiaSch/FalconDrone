@@ -55,7 +55,7 @@ LCSC = {
 FP_LCSC = {
     "JST_GH_SM03B-GHS-TB_1x03-1MP_P1.25mm_Horizontal": "C514175",
     "JST_GH_SM06B-GHS-TB_1x06-1MP_P1.25mm_Horizontal": "C133065",
-    "SW_SPST_PTS810": "C116501",
+    "SW_SPST_PTS810": "C221895",
 }
 
 # PCBWay BOM: schematic value -> (manufacturer, MPN, description). Passives
@@ -78,7 +78,7 @@ FP_MPN = {
         ("JST", "SM03B-GHS-TB(LF)(SN)", "Connector JST-GH 3-pin right angle SMD"),
     "JST_GH_SM06B-GHS-TB_1x06-1MP_P1.25mm_Horizontal":
         ("JST", "SM06B-GHS-TB(LF)(SN)", "Connector JST-GH 6-pin right angle SMD"),
-    "SW_SPST_PTS810": ("C&K", "PTS810SJM250SMTRLFS", "Tactile switch SMD"),
+    "SW_SPST_PTS810": ("C&K", "PTS810SJG250SMTRLFS", "Tactile switch SMD"),
     "PinHeader_1x05_P2.54mm_Vertical": ("", "", "Pin header 1x05 2.54 mm vertical (ESC)"),
     "nRF24L01_Breakout": ("", "", "Female header 2x04 2.54 mm vertical (nRF24L01 module socket)"),
 }

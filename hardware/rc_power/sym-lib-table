@@ -1,0 +1,4 @@
+(sym_lib_table
+	(version 7)
+	(lib (name "rc_power") (type "KiCad") (uri "${KIPRJMOD}/rc_power.kicad_sym") (options "") (descr "FalconDrone RC power parts"))
+)

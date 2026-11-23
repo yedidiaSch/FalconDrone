@@ -15,8 +15,13 @@
 
 class ComplementaryFilter {
 public:
-    /** @param alpha Gyro weight per step (0.98 → ~0.5 s accel time constant at 100 Hz). */
-    explicit constexpr ComplementaryFilter(float alpha) : _alpha(alpha) {}
+    /**
+     * @param tau_s Time constant in seconds: how long the gyro is trusted
+     *              before the accelerometer pulls the angle back. The
+     *              per-step gyro weight is tau / (tau + dt), so the
+     *              behaviour does not change with the loop rate.
+     */
+    explicit constexpr ComplementaryFilter(float tau_s) : _tau(tau_s) {}
 
     /**
      * @brief Fuse one sample.
@@ -29,7 +34,7 @@ public:
     float Pitch() const { return _pitch; }  /**< degrees */
 
 private:
-    float _alpha;
+    float _tau;
     float _roll = 0.0f;
     float _pitch = 0.0f;
     bool _seeded = false;

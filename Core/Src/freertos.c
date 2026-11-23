@@ -219,7 +219,7 @@ void StartIMUTask(void *argument)
 {
   /* USER CODE BEGIN StartIMUTask */
   
-  /* Fixed 100 Hz read / fuse / publish loop — never returns. */
+  /* Fixed 500 Hz read / fuse / publish loop — never returns. */
   imuTaskRun();
   /* USER CODE END StartIMUTask */
 }
@@ -265,7 +265,7 @@ void StartControlTask(void *argument)
  * ControlTask — cascaded attitude controller (flight_ctrl.c).
  *
  * Synchronous with the IMU: blocks on the IMU mailbox, runs once per
- * fresh sample. 100 Hz (IMU_PERIOD_MS).
+ * fresh sample. 500 Hz (IMU_PERIOD_MS).
  *
  * Pipeline each tick:
  *   1. Wait for the next IMU sample (by-value copy from the mailbox)
@@ -289,6 +289,9 @@ void StartControlTask(void *argument)
  * lost for RC_LINK_TIMEOUT_MS) and stops a controller that connects
  * mid-flight from taking over with its slider wherever it happens to be.
  */
+
+#define TELEM_PERIOD_MS 20u   /* 50 Hz CSV; a multiple of IMU_PERIOD_MS */
+_Static_assert(TELEM_PERIOD_MS % IMU_PERIOD_MS == 0u, "telemetry must land on IMU slots");
 
 typedef struct {
     uint8_t  rc_up;     /* 1 = radio is the pilot source this tick */
@@ -355,7 +358,6 @@ static void ControlTask_Run(void)
     RcService_Init(osKernelGetTickCount());
 
     uint32_t last_sample_ms = 0;
-    uint32_t log_div   = 0;   /* decimate telemetry to 50 Hz — 100 Hz overruns the queue */
 
     for (;;)
     {
@@ -387,7 +389,7 @@ static void ControlTask_Run(void)
         }
 
         /* Sample timestamps are scheduled slot times, so dt is exact —
-         * 10 ms normally, 20 ms if the IMU dropped one read. */
+         * IMU_PERIOD_MS normally, twice that if the IMU dropped one read. */
         const uint32_t now = s.t_ms;
         float dt = (float)(now - last_sample_ms) / 1000.0f;
         last_sample_ms = now;
@@ -425,14 +427,15 @@ static void ControlTask_Run(void)
             continue;
         }
 
-        /* Telemetry — one CSV line every 2 ticks (~50 Hz).
+        /* Telemetry — one CSV line every TELEM_PERIOD_MS (50 Hz), picked by
+         * sample time so it doesn't depend on the loop rate.
          * 100 Hz overruns the 16-deep log queue during motion bursts (~33%
          * loss observed). 50 Hz drains comfortably under UART 115200.
          * Format: t_ms,roll,pitch,gx,gy,gz,m1,m2,m3,m4,arm,thr,mode,rsp,psp
          * arm: 0 = disarmed, 1 = armed, 2 = arming
          * mode: 0 = rate, 1 = angle
          * rsp/psp: roll/pitch rate setpoints sent to the rate loop, deg/s */
-        if ((++log_div & 0x1) == 0u) {
+        if ((now % TELEM_PERIOD_MS) == 0u) {
             Log_Printf("%lu,%.1f,%.1f,%.1f,%.1f,%.1f,%u,%u,%u,%u,%u,%u,%u,%.1f,%.1f\r\n",
                        (unsigned long)now,
                        s.roll,   s.pitch,

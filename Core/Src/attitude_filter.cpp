@@ -28,6 +28,8 @@ void ComplementaryFilter::Update(const ImuSample& s, float dt)
         return;
     }
 
-    _roll  = _alpha * (_roll  + s.gx * dt) + (1.0f - _alpha) * accel_roll;
-    _pitch = _alpha * (_pitch + s.gy * dt) + (1.0f - _alpha) * accel_pitch;
+    // dt = 0 (gap) gives alpha = 1: hold the angle, no gyro, no accel step.
+    const float alpha = _tau / (_tau + dt);
+    _roll  = alpha * (_roll  + s.gx * dt) + (1.0f - alpha) * accel_roll;
+    _pitch = alpha * (_pitch + s.gy * dt) + (1.0f - alpha) * accel_pitch;
 }

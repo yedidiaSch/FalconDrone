@@ -4,7 +4,7 @@
 #include <stddef.h>
 
 #define RETRY_INIT_MS  2000u
-#define MAX_READS_POLL 4u      /* a 10 ms tick brings one packet, rarely two */
+#define MAX_READS_POLL 4u      /* a 2 ms tick brings at most one 50 Hz packet */
 
 static bool     s_radio_ok;
 static bool     s_missing_logged;

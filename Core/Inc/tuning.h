@@ -23,8 +23,8 @@ extern "C" {
  *   beyond TUNE_ABORT_TILT_DEG.
  *
  * Tuning log ($l1 <axis>, or on automatically during a step test and for
- * TUNE_LOG_TAIL_MS after it): replaces the 50 Hz CSV with one line per
- * control tick (100 Hz) for one axis:
+ * TUNE_LOG_TAIL_MS after it): replaces the 50 Hz CSV with one line every
+ * TUNE_LOG_PERIOD_MS (100 Hz, every 5th control tick) for one axis:
  *
  *   T,t_ms,seg,ref,sp,meas,ang,p,i,d,u,thr,sat
  *
@@ -53,6 +53,7 @@ extern "C" {
 #define TUNE_ABORT_TILT_DEG    35.0f
 #define TUNE_OVERRIDE_STICK     0.25f   /* normalized stick on the tested axis */
 #define TUNE_LOG_TAIL_MS        1000u
+#define TUNE_LOG_PERIOD_MS        10u   /* 100 Hz: tools/tune_analyze.py assumes it */
 
 /* $s — returns true if the test started (reason logged otherwise). */
 bool Tuning_Start(FlightAxis_t axis, float amp, uint16_t step_ms, uint8_t reps,
@@ -68,8 +69,8 @@ void Tuning_SetLog(bool on, FlightAxis_t axis);
  * ARMED). Drives FlightCtrl_SetTestInput(). */
 void Tuning_Tick(uint32_t now_ms, ArmState_t arm, const IMUData *imu, const FlightCmd *cmd);
 
-/* Every control tick after FlightCtrl. Returns true if it wrote the tuning
- * log line — the normal CSV is skipped then. */
+/* Every control tick after FlightCtrl. Returns true while the tuning log is
+ * on (whether or not this tick wrote a line) — the normal CSV is skipped then. */
 bool Tuning_Log(uint32_t now_ms, const IMUData *imu, const FlightCmd *cmd,
                 const FlightCtrlDebug *dbg, const uint16_t motors[4]);
 

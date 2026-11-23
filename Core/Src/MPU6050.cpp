@@ -15,7 +15,7 @@
  * Default DLPF is wide-open (~256 Hz cutoff), which lets a lot of vibration
  * and electrical noise through — measured ~7-9 dps gyro noise stationary.
  * DLPF_CFG = 3 sets the on-chip LPF to ~42 Hz on both accel and gyro, which
- * is well above our 100 Hz control loop's Nyquist concerns and dramatically
+ * sits below the 250 Hz Nyquist limit of our 500 Hz control loop and dramatically
  * cleans up the signal feeding into the PID derivative term.
  *
  * Reference: MPU-6000 register map, register 0x1A (CONFIG):

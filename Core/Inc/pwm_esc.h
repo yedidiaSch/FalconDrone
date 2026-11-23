@@ -25,8 +25,9 @@ extern "C" {
  *   M4  Rear-Right   CCW  TIM3_CH2  PA7
  *
  * PWM: 400 Hz, 1 µs resolution (timer tick = 1 µs, period = 2 500 ticks).
- * 400 Hz lets every 100 Hz control output reach the motors within 2.5 ms
- * (at 50 Hz every second command was overwritten before it was sent).
+ * 400 Hz is the ESC update-rate limit; the 500 Hz control loop gives every
+ * frame a fresh command. CCR preload (set by HAL_TIM_PWM_ConfigChannel)
+ * makes a new width take effect at the next period, never mid-pulse.
  * Fallback if an ESC misbehaves at 400 Hz: period 4999 (200 Hz) in the .ioc.
  * ESC signal range: 1000 µs (min/armed) to 2000 µs (full throttle)
  */

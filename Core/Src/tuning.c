@@ -5,6 +5,8 @@
 #include "logger.h"
 #include <math.h>
 
+_Static_assert(TUNE_LOG_PERIOD_MS % IMU_PERIOD_MS == 0u, "tuning log must land on IMU slots");
+
 static const char s_axis_char[FLIGHT_AXIS_COUNT] = { 'r', 'p', 'y' };
 
 static TuneSeq      s_seq;
@@ -153,6 +155,11 @@ bool Tuning_Log(uint32_t now_ms, const IMUData *imu, const FlightCmd *cmd,
     }
     if (!s_log_manual && !s_log_tail && s_test_axis == FLIGHT_AXIS_NONE) {
         return false;
+    }
+
+    /* Sample times are exact multiples of IMU_PERIOD_MS: log every 10 ms. */
+    if ((now_ms % TUNE_LOG_PERIOD_MS) != 0u) {
+        return true;
     }
 
     const FlightAxis_t axis = s_log_axis;

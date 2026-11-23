@@ -19,6 +19,9 @@ extern "C" {
  *   - Output clamp (out_limit) is symmetric: ±out_limit. Saturation is also
  *     used to gate integration (clamping integral at i_limit is enough for
  *     basic flight; full back-calculation can come later if needed).
+ *   - Optional first-order low-pass on the derivative (PID_SetDLpf). A raw
+ *     difference amplifies gyro noise by 1/dt, so the faster the loop the
+ *     more the D-term needs it; the cutoff is in Hz, independent of dt.
  *   - dt is passed per call so the same struct works at any loop rate and
  *     copes gracefully with jitter.
  *
@@ -33,8 +36,11 @@ typedef struct {
     float i_limit;    /* |integral|     <= i_limit   (anti-windup)   */
     float out_limit;  /* |output|       <= out_limit (saturation)    */
 
+    float d_lpf_hz;   /* derivative low-pass cutoff, 0 = unfiltered     */
+
     float integral;
     float prev_measurement;
+    float d_filt;      /* filtered d(measurement)/dt                 */
     uint8_t has_prev;  /* 0 on first call → skip derivative term     */
 
     /* Terms of the last PID_Update(), for the tuning log. */
@@ -59,11 +65,14 @@ void  PID_ResetIntegral(PID_t *pid);
 /* Live gain update (e.g. from a tuning UI). Internal state is preserved. */
 void  PID_SetGains(PID_t *pid, float kp, float ki, float kd);
 
+/* Derivative low-pass cutoff in Hz (first order); 0 turns it off. */
+void  PID_SetDLpf(PID_t *pid, float cutoff_hz);
+
 /*
  * One control step.
  *   setpoint    : desired value (e.g. target roll rate, deg/s)
  *   measurement : current value from sensor (e.g. gyro x, deg/s)
- *   dt          : seconds since the previous call (e.g. 0.005f at 200 Hz)
+ *   dt          : seconds since the previous call (e.g. 0.002f at 500 Hz)
  *
  * Returns the controller output, already clamped to ±out_limit.
  */

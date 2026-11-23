@@ -7,8 +7,8 @@
  * ESP-NOW bridge on USART1 (PA9 → bridge RX, PA10 ← bridge TX, common GND).
  *
  * RX: DMA writes into a circular buffer forever; each poll reads up to the
- * DMA write position — no interrupts, no callbacks. At 115200 baud a 10 ms
- * tick brings at most ~115 bytes, well inside the buffer.
+ * DMA write position — no interrupts, no callbacks. At 115200 baud a 2 ms
+ * tick brings at most ~23 bytes, well inside the buffer.
  *
  * TX: one RcAck frame per call, interrupt driven, skipped while the
  * previous one is still going out (at 50 Hz it never is).

@@ -15,18 +15,8 @@
 #define MPU6050_H_
 
 #include "stm32f4xx_hal.h"
+#include "imu_types.h"
 #include <cstdint>
-
-/** One decoded sensor read. Accel in g, gyro in dps with bias removed. */
-struct ImuSample {
-    float ax, ay, az;
-    float gx, gy, gz;
-};
-
-/** Per-axis gyro zero-rate offset in dps. */
-struct GyroBias {
-    float x, y, z;
-};
 
 /**
  * @class MPU6050

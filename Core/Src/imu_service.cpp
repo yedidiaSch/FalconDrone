@@ -1,13 +1,27 @@
 /**
  * @file imu_service.cpp
  * @brief IMU service: task loop, DMA signalling, recovery and sample hand-off
- *        around the C++ MPU6050 driver and complementary filter.
+ *        around the C++ IMU driver and complementary filter.
+ *
+ * The driver is picked at build time by FALCON_IMU (root CMakeLists.txt):
+ * ICM20948 on hardware/carrier, MPU6050 on the breadboard rig. Both have the
+ * same Init / Calibrate / StartRead / Decode interface.
  *
  * @author Yedidya Schwartz
  */
 
 #include "imu_service.h"
+#if defined(FALCON_IMU_ICM20948)
+#include "ICM20948.h"
+using ImuDriver = ICM20948;
+#define IMU_NAME "ICM-20948"
+#elif defined(FALCON_IMU_MPU6050)
 #include "MPU6050.h"
+using ImuDriver = MPU6050;
+#define IMU_NAME "MPU-6050"
+#else
+#error "Define FALCON_IMU_ICM20948 or FALCON_IMU_MPU6050 (FALCON_IMU in CMakeLists.txt)"
+#endif
 #include "attitude_filter.h"
 #include "i2c.h"        /* I2C_Recover — board-specific pins */
 #include "logger.h"
@@ -19,7 +33,7 @@
 
 namespace {
 
-/* A 14-byte read at 400 kHz takes ~0.4 ms; anything near a full period
+/* A 12-14 byte read at 400 kHz takes ~0.4 ms; anything near a full period
  * means the transfer is not coming back. */
 constexpr uint32_t kDmaTimeoutMs = 5;
 
@@ -30,7 +44,7 @@ constexpr uint32_t kMaxIntegrateGapMs = 200;
 constexpr float kFilterAlpha = 0.98f;
 
 /* Constant-initialized — no constructor runs before main(). */
-MPU6050 s_imu;
+ImuDriver s_imu;
 ComplementaryFilter s_filter(kFilterAlpha);
 
 I2C_HandleTypeDef *s_hi2c = nullptr;
@@ -132,15 +146,15 @@ extern "C" void imuCreate(I2C_HandleTypeDef *hi2c)
 extern "C" void imuTaskRun(void)
 {
     /* An MCU reset (RESET button, st-flash) does not power-cycle the sensor.
-     * If the reset landed mid-transfer the MPU6050 can still be holding SDA
+     * If the reset landed mid-transfer the IMU can still be holding SDA
      * low, which leaves the I2C peripheral BUSY forever. Always clock the
      * bus free before the first transaction. */
     I2C_Recover(s_hi2c);
 
     if (s_imu.Init(s_hi2c)) {
-        Log_Print("[IMU] Initialization Success!\r\n");
+        Log_Print("[IMU] " IMU_NAME " initialization Success!\r\n");
     } else {
-        Log_Print("[IMU] Initialization FAILED!\r\n");
+        Log_Print("[IMU] " IMU_NAME " initialization FAILED! (no ACK or wrong WHO_AM_I)\r\n");
     }
 
     uint32_t next = osKernelGetTickCount();

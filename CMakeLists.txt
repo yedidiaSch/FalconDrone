@@ -58,7 +58,6 @@ target_link_directories(${CMAKE_PROJECT_NAME} PRIVATE
 target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     Core/Src/imu_service.cpp
     Core/Src/attitude_filter.cpp
-    Core/Src/MPU6050.cpp
     Core/Src/pwm_esc.c
     Core/Src/mixer.c
     Core/Src/pid.c
@@ -77,22 +76,55 @@ target_sources(${CMAKE_PROJECT_NAME} PRIVATE
     # Add user sources here
 )
 
-# Radio transport: BRIDGE = ESP32 ESP-NOW bridge on USART1, NRF24 = nRF24 on SPI2.
-#   cmake --preset Debug -DFALCON_RC_RADIO=NRF24
-set(FALCON_RC_RADIO "BRIDGE" CACHE STRING "Radio transport: BRIDGE or NRF24")
-set_property(CACHE FALCON_RC_RADIO PROPERTY STRINGS BRIDGE NRF24)
-if(FALCON_RC_RADIO STREQUAL "NRF24")
+# Board: picks the IMU and the radio transport together.
+#   CARRIER     hardware/carrier under the Nucleo: ICM-20948 @0x69, nRF24 on SPI2
+#   BREADBOARD  the jumper-wire bench rig: MPU-6050 @0x68, ESP-NOW bridge on USART1
+#   cmake --preset Debug -DFALCON_BOARD=BREADBOARD
+# FALCON_IMU / FALCON_RC_RADIO override one part of it; empty = board default.
+set(FALCON_BOARD "CARRIER" CACHE STRING "Target board: CARRIER or BREADBOARD")
+set_property(CACHE FALCON_BOARD PROPERTY STRINGS CARRIER BREADBOARD)
+set(FALCON_IMU "" CACHE STRING "IMU override: ICM20948 or MPU6050 (empty = board default)")
+set_property(CACHE FALCON_IMU PROPERTY STRINGS "" ICM20948 MPU6050)
+set(FALCON_RC_RADIO "" CACHE STRING "Radio override: NRF24 or BRIDGE (empty = board default)")
+set_property(CACHE FALCON_RC_RADIO PROPERTY STRINGS "" NRF24 BRIDGE)
+
+if(FALCON_BOARD STREQUAL "CARRIER")
+    set(board_imu ICM20948)
+    set(board_radio NRF24)
+elseif(FALCON_BOARD STREQUAL "BREADBOARD")
+    set(board_imu MPU6050)
+    set(board_radio BRIDGE)
+else()
+    message(FATAL_ERROR "FALCON_BOARD must be CARRIER or BREADBOARD, got '${FALCON_BOARD}'")
+endif()
+if(FALCON_IMU)
+    set(board_imu ${FALCON_IMU})
+endif()
+if(FALCON_RC_RADIO)
+    set(board_radio ${FALCON_RC_RADIO})
+endif()
+
+if(board_imu STREQUAL "ICM20948")
+    target_sources(${CMAKE_PROJECT_NAME} PRIVATE Core/Src/ICM20948.cpp)
+elseif(board_imu STREQUAL "MPU6050")
+    target_sources(${CMAKE_PROJECT_NAME} PRIVATE Core/Src/MPU6050.cpp)
+else()
+    message(FATAL_ERROR "FALCON_IMU must be ICM20948 or MPU6050, got '${board_imu}'")
+endif()
+target_compile_definitions(${CMAKE_PROJECT_NAME} PRIVATE FALCON_IMU_${board_imu})
+
+if(board_radio STREQUAL "NRF24")
     target_sources(${CMAKE_PROJECT_NAME} PRIVATE
         Core/Src/rc_radio_nrf24.c
         Core/Src/nrf24_port_stm32.c
         shared/nrf24/src/nrf24.c
     )
-elseif(FALCON_RC_RADIO STREQUAL "BRIDGE")
+elseif(board_radio STREQUAL "BRIDGE")
     target_sources(${CMAKE_PROJECT_NAME} PRIVATE Core/Src/rc_radio_bridge.c)
 else()
-    message(FATAL_ERROR "FALCON_RC_RADIO must be BRIDGE or NRF24, got '${FALCON_RC_RADIO}'")
+    message(FATAL_ERROR "FALCON_RC_RADIO must be NRF24 or BRIDGE, got '${board_radio}'")
 endif()
-message(STATUS "FalconDrone radio transport: ${FALCON_RC_RADIO}")
+message(STATUS "FalconDrone board: ${FALCON_BOARD} (IMU ${board_imu}, radio ${board_radio})")
 
 # Add include paths
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE

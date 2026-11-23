@@ -2,7 +2,7 @@
  * @file attitude_filter.h
  * @brief Roll/pitch estimation from IMU samples (complementary filter).
  *
- * Kept separate from the MPU6050 driver so the estimator can be swapped
+ * Kept separate from the IMU drivers so the estimator can be swapped
  * (Madgwick / Kalman) without touching sensor I/O.
  *
  * @author Yedidya Schwartz
@@ -11,7 +11,7 @@
 #ifndef ATTITUDE_FILTER_H_
 #define ATTITUDE_FILTER_H_
 
-#include "MPU6050.h"
+#include "imu_types.h"
 
 class ComplementaryFilter {
 public:

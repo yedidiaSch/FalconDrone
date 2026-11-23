@@ -2,15 +2,25 @@ menu "FalconDrone"
 
     choice FALCON_RADIO
         prompt "Radio transport"
-        default FALCON_RADIO_ESPNOW
+        default FALCON_RADIO_NRF24
         help
             How the controller talks to the drone. The STM32 side must match
-            (FALCON_RC_RADIO in the root CMakeLists.txt).
+            (FALCON_BOARD / FALCON_RC_RADIO in the root CMakeLists.txt):
+            nRF24 for the carrier boards, ESP-NOW for the breadboard rig.
 
         config FALCON_RADIO_ESPNOW
             bool "ESP-NOW to the bridge ESP32 on the drone"
         config FALCON_RADIO_NRF24
             bool "nRF24L01+ on VSPI"
     endchoice
+
+    config FALCON_PWR_KEEP
+        bool "Pulse the RC power board's IP5306 button (PWR_KEEP, GPIO17)"
+        default y
+        help
+            hardware/rc_power switches its 5 V boost off after 32 s at light
+            load. With this on, GPIO17 presses its button for 100 ms every
+            10 s to keep it running. Harmless without the power board
+            (the pin is then unconnected).
 
 endmenu

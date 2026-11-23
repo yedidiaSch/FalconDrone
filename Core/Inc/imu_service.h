@@ -1,8 +1,8 @@
 /**
  * @file imu_service.h
- * @brief IMU service — C API over the C++ MPU6050 driver + attitude filter.
+ * @brief IMU service — C API over the C++ IMU driver + attitude filter.
  *
- * Owns everything around the sensor: the IMU task loop (fixed 100 Hz via
+ * Owns everything around the sensor: the IMU task loop (fixed 500 Hz via
  * osDelayUntil), DMA completion signalling, I2C bus recovery, gyro
  * calibration requests, and the hand-off of each sample to the control loop
  * through a single-slot mailbox queue.
@@ -27,8 +27,11 @@
 extern "C" {
 #endif
 
-/** IMU sample period. The filter and the PID both rely on it being fixed. */
-#define IMU_PERIOD_MS 10u
+/** IMU sample period = control loop period (500 Hz). Whole ms only: the
+ *  schedule runs on the 1 ms RTOS tick. Above the ESCs' 400 Hz PWM, so
+ *  every ESC frame gets a fresh command. Telemetry (50 Hz) and the tuning
+ *  log (100 Hz) are decimated by time, so they don't change with it. */
+#define IMU_PERIOD_MS 2u
 
 /**
  * @brief One fused IMU sample, delivered by value through the mailbox.

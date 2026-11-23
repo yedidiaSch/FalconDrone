@@ -67,7 +67,7 @@ bool ICM20948::Init(I2C_HandleTypeDef* hi2c)
     osDelay(50);
 
     /* Bank 2: output data rates at maximum (gyro 1.1 kHz, accel 1.125 kHz);
-     * the 100 Hz reader always gets the newest filtered sample. */
+     * the 500 Hz reader always gets the newest filtered sample. */
     if (!SelectBank(2)) return false;
     const bool ok = WriteReg(kRegGyroSmplrtDiv, 0)
                  && WriteReg(kRegGyroConfig1, kGyroCfg1)

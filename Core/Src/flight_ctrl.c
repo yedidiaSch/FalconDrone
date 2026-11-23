@@ -5,7 +5,8 @@
 #include "logger.h"
 #include <math.h>
 
-#define TRIM_SAMPLES        200u   /* 2 s at 100 Hz */
+#define TRIM_CAPTURE_MS    2000u
+#define TRIM_SAMPLES       (TRIM_CAPTURE_MS / IMU_PERIOD_MS)
 #define TRIM_MAX_RATE_DPS     5.0f /* abort the capture if the board moves */
 
 static PID_t        s_pid[LOOP_COUNT];
@@ -33,6 +34,9 @@ void FlightCtrl_Init(void)
     PID_Init(&s_pid[LOOP_RATE_ROLL],  RATE_RP_KP,  RATE_RP_KI,  RATE_RP_KD, RATE_I_LIMIT, RATE_OUT_LIMIT);
     PID_Init(&s_pid[LOOP_RATE_PITCH], RATE_RP_KP,  RATE_RP_KI,  RATE_RP_KD, RATE_I_LIMIT, RATE_OUT_LIMIT);
     PID_Init(&s_pid[LOOP_RATE_YAW],   RATE_YAW_KP, RATE_YAW_KI, 0.0f,       RATE_I_LIMIT, RATE_OUT_LIMIT);
+    PID_SetDLpf(&s_pid[LOOP_RATE_ROLL],  RATE_D_LPF_HZ);
+    PID_SetDLpf(&s_pid[LOOP_RATE_PITCH], RATE_D_LPF_HZ);
+    PID_SetDLpf(&s_pid[LOOP_RATE_YAW],   RATE_D_LPF_HZ);
 
     /* Angle loop is P-only; its output is a rate setpoint in deg/s. */
     PID_Init(&s_pid[LOOP_ANGLE_ROLL],  ANGLE_KP, 0.0f, 0.0f, 0.0f, ANGLE_MAX_RATE_DPS);

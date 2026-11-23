@@ -1,5 +1,7 @@
 #include "pid.h"
 
+#define PID_TWO_PI 6.2831853f
+
 static float clampf(float v, float limit)
 {
     if (v >  limit) return  limit;
@@ -16,6 +18,7 @@ void PID_Init(PID_t *pid,
     pid->kd = kd;
     pid->i_limit   = i_limit;
     pid->out_limit = out_limit;
+    pid->d_lpf_hz  = 0.0f;
 
     PID_Reset(pid);
 }
@@ -25,6 +28,7 @@ void PID_Reset(PID_t *pid)
     pid->integral         = 0.0f;
     pid->prev_measurement = 0.0f;
     pid->has_prev         = 0u;
+    pid->d_filt           = 0.0f;
     pid->p_term = pid->i_term = pid->d_term = pid->output = 0.0f;
 }
 
@@ -40,6 +44,11 @@ void PID_SetGains(PID_t *pid, float kp, float ki, float kd)
     pid->kd = kd;
 }
 
+void PID_SetDLpf(PID_t *pid, float cutoff_hz)
+{
+    pid->d_lpf_hz = cutoff_hz > 0.0f ? cutoff_hz : 0.0f;
+}
+
 float PID_Update(PID_t *pid, float setpoint, float measurement, float dt)
 {
     const float error = setpoint - measurement;
@@ -51,10 +60,17 @@ float PID_Update(PID_t *pid, float setpoint, float measurement, float dt)
     /* Derivative on measurement (negated — d(error)/dt = -d(measurement)/dt
      * when setpoint is constant, which avoids spikes on setpoint steps).
      * Skip on the first call so prev_measurement isn't garbage. */
-    float d_meas = 0.0f;
     if (pid->has_prev && dt > 0.0f) {
-        d_meas = (measurement - pid->prev_measurement) / dt;
+        const float d_raw = (measurement - pid->prev_measurement) / dt;
+        if (pid->d_lpf_hz > 0.0f) {
+            /* First-order low-pass, discretized for this dt. */
+            const float rc = 1.0f / (PID_TWO_PI * pid->d_lpf_hz);
+            pid->d_filt += (dt / (rc + dt)) * (d_raw - pid->d_filt);
+        } else {
+            pid->d_filt = d_raw;
+        }
     }
+    const float d_meas = pid->d_filt;
     pid->prev_measurement = measurement;
     pid->has_prev = 1u;
 

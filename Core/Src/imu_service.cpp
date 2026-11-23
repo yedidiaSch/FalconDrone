@@ -33,19 +33,21 @@ using ImuDriver = MPU6050;
 
 namespace {
 
-/* A 12-14 byte read at 400 kHz takes ~0.4 ms; anything near a full period
- * means the transfer is not coming back. */
-constexpr uint32_t kDmaTimeoutMs = 5;
+/* A 12-14 byte read at 400 kHz takes ~0.4 ms. The task wakes on a tick
+ * edge, so 2 ticks give it 1-2 ms; a timeout costs at most the next slot,
+ * which the fixed-rate schedule below resyncs from. */
+constexpr uint32_t kDmaTimeoutMs = 2;
 
 /* Gaps longer than this (calibration, repeated bus failures) skip gyro
  * integration for one step rather than integrating a stale rate. */
 constexpr uint32_t kMaxIntegrateGapMs = 200;
 
-constexpr float kFilterAlpha = 0.98f;
+/* 0.49 s = the old alpha 0.98 at 100 Hz (tau = alpha * dt / (1 - alpha)). */
+constexpr float kFilterTauS = 0.49f;
 
 /* Constant-initialized — no constructor runs before main(). */
 ImuDriver s_imu;
-ComplementaryFilter s_filter(kFilterAlpha);
+ComplementaryFilter s_filter(kFilterTauS);
 
 I2C_HandleTypeDef *s_hi2c = nullptr;
 

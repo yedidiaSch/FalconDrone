@@ -12,7 +12,7 @@ extern "C" {
 
 /*
  * Drone end of the radio link, polled from ControlTask once per tick
- * (100 Hz; the controller sends at 50 Hz). The transport — ESP-NOW bridge
+ * (500 Hz; the controller sends at 50 Hz). The transport — ESP-NOW bridge
  * or nRF24 — is behind rc_radio.h.
  *
  * Each poll takes the received packets, updates the link supervisor and

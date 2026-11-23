@@ -8,7 +8,7 @@ tuning session:
     python tools/tune_analyze.py /tmp/run.log
     python tools/tune_sim.py --autotune          # follow the advice in a loop
 
-Model (one axis on a rod, props on, 100 Hz loop like the firmware):
+Model (one axis on a rod, props on, 500 Hz loop and 100 Hz log like the firmware):
     motor:  u_f' = (u - u_f) / TAU_MOTOR        first-order thrust lag
     frame:  w'   = K_TORQUE * u_f - DAMPING * w + disturbance
     angle:  a'   = w
@@ -27,7 +27,10 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import tune_analyze  # noqa: E402
 
-DT = 0.01
+DT = 0.002                 # control loop, IMU_PERIOD_MS
+LOG_EVERY = 5              # tuning log at 100 Hz (TUNE_LOG_PERIOD_MS)
+PLANT_STEPS = 4            # plant integrated at 2 kHz
+D_LPF_HZ = 40.0            # RATE_D_LPF_HZ
 TAU_MOTOR = 0.035          # s
 K_TORQUE = 40.0            # (deg/s^2) per us of differential command
 DAMPING = 2.0              # 1/s
@@ -41,18 +44,26 @@ LEAD_MS, HOLD_MIN_MS = 500, 500
 class Pid:
     """Port of Core/Src/pid.c."""
 
-    def __init__(self, kp, ki, kd, i_limit, out_limit):
+    def __init__(self, kp, ki, kd, i_limit, out_limit, d_lpf_hz=0.0):
         self.kp, self.ki, self.kd = kp, ki, kd
         self.i_limit, self.out_limit = i_limit, out_limit
+        self.d_lpf_hz = d_lpf_hz
         self.integral, self.prev, self.has_prev = 0.0, 0.0, False
+        self.d_filt = 0.0
         self.p = self.i = self.d = self.out = 0.0
 
     def update(self, sp, meas, dt):
         err = sp - meas
         self.integral = max(-self.i_limit, min(self.i_limit, self.integral + err * dt))
-        d_meas = (meas - self.prev) / dt if self.has_prev else 0.0
+        if self.has_prev:
+            d_raw = (meas - self.prev) / dt
+            if self.d_lpf_hz > 0.0:
+                rc = 1.0 / (2.0 * 3.14159265 * self.d_lpf_hz)
+                self.d_filt += dt / (rc + dt) * (d_raw - self.d_filt)
+            else:
+                self.d_filt = d_raw
         self.prev, self.has_prev = meas, True
-        self.p, self.i, self.d = self.kp * err, self.ki * self.integral, -self.kd * d_meas
+        self.p, self.i, self.d = self.kp * err, self.ki * self.integral, -self.kd * self.d_filt
         self.out = max(-self.out_limit, min(self.out_limit, self.p + self.i + self.d))
         return self.out
 
@@ -82,13 +93,14 @@ def run_test(kp, ki, kd, akp=2.0, mode='RATE', amp=60.0, step_ms=None, reps=3,
     if step_ms is None:                        # same defaults as $s
         step_ms = 800 if mode == 'ANGLE' else 300
     rnd = random.Random(seed)
-    rate = Pid(kp, ki, kd, I_LIMIT, OUT_LIMIT)
+    rate = Pid(kp, ki, kd, I_LIMIT, OUT_LIMIT, D_LPF_HZ)
     outer = Pid(akp, 0.0, 0.0, 0.0, 150.0)
     w = a = u_f = 0.0
     gyro_prev = 0.0
     lines = [f'[TUNE] start axis=r mode={mode} amp={amp:.1f} step={step_ms} reps={reps} '
              f'kp={kp:.3f} ki={ki:.3f} kd={kd:.4f} lim={OUT_LIMIT:.0f} akp={akp:.3f}']
     t_ms = 0
+    tick = 0
     while True:
         seq = doublet(t_ms, amp, step_ms, reps)
         if seq is None:
@@ -103,15 +115,17 @@ def run_test(kp, ki, kd, akp=2.0, mode='RATE', amp=60.0, step_ms=None, reps=3,
         if thr < LIFTOFF_US:
             rate.integral = 0.0
         sat = int(abs(u) >= OUT_LIMIT * 0.999)
-        lines.append(f'T,{t_ms},{seg},{ref:.1f},{sp:.1f},{gyro:.1f},{a:.1f},'
-                     f'{rate.p:.1f},{rate.i:.1f},{rate.d:.1f},{u:.1f},{thr},{sat}')
-        for _ in range(10):                    # plant at 1 kHz
-            h = DT / 10
+        if tick % LOG_EVERY == 0:
+            lines.append(f'T,{t_ms},{seg},{ref:.1f},{sp:.1f},{gyro:.1f},{a:.1f},'
+                         f'{rate.p:.1f},{rate.i:.1f},{rate.d:.1f},{u:.1f},{thr},{sat}')
+        for _ in range(PLANT_STEPS):
+            h = DT / PLANT_STEPS
             u_f += (u - u_f) / TAU_MOTOR * h
             w += (K_TORQUE * u_f - DAMPING * w + disturbance) * h
             a += w * h
         gyro_prev = w + rnd.gauss(0.0, GYRO_NOISE)
-        t_ms += 10
+        t_ms += round(DT * 1000)
+        tick += 1
     lines.append('[TUNE] done')
     return lines
 

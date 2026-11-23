@@ -33,6 +33,9 @@
 #define RATE_YAW_KP               1.5f
 #define RATE_YAW_KI               0.0f
 #define RATE_I_LIMIT            200.0f  /* |integral| clamp, deg/s * s */
+/* D-term low-pass. At 100 Hz the loop's own sampling (50 Hz Nyquist) did
+ * this; at 500 Hz the raw difference is 5x noisier without it. */
+#define RATE_D_LPF_HZ            40.0f
 #define RATE_OUT_LIMIT          300.0f  /* per-axis authority, us */
 
 /* Boot mode. RATE while tuning the inner loop (design doc M2); switch to

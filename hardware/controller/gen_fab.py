@@ -14,9 +14,7 @@ the front (sticks, toggles, tact switches, LEDs, sockets) by JLCPCB's THT
 service. The one exception is J2 (debug UART pins, DNP in the schematic).
 
 Part numbers were picked from the JLCPCB library on 2026-10-21; `--stock`
-re-checks them against JLCPCB's live stock. Parts with no LCSC number
-(SW9) are bought by JLCPCB through Global Sourcing: on the BOM page search
-the MPN under "Global Sourcing" (or send the part in as consigned stock).
+re-checks them against JLCPCB's live stock.
 
 CPL follows the kicad-jlcpcb-tools conventions: part centre = centre of the
 pads, Y up, bottom-side angle mirrored (180 - a), plus the per-package
@@ -72,8 +70,10 @@ PARTS = {
     "SW5": ("C110153", "HRO K2-1102DP-C4SW-04"),
     "SW6": ("C110153", "HRO K2-1102DP-C4SW-04"),
     "SW7": ("C110153", "HRO K2-1102DP-C4SW-04"),
-    "SW8": ("C221549", "C&K 7101SYCQE"),
-    "SW9": ("", "C&K 7103SYCQE (Global Sourcing)"),
+    # C&K 7101SYCQE / 7103SYCQE are short or gone at JLCPCB; same 4.7 mm straight
+    # PC pins, common in the middle (not the SYZQE / M6 versions: lug / right angle)
+    "SW8": ("C273353", "E-Switch 100SP1T1B4M2QE"),
+    "SW9": ("C908270", "Dailywell 1MS3T1B1M2QES-5"),
     "D1": ("C85161", "Everlight 204-10SYGD/S530-E3 green"),
     "D2": ("C84774", "Everlight 204-10SDRD/S530-A3-L red"),
     "D4": ("C85160", "Everlight 204-10UYD/S530-A3-L yellow"),

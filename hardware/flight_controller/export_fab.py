@@ -11,9 +11,10 @@ build/pcbway/
                             from DigiKey, Mouser, LCSC...), so the GPS and the exact
                             AP7361C are included; upload with the same gerbers zip and CPL
 
-LCSC Part # is filled in for the parts found in LCSC (looked up 2026-10-21, see
-ASSEMBLY.md); the passives are left to JLCPCB's BOM matcher, which picks basic
-parts by value and footprint. Check stock on upload: it changes daily.
+LCSC Part # is filled in for every part (looked up 2026-10-25, see ASSEMBLY.md);
+J2/J4 are through-hole, so turn on JLCPCB's THT assembly. Check stock on upload:
+it changes daily. The JLCPCB BOM and CPL leave out JLC_DNP (fitted later by
+hand); the PCBWay BOM still lists every part.
 
 Usage:  python3 export_fab.py   (after route_pcb.py; checks DRC first)
 """
@@ -35,10 +36,13 @@ OUT = os.path.join(HERE, "build", "jlcpcb")
 LAYERS = ["F.Cu", "In1.Cu", "In2.Cu", "B.Cu", "F.Paste", "B.Paste", "F.Silkscreen",
           "B.Silkscreen", "F.Mask", "B.Mask", "Edge.Cuts"]
 NOT_ASSEMBLED = ("H",)     # mounting holes
+# Left off the JLCPCB order to save cost (~$60 for two boards); their support
+# parts (U6, FB1, decoupling) are still fitted, so these can go on later.
+JLC_DNP = {"U5", "U7"}     # MS5611 barometer, SAM-M10Q GPS
 # BOM comments JLCPCB can match, where the schematic value is a role name
 FP_COMMENTS = {
-    "PinHeader_1x05_P2.54mm_Vertical": "Pin header 1x05 2.54mm vertical",
-    "nRF24L01_Breakout": "Female header 2x04 2.54mm vertical (nRF24L01 module socket)",
+    "PinHeader_1x05_P2.54mm_Vertical": "PZ254V-11-05P",
+    "nRF24L01_Breakout": "A2541HWV-2x4P",
 }
 
 # LCSC numbers by schematic value (see ASSEMBLY.md for the substitutions)
@@ -50,12 +54,27 @@ LCSC = {
     "SP0504BAHT": "C10675",
     "AO3401A": "C15127",
     "SMAJ5.0A": "C499731",
-    "AP7361C-33E": "C150719",         # AP7361-33E-13: the C version isn't listed
+    "AP7361C-33E": "C500795",         # AP7361C-33E-13
+    "SAM-M10Q": "C5443880",           # SAM-M10Q-00B
+    "600R@100MHz": "C1002",           # Sunlord GZ1608D601TF
+    "green": "C51933293",             # GL0603UG01
+    # passives: the basic parts JLCPCB's matcher picks for these values
+    "10u": "C15850",                  # 0805 25 V X5R
+    "4.7u": "C1779",                  # 0805 25 V X5R
+    "2.2u": "C23630",                 # 0603 16 V X5R
+    "1u": "C15849",                   # 0603 50 V X5R
+    "100n": "C14663",                 # 0603 50 V X7R
+    "10n": "C57112",                  # 0603 50 V X7R
+    "10k": "C25804",
+    "4.7k": "C23162",
+    "1k": "C21190",
 }
 FP_LCSC = {
     "JST_GH_SM03B-GHS-TB_1x03-1MP_P1.25mm_Horizontal": "C514175",
     "JST_GH_SM06B-GHS-TB_1x06-1MP_P1.25mm_Horizontal": "C133065",
-    "SW_SPST_PTS810": "C116501",
+    "SW_SPST_PTS810": "C221895",
+    "nRF24L01_Breakout": "C239344",              # CJT A2541HWV-2x4P, as on the controller
+    "PinHeader_1x05_P2.54mm_Vertical": "C492404",  # PZ254V-11-05P
 }
 
 # PCBWay BOM: schematic value -> (manufacturer, MPN, description). Passives
@@ -78,9 +97,9 @@ FP_MPN = {
         ("JST", "SM03B-GHS-TB(LF)(SN)", "Connector JST-GH 3-pin right angle SMD"),
     "JST_GH_SM06B-GHS-TB_1x06-1MP_P1.25mm_Horizontal":
         ("JST", "SM06B-GHS-TB(LF)(SN)", "Connector JST-GH 6-pin right angle SMD"),
-    "SW_SPST_PTS810": ("C&K", "PTS810SJM250SMTRLFS", "Tactile switch SMD"),
-    "PinHeader_1x05_P2.54mm_Vertical": ("", "", "Pin header 1x05 2.54 mm vertical (ESC)"),
-    "nRF24L01_Breakout": ("", "", "Female header 2x04 2.54 mm vertical (nRF24L01 module socket)"),
+    "SW_SPST_PTS810": ("C&K", "PTS810SJG250SMTRLFS", "Tactile switch SMD"),
+    "PinHeader_1x05_P2.54mm_Vertical": ("XFCN", "PZ254V-11-05P", "Pin header 1x05 2.54 mm vertical (ESC)"),
+    "nRF24L01_Breakout": ("CJT", "A2541HWV-2x4P", "Female header 2x04 2.54 mm vertical (nRF24L01 module socket)"),
 }
 THT = ("PinHeader_", "nRF24L01_Breakout")
 
@@ -145,6 +164,8 @@ def bom():
     comps, _ = gen_pcb.load_netlist()
     groups = {}
     for ref, (value, fpid) in comps.items():
+        if ref in JLC_DNP:
+            continue
         fp = fpid.split(":")[1]
         groups.setdefault((comment(value, fp), fp), []).append(ref)
     key = lambda r: (r.rstrip("0123456789"), int(r[len(r.rstrip("0123456789")):] or 0))
@@ -176,26 +197,72 @@ def pcbway_bom():
         for i, (((mfr, mpn, desc), fp), refs) in enumerate(lines, 1):
             value = comps[refs[0]][0]
             lcsc = FP_LCSC.get(fp) or LCSC.get(value, "")
-            if value == "AP7361C-33E":
-                lcsc = ""                         # LCSC's is the non-C part; PCBWay can get the C
             w.writerow([i, ",".join(sorted(refs, key=key)), len(refs), mfr, mpn, desc, fp,
                         "THT" if fp.startswith(THT) else "SMD", lcsc])
     return path
 
 
-def cpl():
-    raw = os.path.join(OUT, "pos.csv")
+# JLCPCB model rotation minus KiCad's, per package. Read off JLCPCB's placement
+# viewer on 2026-10-25 (pink pin-1 dot vs the silk pin-1 triangle); anything
+# not listed (passives, LGA-14 IMU, GPS, JST-GH, buttons) needed no correction.
+ROT_CORRECTION = [
+    ("SOT-23", 180),             # SOT-23, SOT-23-5
+    ("SOT-223", 180),
+    ("LQFP-", 270),
+    ("LGA-8_3x5mm", 270),        # MS5611: JLCPCB's footprint lies along X
+]
+BOTTOM_CORRECTION = [
+    ("JST_GH_", 180),            # J5/J6 sat right before the bottom mirroring
+]
+
+
+def jlc_rotation(package, angle, bottom):
+    """kicad-jlcpcb-tools convention: bottom angles mirrored (180 - a), then
+    the per-package correction."""
+    table = ROT_CORRECTION + (BOTTOM_CORRECTION if bottom else [])
+    angle = (180 - angle) if bottom else angle
+    angle += next((c for pat, c in table if package.startswith(pat)), 0)
+    return angle % 360
+
+
+def tht_placement():
+    """ref -> (x, y, rotation) for the through-hole headers. KiCad's origin is
+    pin 1 and the row runs along Y; JLCPCB places their model by its centre,
+    with the row along X at 0 deg."""
+    import pcbnew
+    board = pcbnew.LoadBoard(PCB)
+    out = {}
+    for fp in board.GetFootprints():
+        if not str(fp.GetFPID().GetLibItemName()).startswith(THT):
+            continue
+        pads = list(fp.Pads())
+        box = pads[0].GetBoundingBox()
+        for pad in pads[1:]:
+            box.Merge(pad.GetBoundingBox())
+        c = box.GetCenter()
+        rot = (fp.GetOrientation().AsDegrees() + 90) % 360
+        out[fp.GetReference()] = (pcbnew.ToMM(c.x), -pcbnew.ToMM(c.y), rot)
+    return out
+
+
+def cpl(out=OUT):
+    tht = tht_placement()
+    raw = os.path.join(out, "pos.csv")
     kicad_cli("pcb", "export", "pos", "-o", raw, "--format", "csv", "--units", "mm",
               "--side", "both", PCB)
-    path = os.path.join(OUT, gen_pcb.PROJECT + "_cpl.csv")
+    path = os.path.join(out, gen_pcb.PROJECT + "_cpl.csv")
     with open(raw) as src, open(path, "w", newline="") as f:
         w = csv.writer(f)
         w.writerow(["Designator", "Mid X", "Mid Y", "Layer", "Rotation"])
         for row in csv.DictReader(src):
-            if row["Ref"].startswith(NOT_ASSEMBLED):
+            if row["Ref"].startswith(NOT_ASSEMBLED) or row["Ref"] in JLC_DNP:
                 continue
-            w.writerow([row["Ref"], row["PosX"] + "mm", row["PosY"] + "mm",
-                        "Top" if row["Side"] == "top" else "Bottom", row["Rot"]])
+            x, y = row["PosX"], row["PosY"]
+            rot = f'{jlc_rotation(row["Package"], float(row["Rot"]), row["Side"] == "bottom"):.6f}'
+            if row["Ref"] in tht:
+                x, y, rot = (f"{v:.6f}" for v in tht[row["Ref"]])
+            w.writerow([row["Ref"], x + "mm", y + "mm",
+                        "Top" if row["Side"] == "top" else "Bottom", rot])
     os.remove(raw)
     return path
 

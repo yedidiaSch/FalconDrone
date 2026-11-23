@@ -80,9 +80,12 @@ private:
 
     static constexpr uint16_t kBlockSize = 12;   /**< 6 Accel + 6 Gyro, no temperature */
 
-    /* Same ranges as the MPU6050 driver so the PID gains carry over. */
+    /* Gyro at full range so fast yaw or flips never clip; Decode() returns
+     * dps either way, so the range does not change the PID gains (0.06 dps
+     * per LSB is still far below the sensor noise). Accel stays at +/-2 g:
+     * it is only the gravity reference for the attitude filter. */
     static constexpr float kAccelLsbPerG  = 16384.0f; /**< Range +/- 2g */
-    static constexpr float kGyroLsbPerDps = 131.0f;   /**< Range +/- 250dps */
+    static constexpr float kGyroLsbPerDps = 16.4f;    /**< Range +/- 2000dps */
 
     bool WriteReg(uint16_t reg, uint8_t value);
     bool SelectBank(uint8_t bank);

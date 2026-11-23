@@ -22,10 +22,13 @@ namespace {
 /* GYRO_CONFIG_1 / ACCEL_CONFIG: [5:3] DLPFCFG, [2:1] FS_SEL, [0] FCHOICE.
  * FCHOICE=1 enables the DLPF. DLPFCFG=3 → gyro 51.2 Hz / accel 50.4 Hz 3 dB
  * bandwidth, the closest match to the MPU6050's 42 Hz DLPF_CFG=3 setting the
- * gains were tuned with. FS_SEL=0 → +/-250 dps, +/-2 g. */
-constexpr uint8_t kDlpfCfg  = 3;
-constexpr uint8_t kGyroCfg1 = (kDlpfCfg << 3) | (0 << 1) | 1;
-constexpr uint8_t kAccelCfg = (kDlpfCfg << 3) | (0 << 1) | 1;
+ * gains were tuned with. Gyro FS_SEL=3 → +/-2000 dps (must match
+ * kGyroLsbPerDps), accel FS_SEL=0 → +/-2 g (kAccelLsbPerG). */
+constexpr uint8_t kDlpfCfg     = 3;
+constexpr uint8_t kGyroFsSel   = 3;
+constexpr uint8_t kAccelFsSel  = 0;
+constexpr uint8_t kGyroCfg1 = (kDlpfCfg << 3) | (kGyroFsSel << 1) | 1;
+constexpr uint8_t kAccelCfg = (kDlpfCfg << 3) | (kAccelFsSel << 1) | 1;
 
 constexpr uint8_t kPwr1Reset = 0x80;   /**< DEVICE_RESET */
 constexpr uint8_t kPwr1Run   = 0x01;   /**< SLEEP=0, CLKSEL=1 (PLL when ready) */

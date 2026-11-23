@@ -21,6 +21,7 @@
 #include "freertos/task.h"
 #include "board.h"
 #include "inputs.h"
+#include "pwr_keep.h"
 #include "radio_link.h"
 #include "rc_protocol.h"
 #include "ui.h"
@@ -148,6 +149,7 @@ static void radio_task(void *arg)
 void app_main(void)
 {
     ESP_LOGI(TAG, "FalconDrone controller boot — keep the stick centered");
+    pwr_keep_start();       /* first: the power board must not time out */
     ESP_ERROR_CHECK(inputs_init());
     ui_start();
     xTaskCreate(radio_task, "radio", 4096, NULL, 10, NULL);

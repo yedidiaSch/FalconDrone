@@ -7,9 +7,11 @@ CONFIG_ESPTOOLPY_FLASHSIZE_4MB=y
 # 1 ms tick so vTaskDelayUntil can hold the 50 Hz radio period exactly.
 CONFIG_FREERTOS_HZ=1000
 
-# Radio: ESP-NOW (Wi-Fi) by default; nRF24 is the alternative. Bluetooth is
-# never used — keep it out of the build.
-CONFIG_FALCON_RADIO_ESPNOW=y
+# Radio: nRF24 by default (rc_carrier board); ESP-NOW (Wi-Fi) is the
+# alternative for the breadboard rig. Bluetooth is never used — keep it out
+# of the build.
+CONFIG_FALCON_RADIO_NRF24=y
+CONFIG_FALCON_PWR_KEEP=y
 CONFIG_BT_ENABLED=n
 
 CONFIG_LOG_DEFAULT_LEVEL_INFO=y

@@ -10,13 +10,15 @@ The firmware is designed with a modular, object-oriented approach in C++, emphas
 
 ### Key Features
 * **Real-Time Kernel:** Task management and scheduling via FreeRTOS.
-* **Asynchronous I/O:** MPU6050 IMU data acquisition using **I2C DMA** to minimize CPU overhead.
+* **Asynchronous I/O:** IMU (ICM-20948 or MPU6050) data acquisition using **I2C DMA** to minimize CPU overhead.
 * **Thread-Safe Logging:** Custom UART logging mechanism utilizing **DMA** and FreeRTOS Queues for non-blocking telemetry.
 * **Attitude Estimation:** Implementation of raw sensor data processing (Accelerometer and Gyroscope) for Roll/Pitch calculation.
 
 ## Hardware Stack
 * **MCU:** STM32F446RE (ARM Cortex-M4 @ 180MHz)
-* **IMU:** MPU6050 (3-Axis Accelerometer & Gyroscope)
+* **IMU:** ICM-20948 on the carrier board (`hardware/carrier`), MPU6050 on the breadboard rig.
+  Pick with `cmake --preset Debug -DFALCON_BOARD=CARRIER|BREADBOARD` (CARRIER is the default;
+  it also selects the nRF24 radio, BREADBOARD the ESP-NOW bridge).
 * **Frame:** F450 Quadcopter Frame
 * **Motors:** A2212 1000KV Brushless Motors
 * **ESCs:** 30A Brushless XXD

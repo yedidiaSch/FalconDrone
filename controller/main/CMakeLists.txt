@@ -8,7 +8,7 @@ else()
 endif()
 
 idf_component_register(
-    SRCS "main.c" "inputs.c" "gfx.c" "ui_draw.c" "ui.c" "oled.c" ${radio_srcs}
+    SRCS "main.c" "inputs.c" "gfx.c" "ui_draw.c" "ui.c" "oled.c" "pwr_keep.c" ${radio_srcs}
     INCLUDE_DIRS "."
     REQUIRES rc_protocol esp_driver_gpio esp_adc esp_rom esp_lcd esp_driver_i2c
              nrf24 esp_driver_spi espnow_wifi

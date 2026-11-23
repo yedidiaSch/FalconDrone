@@ -14,6 +14,9 @@
  *   Switches    ARM: middle pin→D26, one end pin→GND (other end free)
  *               MODE: middle pin→D27, one end pin→GND (other end free)
  *
+ *   Power board (hardware/rc_power, via J10 on hardware/rc_carrier):
+ *               PWR_KEEP→D17 (presses the IP5306 button, see pwr_keep.h)
+ *
  * Analog inputs must stay on ADC1 (GPIO32-39): ADC2 is unusable while the
  * Wi-Fi driver is active, so it is avoided altogether.
  */
@@ -44,5 +47,8 @@
  * inputs.c (depends on which end pin was wired to GND). */
 #define PIN_ARM_SW      GPIO_NUM_26
 #define PIN_MODE_SW     GPIO_NUM_27
+
+/* RC power board keep-alive: high = IP5306 button pressed (via a 2N7002) */
+#define PIN_PWR_KEEP    GPIO_NUM_17
 
 #endif /* BOARD_H */
